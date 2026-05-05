@@ -1,0 +1,13 @@
+{
+  "repo": "finch",
+  "feeds": [
+    {
+      "source": "https://www.tryfinch.com/blog",
+      "feed_url": "https://www.tryfinch.com/blog/rss.xml",
+      "saved": 10,
+      "title": "The Finch Blog"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:27:57Z"
+}
