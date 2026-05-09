@@ -4,10 +4,10 @@
     {
       "source": "https://www.tryfinch.com/blog",
       "feed_url": "https://www.tryfinch.com/blog/rss.xml",
-      "saved": 10,
-      "title": "The Finch Blog"
+      "title": "The Finch Blog",
+      "saved": 1
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-05-03T23:27:57Z"
+  "post_count": 11,
+  "fetched": "2026-05-09T20:17:51Z"
 }
