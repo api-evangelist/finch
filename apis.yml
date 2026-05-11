@@ -69,6 +69,22 @@ common:
     url: https://developer.tryfinch.com/changelog
   - type: StatusPage
     url: https://status.tryfinch.com/
+  - type: Integrations
+    url: https://www.tryfinch.com/integrations
+integrations:
+  - name: BambooHR
+  - name: HiBob
+  - name: Gusto
+  - name: Justworks
+  - name: Paychex
+  - name: Paycor
+  - name: Paylocity
+  - name: QuickBooks Payroll
+  - name: Rippling
+  - name: TriNet (Zenefits)
+  - name: UKG Pro
+  - name: Workday
+  - name: Run Powered by ADP
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
