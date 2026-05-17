@@ -43,7 +43,7 @@ apis:
     properties:
       - type: Documentation
         url: https://developer.tryfinch.com/
-      - type: API Reference
+      - type: APIReference
         url: https://developer.tryfinch.com/api-reference/
       - type: SignUp
         url: https://dashboard.tryfinch.com/signup
@@ -57,7 +57,7 @@ common:
     url: https://www.tryfinch.com/
   - type: Documentation
     url: https://developer.tryfinch.com/
-  - type: API Reference
+  - type: APIReference
     url: https://developer.tryfinch.com/api-reference/
   - type: SignUp
     url: https://dashboard.tryfinch.com/signup
@@ -65,7 +65,7 @@ common:
     url: https://www.tryfinch.com/pricing
   - type: Blog
     url: https://www.tryfinch.com/blog
-  - type: Changelog
+  - type: ChangeLog
     url: https://developer.tryfinch.com/changelog
   - type: StatusPage
     url: https://status.tryfinch.com/
