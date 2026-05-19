@@ -1,0 +1,401 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Finch API
+  description: 'Finch API. 9 operations. Lead operation: Exchange authorization code for access token. Self-contained Naftiko
+    capability covering one Finch business surface.'
+  tags:
+  - Finch
+  - Finch API
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    FINCH_API_KEY: FINCH_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: finch
+    baseUri: https://api.tryfinch.com
+    description: Finch API business capability. Self-contained, no shared references.
+    resources:
+    - name: auth-token
+      path: /auth/token
+      operations:
+      - name: exchangeauthcode
+        method: POST
+        description: Exchange authorization code for access token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: connect-sessions
+      path: /connect/sessions
+      operations:
+      - name: createconnectsession
+        method: POST
+        description: Create a Finch Connect session
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: employer-benefits
+      path: /employer/benefits
+      operations:
+      - name: listbenefits
+        method: GET
+        description: List company benefits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: employer-company
+      path: /employer/company
+      operations:
+      - name: getcompany
+        method: GET
+        description: Get connected company information
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: employer-directory
+      path: /employer/directory
+      operations:
+      - name: listdirectory
+        method: GET
+        description: List employees in the company directory
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+    - name: employer-employment
+      path: /employer/employment
+      operations:
+      - name: getemployment
+        method: POST
+        description: Get employment records
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: employer-individual
+      path: /employer/individual
+      operations:
+      - name: getindividuals
+        method: POST
+        description: Get individual records (PII)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: employer-pay-statement
+      path: /employer/pay-statement
+      operations:
+      - name: getpaystatements
+        method: POST
+        description: Get pay statements for one or more payments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: employer-payment
+      path: /employer/payment
+      operations:
+      - name: listpayments
+        method: GET
+        description: List company payments (pay runs)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: start_date
+          in: query
+          type: string
+        - name: end_date
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.FINCH_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: finch-rest
+    port: 8080
+    description: REST adapter for Finch API. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+    resources:
+    - path: /v1/auth/token
+      name: auth-token
+      description: REST surface for auth-token.
+      operations:
+      - method: POST
+        name: exchangeauthcode
+        description: Exchange authorization code for access token
+        call: finch.exchangeauthcode
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/connect/sessions
+      name: connect-sessions
+      description: REST surface for connect-sessions.
+      operations:
+      - method: POST
+        name: createconnectsession
+        description: Create a Finch Connect session
+        call: finch.createconnectsession
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/benefits
+      name: employer-benefits
+      description: REST surface for employer-benefits.
+      operations:
+      - method: GET
+        name: listbenefits
+        description: List company benefits
+        call: finch.listbenefits
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/company
+      name: employer-company
+      description: REST surface for employer-company.
+      operations:
+      - method: GET
+        name: getcompany
+        description: Get connected company information
+        call: finch.getcompany
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/directory
+      name: employer-directory
+      description: REST surface for employer-directory.
+      operations:
+      - method: GET
+        name: listdirectory
+        description: List employees in the company directory
+        call: finch.listdirectory
+        with:
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/employment
+      name: employer-employment
+      description: REST surface for employer-employment.
+      operations:
+      - method: POST
+        name: getemployment
+        description: Get employment records
+        call: finch.getemployment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/individual
+      name: employer-individual
+      description: REST surface for employer-individual.
+      operations:
+      - method: POST
+        name: getindividuals
+        description: Get individual records (PII)
+        call: finch.getindividuals
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/pay-statement
+      name: employer-pay-statement
+      description: REST surface for employer-pay-statement.
+      operations:
+      - method: POST
+        name: getpaystatements
+        description: Get pay statements for one or more payments
+        call: finch.getpaystatements
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/employer/payment
+      name: employer-payment
+      description: REST surface for employer-payment.
+      operations:
+      - method: GET
+        name: listpayments
+        description: List company payments (pay runs)
+        call: finch.listpayments
+        with:
+          start_date: rest.start_date
+          end_date: rest.end_date
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: finch-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Finch API. One tool per consumed operation, routed inline through this capability's consumes
+      block.
+    tools:
+    - name: exchange-authorization-code-access-token
+      description: Exchange authorization code for access token
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: finch.exchangeauthcode
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-finch-connect-session
+      description: Create a Finch Connect session
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: finch.createconnectsession
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-company-benefits
+      description: List company benefits
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: finch.listbenefits
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-connected-company-information
+      description: Get connected company information
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: finch.getcompany
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-employees-company-directory
+      description: List employees in the company directory
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: finch.listdirectory
+      with:
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-employment-records
+      description: Get employment records
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: finch.getemployment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-individual-records-pii
+      description: Get individual records (PII)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: finch.getindividuals
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-pay-statements-one-more
+      description: Get pay statements for one or more payments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: finch.getpaystatements
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-company-payments-pay-runs
+      description: List company payments (pay runs)
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: finch.listpayments
+      with:
+        start_date: tools.start_date
+        end_date: tools.end_date
+      outputParameters:
+      - type: object
+        mapping: $.
