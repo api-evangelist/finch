@@ -70,6 +70,8 @@ common:
     url: https://status.tryfinch.com/
   - type: Integrations
     url: https://www.tryfinch.com/integrations
+  - type: LLMsTxt
+    url: https://developer.tryfinch.com/llms.txt
 integrations:
   - name: BambooHR
   - name: HiBob
