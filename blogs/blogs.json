@@ -2,12 +2,20 @@
   "repo": "finch",
   "feeds": [
     {
-      "source": "https://www.tryfinch.com/blog",
+      "source": "https://www.tryfinch.com/blog/rss.xml",
       "feed_url": "https://www.tryfinch.com/blog/rss.xml",
-      "title": "The Finch Blog",
-      "saved": 48
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://www.tryfinch.com/pricing",
+      "feed_url": "https://www.tryfinch.com/pricing",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 59,
-  "fetched": "2026-05-17T20:20:35Z"
+  "post_count": 91,
+  "fetched": "2026-06-01T23:35:02Z"
 }
