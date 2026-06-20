@@ -6,7 +6,7 @@ description: >-
   payments, pay statements, and benefits across hundreds of providers (ADP, Gusto, Paylocity, Workday, BambooHR,
   Rippling, Justworks, TriNet, and more). Finch Connect handles end-user authorization via OAuth.
 type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 position: Consumer
 tags:
