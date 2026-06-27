@@ -41,7 +41,7 @@ apis:
         url: https://developer.tryfinch.com/
       - type: APIReference
         url: https://developer.tryfinch.com/api-reference/
-      - type: SignUp
+      - type: Signup
         url: https://dashboard.tryfinch.com/signup
       - type: Pricing
         url: https://www.tryfinch.com/pricing
@@ -58,7 +58,7 @@ common:
     url: https://developer.tryfinch.com/
   - type: APIReference
     url: https://developer.tryfinch.com/api-reference/
-  - type: SignUp
+  - type: Signup
     url: https://dashboard.tryfinch.com/signup
   - type: Pricing
     url: https://www.tryfinch.com/pricing
@@ -70,7 +70,7 @@ common:
     url: https://status.tryfinch.com/
   - type: Integrations
     url: https://www.tryfinch.com/integrations
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://developer.tryfinch.com/llms.txt
 integrations:
   - name: BambooHR
