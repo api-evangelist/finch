@@ -48,6 +48,12 @@ apis:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/openapi/finch-openapi.yml
 common:
+  - type: TrustCenter
+    url: security/finch-trust-center.yml
+  - type: DomainSecurity
+    url: security/finch-domain-security.yml
+  - type: Authentication
+    url: authentication/finch-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/Finch-API
   - type: LinkedIn

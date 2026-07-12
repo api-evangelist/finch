@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/finch-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: Finch access token
+  sources:
+  - openapi/finch-openapi.yml
