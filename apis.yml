@@ -48,6 +48,8 @@ apis:
       - type: OpenAPI
         url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/openapi/finch-openapi.yml
 common:
+  - type: AgenticAccess
+    url: agentic-access/finch-agentic-access.yml
   - type: TrustCenter
     url: security/finch-trust-center.yml
   - type: DomainSecurity
