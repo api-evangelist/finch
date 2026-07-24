@@ -1,0 +1,59 @@
+openapi: 3.1.0
+info:
+  title: Finch Auth API
+  description: Finch is a unified employment API that lets developers integrate with HRIS, payroll, and benefits systems through a single interface. The API exposes Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources, plus Sandbox endpoints for testing.
+  version: '2024-04-01'
+  contact:
+    name: Finch
+    url: https://www.tryfinch.com/
+servers:
+- url: https://api.tryfinch.com
+  description: Finch API
+security:
+- bearerAuth: []
+tags:
+- name: Auth
+paths:
+  /auth/token:
+    post:
+      operationId: exchangeAuthCode
+      summary: Exchange authorization code for access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - client_id
+              - client_secret
+              - code
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                code:
+                  type: string
+                redirect_uri:
+                  type: string
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+      tags:
+      - Auth
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Finch access token

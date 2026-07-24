@@ -1,92 +1,19 @@
 openapi: 3.1.0
 info:
-  title: Finch API
-  description: >-
-    Finch is a unified employment API that lets developers integrate with
-    HRIS, payroll, and benefits systems through a single interface. The API
-    exposes Company, Directory, Individual, Employment, Payment, Pay
-    Statement, and Benefits resources, plus Sandbox endpoints for testing.
+  title: Finch Auth Employer API
+  description: Finch is a unified employment API that lets developers integrate with HRIS, payroll, and benefits systems through a single interface. The API exposes Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources, plus Sandbox endpoints for testing.
   version: '2024-04-01'
   contact:
     name: Finch
     url: https://www.tryfinch.com/
 servers:
-  - url: https://api.tryfinch.com
-    description: Finch API
+- url: https://api.tryfinch.com
+  description: Finch API
 security:
-  - bearerAuth: []
+- bearerAuth: []
+tags:
+- name: Employer
 paths:
-  /connect/sessions:
-    post:
-      operationId: createConnectSession
-      summary: Create a Finch Connect session
-      description: Initializes the Connect authorization flow for an end-user.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                customer_id:
-                  type: string
-                customer_name:
-                  type: string
-                customer_email:
-                  type: string
-                products:
-                  type: array
-                  items:
-                    type: string
-                redirect_uri:
-                  type: string
-      responses:
-        '200':
-          description: Connect session created
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  session_id:
-                    type: string
-                  connect_url:
-                    type: string
-  /auth/token:
-    post:
-      operationId: exchangeAuthCode
-      summary: Exchange authorization code for access token
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - client_id
-                - client_secret
-                - code
-              properties:
-                client_id:
-                  type: string
-                client_secret:
-                  type: string
-                code:
-                  type: string
-                redirect_uri:
-                  type: string
-      responses:
-        '200':
-          description: Token issued
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  access_token:
-                    type: string
-                  token_type:
-                    type: string
   /employer/company:
     get:
       operationId: getCompany
@@ -98,19 +25,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Company'
+      tags:
+      - Employer
   /employer/directory:
     get:
       operationId: listDirectory
       summary: List employees in the company directory
       parameters:
-        - name: limit
-          in: query
-          schema:
-            type: integer
-        - name: offset
-          in: query
-          schema:
-            type: integer
+      - name: limit
+        in: query
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        schema:
+          type: integer
       responses:
         '200':
           description: Paginated directory
@@ -125,6 +54,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/IndividualSummary'
+      tags:
+      - Employer
   /employer/individual:
     post:
       operationId: getIndividuals
@@ -155,6 +86,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Individual'
+      tags:
+      - Employer
   /employer/employment:
     post:
       operationId: getEmployment
@@ -185,21 +118,23 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Employment'
+      tags:
+      - Employer
   /employer/payment:
     get:
       operationId: listPayments
       summary: List company payments (pay runs)
       parameters:
-        - name: start_date
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: end_date
-          in: query
-          schema:
-            type: string
-            format: date
+      - name: start_date
+        in: query
+        schema:
+          type: string
+          format: date
+      - name: end_date
+        in: query
+        schema:
+          type: string
+          format: date
       responses:
         '200':
           description: Payments list
@@ -212,6 +147,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/Payment'
+      tags:
+      - Employer
   /employer/pay-statement:
     post:
       operationId: getPayStatements
@@ -242,6 +179,8 @@ paths:
                     type: array
                     items:
                       type: object
+      tags:
+      - Employer
   /employer/benefits:
     get:
       operationId: listBenefits
@@ -255,20 +194,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/CompanyBenefit'
+      tags:
+      - Employer
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: Finch access token
   schemas:
-    Paging:
-      type: object
-      properties:
-        count:
-          type: integer
-        offset:
-          type: integer
     Company:
       type: object
       properties:
@@ -301,6 +230,56 @@ components:
           type: array
           items:
             type: object
+    CompanyBenefit:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
+    Employment:
+      type: object
+      properties:
+        individual_id:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            title:
+              type: string
+            manager:
+              type: object
+            department:
+              type: object
+            employment:
+              type: object
+              properties:
+                type:
+                  type: string
+                subtype:
+                  type: string
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+            is_active:
+              type: boolean
+            income:
+              type: object
+            location:
+              type: object
     IndividualSummary:
       type: object
       properties:
@@ -358,45 +337,6 @@ components:
                 type: object
             residence:
               type: object
-    Employment:
-      type: object
-      properties:
-        individual_id:
-          type: string
-        body:
-          type: object
-          properties:
-            id:
-              type: string
-            first_name:
-              type: string
-            last_name:
-              type: string
-            title:
-              type: string
-            manager:
-              type: object
-            department:
-              type: object
-            employment:
-              type: object
-              properties:
-                type:
-                  type: string
-                subtype:
-                  type: string
-            start_date:
-              type: string
-              format: date
-            end_date:
-              type: string
-              format: date
-            is_active:
-              type: boolean
-            income:
-              type: object
-            location:
-              type: object
     Payment:
       type: object
       properties:
@@ -431,14 +371,15 @@ components:
           type: array
           items:
             type: string
-    CompanyBenefit:
+    Paging:
       type: object
       properties:
-        benefit_id:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        frequency:
-          type: string
+        count:
+          type: integer
+        offset:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Finch access token

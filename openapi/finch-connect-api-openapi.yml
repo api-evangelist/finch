@@ -1,0 +1,60 @@
+openapi: 3.1.0
+info:
+  title: Finch Auth Connect API
+  description: Finch is a unified employment API that lets developers integrate with HRIS, payroll, and benefits systems through a single interface. The API exposes Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources, plus Sandbox endpoints for testing.
+  version: '2024-04-01'
+  contact:
+    name: Finch
+    url: https://www.tryfinch.com/
+servers:
+- url: https://api.tryfinch.com
+  description: Finch API
+security:
+- bearerAuth: []
+tags:
+- name: Connect
+paths:
+  /connect/sessions:
+    post:
+      operationId: createConnectSession
+      summary: Create a Finch Connect session
+      description: Initializes the Connect authorization flow for an end-user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: string
+                customer_name:
+                  type: string
+                customer_email:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: string
+                redirect_uri:
+                  type: string
+      responses:
+        '200':
+          description: Connect session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  connect_url:
+                    type: string
+      tags:
+      - Connect
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Finch access token
