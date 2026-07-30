@@ -6,7 +6,20 @@ description: >-
   payments, pay statements, and benefits across hundreds of providers (ADP, Gusto, Paylocity, Workday, BambooHR,
   Rippling, Justworks, TriNet, and more). Finch Connect handles end-user authorization via OAuth.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/finch.png
 access: 3rd-Party
 position: Consumer
 tags:
@@ -22,31 +35,60 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: finch:finch-api
-    name: Finch API
-    description: >-
-      Unified REST API for HRIS, payroll, and benefits providers. Supports Company, Directory, Individual, Employment,
-      Payment, Pay Statement, and Benefits resources. Authentication uses OAuth 2.0 via Finch Connect to issue
-      per-employer bearer access tokens.
-    humanURL: https://www.tryfinch.com/
-    baseURL: https://api.tryfinch.com
-    tags:
-      - Employment
-      - HRIS
-      - Payroll
-      - Benefits
-      - Unified API
-    properties:
-      - type: Documentation
-        url: https://developer.tryfinch.com/
-      - type: APIReference
-        url: https://developer.tryfinch.com/api-reference/
-      - type: Signup
-        url: https://dashboard.tryfinch.com/signup
-      - type: Pricing
-        url: https://www.tryfinch.com/pricing
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/openapi/finch-openapi.yml
+- aid: finch:finch-auth-api
+  name: Finch Auth API
+  description: The Auth API from Finch — 1 operation(s) for auth.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-auth-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-connect-api
+  name: Finch Connect API
+  description: The Connect API from Finch — 1 operation(s) for connect.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Connect
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-connect-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-employer-api
+  name: Finch Employer API
+  description: The Employer API from Finch — 7 operation(s) for employer.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Employer
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-employer-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
 common:
   - type: AgenticAccess
     url: agentic-access/finch-agentic-access.yml
