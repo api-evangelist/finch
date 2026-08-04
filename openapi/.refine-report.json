@@ -1,0 +1,18 @@
+{
+  "provider": "finch",
+  "sources": [
+    "finch-auth-api-openapi.yml",
+    "finch-connect-api-openapi.yml",
+    "finch-employer-api-openapi.yml"
+  ],
+  "outputs": [
+    "finch-auth-api-openapi.yml",
+    "finch-connect-api-openapi.yml",
+    "finch-employer-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

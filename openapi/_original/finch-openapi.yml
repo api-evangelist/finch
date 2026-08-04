@@ -1,0 +1,444 @@
+openapi: 3.1.0
+info:
+  title: Finch API
+  description: >-
+    Finch is a unified employment API that lets developers integrate with
+    HRIS, payroll, and benefits systems through a single interface. The API
+    exposes Company, Directory, Individual, Employment, Payment, Pay
+    Statement, and Benefits resources, plus Sandbox endpoints for testing.
+  version: '2024-04-01'
+  contact:
+    name: Finch
+    url: https://www.tryfinch.com/
+servers:
+  - url: https://api.tryfinch.com
+    description: Finch API
+security:
+  - bearerAuth: []
+paths:
+  /connect/sessions:
+    post:
+      operationId: createConnectSession
+      summary: Create a Finch Connect session
+      description: Initializes the Connect authorization flow for an end-user.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: string
+                customer_name:
+                  type: string
+                customer_email:
+                  type: string
+                products:
+                  type: array
+                  items:
+                    type: string
+                redirect_uri:
+                  type: string
+      responses:
+        '200':
+          description: Connect session created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_id:
+                    type: string
+                  connect_url:
+                    type: string
+  /auth/token:
+    post:
+      operationId: exchangeAuthCode
+      summary: Exchange authorization code for access token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+                - code
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                code:
+                  type: string
+                redirect_uri:
+                  type: string
+      responses:
+        '200':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+  /employer/company:
+    get:
+      operationId: getCompany
+      summary: Get connected company information
+      responses:
+        '200':
+          description: Company record
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+  /employer/directory:
+    get:
+      operationId: listDirectory
+      summary: List employees in the company directory
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated directory
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  paging:
+                    $ref: '#/components/schemas/Paging'
+                  individuals:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/IndividualSummary'
+  /employer/individual:
+    post:
+      operationId: getIndividuals
+      summary: Get individual records (PII)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      individual_id:
+                        type: string
+      responses:
+        '200':
+          description: Individual records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Individual'
+  /employer/employment:
+    post:
+      operationId: getEmployment
+      summary: Get employment records
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      individual_id:
+                        type: string
+      responses:
+        '200':
+          description: Employment records
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responses:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employment'
+  /employer/payment:
+    get:
+      operationId: listPayments
+      summary: List company payments (pay runs)
+      parameters:
+        - name: start_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: end_date
+          in: query
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Payments list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Payment'
+  /employer/pay-statement:
+    post:
+      operationId: getPayStatements
+      summary: Get pay statements for one or more payments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      payment_id:
+                        type: string
+      responses:
+        '200':
+          description: Pay statement responses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  responses:
+                    type: array
+                    items:
+                      type: object
+  /employer/benefits:
+    get:
+      operationId: listBenefits
+      summary: List company benefits
+      responses:
+        '200':
+          description: Benefits list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CompanyBenefit'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Finch access token
+  schemas:
+    Paging:
+      type: object
+      properties:
+        count:
+          type: integer
+        offset:
+          type: integer
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+        legal_name:
+          type: string
+        entity:
+          type: object
+          properties:
+            type:
+              type: string
+            subtype:
+              type: string
+        ein:
+          type: string
+        primary_email:
+          type: string
+        primary_phone_number:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        locations:
+          type: array
+          items:
+            type: object
+        accounts:
+          type: array
+          items:
+            type: object
+    IndividualSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        manager:
+          type: object
+          properties:
+            id:
+              type: string
+        department:
+          type: object
+          properties:
+            name:
+              type: string
+        is_active:
+          type: boolean
+    Individual:
+      type: object
+      properties:
+        individual_id:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            preferred_name:
+              type: string
+            dob:
+              type: string
+            gender:
+              type: string
+            ethnicity:
+              type: string
+            ssn:
+              type: string
+            emails:
+              type: array
+              items:
+                type: object
+            phone_numbers:
+              type: array
+              items:
+                type: object
+            residence:
+              type: object
+    Employment:
+      type: object
+      properties:
+        individual_id:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            title:
+              type: string
+            manager:
+              type: object
+            department:
+              type: object
+            employment:
+              type: object
+              properties:
+                type:
+                  type: string
+                subtype:
+                  type: string
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+            is_active:
+              type: boolean
+            income:
+              type: object
+            location:
+              type: object
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        pay_period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+        pay_date:
+          type: string
+          format: date
+        debit_date:
+          type: string
+          format: date
+        company_debit:
+          type: object
+        gross_pay:
+          type: object
+        net_pay:
+          type: object
+        employer_taxes:
+          type: object
+        employee_taxes:
+          type: object
+        individual_ids:
+          type: array
+          items:
+            type: string
+    CompanyBenefit:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
