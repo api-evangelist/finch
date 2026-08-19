@@ -1,0 +1,683 @@
+{
+  "item": [
+    {
+      "id": "03aa8a4e-e5bc-4c62-b77a-2e31bfe3ee81",
+      "name": "Employer",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec41b729-64c5-492f-afe9-2443d7636eb4",
+          "name": "Get connected company information",
+          "request": {
+            "name": "Get connected company information",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "company"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed889587-7c4e-4a4a-846c-f027b74d1830",
+              "name": "Company record",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "company"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"legal_name\": \"string\",\n  \"entity\": {\n    \"type\": \"string\",\n    \"subtype\": \"string\"\n  },\n  \"ein\": \"string\",\n  \"primary_email\": \"string\",\n  \"primary_phone_number\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "86402f94-3f68-4f6e-b238-9029e3ea17f2",
+          "name": "List employees in the company directory",
+          "request": {
+            "name": "List employees in the company directory",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "directory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "95587895-8c34-4117-9ec8-b0da242fe8b3",
+              "name": "Paginated directory",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "directory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paging\": {\n    \"count\": 1060,\n    \"offset\": 7965\n  },\n  \"individuals\": [\n    {\n      \"id\": \"string\",\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\",\n      \"manager\": {\n        \"id\": \"string\"\n      },\n      \"department\": {\n        \"name\": \"string\"\n      },\n      \"is_active\": false\n    },\n    {\n      \"id\": \"string\",\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\",\n      \"manager\": {\n        \"id\": \"string\"\n      },\n      \"department\": {\n        \"name\": \"string\"\n      },\n      \"is_active\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "23b526ae-1700-436e-9c9e-576c26deb118",
+          "name": "Get individual records (PII)",
+          "request": {
+            "name": "Get individual records (PII)",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "individual"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requests\": [\n    {\n      \"individual_id\": \"<string>\"\n    },\n    {\n      \"individual_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2f49a312-f895-4a7c-9497-24eebfe12867",
+              "name": "Individual records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "individual"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requests\": [\n    {\n      \"individual_id\": \"<string>\"\n    },\n    {\n      \"individual_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"responses\": [\n    {\n      \"individual_id\": \"string\",\n      \"body\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"preferred_name\": \"string\",\n        \"dob\": \"string\",\n        \"gender\": \"string\",\n        \"ethnicity\": \"string\",\n        \"ssn\": \"string\",\n        \"residence\": {}\n      }\n    },\n    {\n      \"individual_id\": \"string\",\n      \"body\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"preferred_name\": \"string\",\n        \"dob\": \"string\",\n        \"gender\": \"string\",\n        \"ethnicity\": \"string\",\n        \"ssn\": \"string\",\n        \"residence\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b31e9042-b2d4-4515-a4a3-3b50337640c2",
+          "name": "Get employment records",
+          "request": {
+            "name": "Get employment records",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "employment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requests\": [\n    {\n      \"individual_id\": \"<string>\"\n    },\n    {\n      \"individual_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b991fa70-2e4f-4b83-92c7-9d38caccc45e",
+              "name": "Employment records",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "employment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requests\": [\n    {\n      \"individual_id\": \"<string>\"\n    },\n    {\n      \"individual_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"responses\": [\n    {\n      \"individual_id\": \"string\",\n      \"body\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"title\": \"string\",\n        \"manager\": {},\n        \"department\": {},\n        \"employment\": {\n          \"type\": \"string\",\n          \"subtype\": \"string\"\n        },\n        \"start_date\": \"1980-02-01\",\n        \"end_date\": \"2017-11-30\",\n        \"is_active\": false,\n        \"income\": {},\n        \"location\": {}\n      }\n    },\n    {\n      \"individual_id\": \"string\",\n      \"body\": {\n        \"id\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"title\": \"string\",\n        \"manager\": {},\n        \"department\": {},\n        \"employment\": {\n          \"type\": \"string\",\n          \"subtype\": \"string\"\n        },\n        \"start_date\": \"1957-10-10\",\n        \"end_date\": \"1996-07-12\",\n        \"is_active\": false,\n        \"income\": {},\n        \"location\": {}\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8f4a8363-9b6a-46d0-9d34-5852b02b79c1",
+          "name": "List company payments (pay runs)",
+          "request": {
+            "name": "List company payments (pay runs)",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "payment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_date",
+                  "value": "<date>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end_date",
+                  "value": "<date>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "44eb3405-0a42-4d6e-86e0-fe191e118090",
+              "name": "Payments list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "payment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_date",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "end_date",
+                      "value": "<date>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payments\": [\n    {\n      \"id\": \"string\",\n      \"pay_period\": {\n        \"start_date\": \"1958-07-28\",\n        \"end_date\": \"1982-03-06\"\n      },\n      \"pay_date\": \"1977-06-13\",\n      \"debit_date\": \"1988-12-10\",\n      \"company_debit\": {},\n      \"gross_pay\": {},\n      \"net_pay\": {},\n      \"employer_taxes\": {},\n      \"employee_taxes\": {},\n      \"individual_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"pay_period\": {\n        \"start_date\": \"1987-01-12\",\n        \"end_date\": \"2017-03-10\"\n      },\n      \"pay_date\": \"1976-04-27\",\n      \"debit_date\": \"1986-08-12\",\n      \"company_debit\": {},\n      \"gross_pay\": {},\n      \"net_pay\": {},\n      \"employer_taxes\": {},\n      \"employee_taxes\": {},\n      \"individual_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a68a1d05-5dd7-4f9e-af59-e2a6f9b3664a",
+          "name": "Get pay statements for one or more payments",
+          "request": {
+            "name": "Get pay statements for one or more payments",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "pay-statement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requests\": [\n    {\n      \"payment_id\": \"<string>\"\n    },\n    {\n      \"payment_id\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "90599ccb-c723-4035-93e4-5aad37ad398b",
+              "name": "Pay statement responses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "pay-statement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"requests\": [\n    {\n      \"payment_id\": \"<string>\"\n    },\n    {\n      \"payment_id\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55720813-b3c3-42d6-8cdf-565122a15e74",
+          "name": "List company benefits",
+          "request": {
+            "name": "List company benefits",
+            "description": {},
+            "url": {
+              "path": [
+                "employer",
+                "benefits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a51cee12-4b0d-45f5-a7b0-094fbe9bc2ef",
+              "name": "Benefits list",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "employer",
+                    "benefits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"benefit_id\": \"string\",\n    \"type\": \"string\",\n    \"description\": \"string\",\n    \"frequency\": \"string\"\n  },\n  {\n    \"benefit_id\": \"string\",\n    \"type\": \"string\",\n    \"description\": \"string\",\n    \"frequency\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tryfinch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3fad0b99-4015-4657-bd74-cd766709a783",
+    "name": "Finch Auth Employer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Finch is a unified employment API that lets developers integrate with HRIS, payroll, and benefits systems through a single interface. The API exposes Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources, plus Sandbox endpoints for testing.\n\nContact Support:\n Name: Finch",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,128 @@
+# Finch
+
+## Docs
+
+- [Quickstart](https://developer.tryfinch.com/how-finch-works/quickstart.md): This API Quickstart guide will help you send your first request to Finch, the unified API for HR and payroll.
+- [What is Finch?](https://developer.tryfinch.com/how-finch-works/finch-overview.md): The Finch API powers integrations to employment systems through a single, standardized data model.
+- [How the Finch API is organized](https://developer.tryfinch.com/how-finch-works/data-model.md): Finch's API data model normalizes payroll, HR, and benefits data from 250+ providers. Walk through the core entities and how they connect in one map.
+- [Connect an Employer](https://developer.tryfinch.com/how-finch-works/finch-connect.md): Finch Connect is an embedded onboarding flow that enables employers to connect their HR or payroll system to your app.
+- [Unified API Glossary](https://developer.tryfinch.com/how-finch-works/unified-employment-api-glossary.md): Use this glossary to familiarize yourself with terminology used in Finch's documentation and API reference.
+- [Integration Types](https://developer.tryfinch.com/integrations/integration-types.md): Finch automated integrations sync data from HR and payroll providers every 24 hours. For our assisted integrations, data is refreshed every 7 days.
+- [Provider Network](https://developer.tryfinch.com/integrations/providers.md): Search 250+ supported HRIS and payroll integrations. See data refresh speeds, supported products, and integration types for each provider.
+- [Field Support](https://developer.tryfinch.com/integrations/field-support.md): Explore and compare field support across integrations.
+- [Provider Setup Instructions](https://developer.tryfinch.com/integrations/provider-setup.md): Learn about provider-specific instructions required for initial integration setup and deductions setup.
+- [Organization](https://developer.tryfinch.com/products/organization/Overview.md): Read company, directory, individual, and employment data from an employer's HRIS or payroll system through Finch's four Organization API endpoints.
+- [Payroll](https://developer.tryfinch.com/products/payroll/Overview.md): Read company pay runs, employee pay statements, and pay groups from an employer's payroll system through Finch's Payroll API endpoints.
+- [Deductions](https://developer.tryfinch.com/products/deductions/Overview.md): Read and write payroll deductions and contributions across providers with Finch's Deductions API — manage 401(k), HSA, FSA, and other benefit deductions.
+- [Benefits](https://developer.tryfinch.com/products/benefits/Overview.md): Read benefit plans, employee enrollments, and covered dependents from an employer's benefits administration system with Finch's Benefits APIs.
+- [Documents](https://developer.tryfinch.com/products/documents/Overview.md): Read structured data from employee tax documents in HR and payroll systems with Finch's Documents API. In beta with support for W-4 forms.
+- [Implementation with Finch](https://developer.tryfinch.com/implementation-guide/go-live-checklist.md): Finch's Implementation Program is designed to take you from your first API call to a production-ready integration. The resources in this guide were developed by Finch's Implementation Engineering team based on best practices and experience working with hundreds of developers. The best way to build w…
+- [Create a Finch Developer Account](https://developer.tryfinch.com/implementation-guide/Connect/Create-Account.md): Create your Finch Developer Account, recieve your application credentials, and pilot how Finch works in our sandbox environment.
+- [Create a Finch Connect Session](https://developer.tryfinch.com/implementation-guide/Connect/Set-Up-Finch-Connect.md): Set up Finch Connect to collect consent from your customers and begin syncing data from their HR or payroll system.
+- [Retrieve Access Token](https://developer.tryfinch.com/implementation-guide/Connect/Retrieve-Access-Token.md): In this guide, you’ll exchange the authorization code for an access token. Access tokens are required for making API requests to Finch endpoints.
+- [Environments](https://developer.tryfinch.com/implementation-guide/Test/Environments.md): Choose between Finch Sandbox, Provider Sandbox, and Development for testing. Compare connection limits, assisted support, and provider availability per environment.
+- [Finch Sandbox](https://developer.tryfinch.com/implementation-guide/Test/Finch-Sandbox.md): Test automated and assisted integrations with mock connections. Use sandbox API endpoints to configure mock data and test scenarios before going live.
+- [Provider Sandboxes](https://developer.tryfinch.com/implementation-guide/Test/Provider-Sandboxes.md): Use Provider Sandboxes to test up to five connections with live providers for free. Test with demo accounts or trial accounts that you create in the provider system.
+- [Backend Security](https://developer.tryfinch.com/implementation-guide/Backend-Application/Backend-Security.md): Finch takes security seriously, so we require a backend server to manage all requests and responses to and from Finch APIs. Once the connection has been created via Finch Connect, you can obtain an `access_token` which will be used to call the Finch APIs. We offer several [backend SDKs](/developer-r…
+- [Store Tokens](https://developer.tryfinch.com/implementation-guide/Backend-Application/Store-Tokens.md): ***Finch requires developers to store tokens on the backend server for improved security controls***. To reduce the likelihood of unitentional exposure of employer access tokens or other private information, you'll need to ensure all access tokens are stored securely.
+- [Disconnect Connections](https://developer.tryfinch.com/implementation-guide/Backend-Application/Disconnect-Connections.md): Learn how to disconnect an entire connection or remove specific entities from a connection.
+- [Mitigate Errors](https://developer.tryfinch.com/implementation-guide/Backend-Application/Mitigate-Errors.md): Identify and handle Finch API responses and errors — null values, 202 responses, server errors, reauthentication errors, and rate limit errors — with mitigation steps for each.
+- [Monitor Usage](https://developer.tryfinch.com/implementation-guide/Backend-Application/Monitor-Usage.md): In this guide, you'll find best practices for monitoring your application's usage of Finch to identify patterns and potential issues.
+- [Control Access (Optional)](https://developer.tryfinch.com/implementation-guide/Backend-Application/Control-Access.md): Learn how to control data access within multi-tenancy applications through role-based access control (RBAC) or other authorization methods.
+- [Manage Connections](https://developer.tryfinch.com/implementation-guide/Backend-Application/Manage-Connections.md): In this guide, you’ll learn how to define and manage multi-account, multi-provider, and multi-entity connections based on your customers’ needs.
+- [Read Organization and Payroll Data](https://developer.tryfinch.com/implementation-guide/API-Calls/Read-Data.md): In this guide, you'll learn how to read data from Finch's company, directory, individual, employment, payment, and pay statement API endpoints.
+- [Batch Requests](https://developer.tryfinch.com/implementation-guide/API-Calls/Batch-Requests.md): Batch multiple IDs into a single request to Finch's individual, employment, pay-statement, and deductions endpoints to cut API calls and rate limit risk.
+- [Write Deductions](https://developer.tryfinch.com/implementation-guide/API-Calls/Write-Data.md): In this guide, you'll learn how to write deduction and contribution changes to Finch's deductions API endpoints.
+- [Email Forwarding](https://developer.tryfinch.com/implementation-guide/Integration-Preparation/Email-Forwarding.md): Set up email forwarding to ensure successful authentication with providers.
+- [Manage Integrations](https://developer.tryfinch.com/implementation-guide/Integration-Preparation/Manage-Integrations.md): Customize the list of Providers your customers see in Finch Connect. Validate field support for each provider you plan to use, and disable any that don't fit your use case.
+- [Configure Auth Methods](https://developer.tryfinch.com/implementation-guide/Integration-Preparation/Configure-Auth-Methods.md): Learn more about the four authentication methods offered by Finch -- OAuth, Credentials, API token, and Assisted.
+- [Security Reviews](https://developer.tryfinch.com/implementation-guide/Integration-Preparation/Security-Reviews.md): Some providers, including Gusto and TriNet, require a security review or other one-time setup before you can go live with them. See [Provider Setup Instructions](/integrations/provider-setup) for which providers require this and what's involved.
+- [Increase Employer Adoption](https://developer.tryfinch.com/implementation-guide/Deploy-and-Manage/Increase-Employer-Adoption.md): Best practices for improving employer completion rates in Finch Connect through in-app messaging, UI defaults, and re-engagement at key decision points.
+- [Get support](https://developer.tryfinch.com/implementation-guide/Deploy-and-Manage/Support.md): Reach Finch Technical Support via email, Slack, or the support portal. Include request_id and other identifiers in your ticket for faster, accurate responses.
+- [API Changes and Updates](https://developer.tryfinch.com/developer-resources/api-changes.md): Keep track of changes and upgrades to the Finch API
+- [SDKs](https://developer.tryfinch.com/developer-resources/SDKs.md): Explore our frontend and backend SDK repositories. Finch supports SDKs in JavaScript, React, Node, Python, Java, Kotlin, Go, and Ruby.
+- [MCP](https://developer.tryfinch.com/developer-resources/Finch-MCP-Server.md): Use the Finch MCP Server to enable natural language access to the Finch API via large language models (LLMs).
+- [Build or audit a Finch integration with AI agents](https://developer.tryfinch.com/developer-resources/Build-or-Audit-with-AI.md): Finch Integration Skills guide an AI agent through building a new Finch integration or auditing an existing one — answer questions about your stack and get reviewable code, or point the agent at your repo and get a findings report.
+- [Webhooks](https://developer.tryfinch.com/developer-resources/Webhooks.md): Finch sends account update, job completion, and data change events via webhook. Register an endpoint in the Developer Dashboard to get your webhook secret.
+- [Request Forwarding](https://developer.tryfinch.com/developer-resources/Request-Forwarding.md): Finch Request Forwarding is a passthrough API feature that enables you to issue raw requests directly against an employment system’s API.
+- [Data Access Controls](https://developer.tryfinch.com/developer-resources/Data-Access-Controls.md): Learn how to disable fields from API responses.
+- [Data Syncs](https://developer.tryfinch.com/developer-resources/Data-Syncs.md): Learn how Finch syncs data after an employer connects and how you can verify the freshness and scope of the data you receive.
+- [Reauthentication](https://developer.tryfinch.com/developer-resources/Reauthentication.md): Reauthenticate a connection after Finch returns a 401 reauthenticate_user error. Covers multi-entity connections, employee permissions, and scope updates.
+- [Reconcile Employees](https://developer.tryfinch.com/developer-resources/Reconcile-Employees.md): Learn how to reconcile employee profiles in Finch using PII such as full name and date of birth (DOB), email, or SSN.
+- [Enable Social Security Number (SSN) Field](https://developer.tryfinch.com/developer-resources/Enable-SSN-Field.md): In this guide, you'll learn how to enable the social security number (SSN) field in Finch. The SSN field must be explicitly authorized by the employer.
+- [Calculate Year-To-Date (YTD) Wages](https://developer.tryfinch.com/developer-resources/Calculating-YTD-Wages.md): Learn how to calculate year-to-date (YTD) gross wages for individual employees using data returned from Finch Organization endpoints.
+- [W-2 Box 1](https://developer.tryfinch.com/developer-resources/Calculating-W2-Box1-value.md): Finch's data can be used to run an individual's W-2 Box 1 calculation using data returned from Finch Pay endpoints.
+- [Pay Statement Type Classification](https://developer.tryfinch.com/developer-resources/Pay-Statement-Type-Classification.md): Learn how to classify Contributions and Deductions retrieved from the Finch Payroll endpoints.
+- [Pay Statement Items & Rules](https://developer.tryfinch.com/developer-resources/Pay-Statement-Items-Rules.md): Assign labels, categories, and metadata to pay statement items based on custom rules.
+- [Tiered Employer Matching](https://developer.tryfinch.com/developer-resources/Tiered-Employer-Matching.md): Learn how to manage tiered employer contributions (employer match) with Finch.
+- [Finch Developer FAQs](https://developer.tryfinch.com/developer-resources/Developer-FAQs.md): Explore Finch developers' most frequently asked questions (FAQ) and answers. Topics include Products & Integrations, API & Data Model, Security, and more.
+- [Company](https://developer.tryfinch.com/api-reference/organization/company.md): Read basic company data
+- [Directory](https://developer.tryfinch.com/api-reference/organization/directory.md): Read company directory and organization structure
+- [Individual](https://developer.tryfinch.com/api-reference/organization/individual.md): Read individual data, excluding income and employment data
+- [Employment](https://developer.tryfinch.com/api-reference/organization/employment.md): Read individual employment and income data
+- [Payment](https://developer.tryfinch.com/api-reference/payroll/payment.md): Read payroll and contractor related payments by the company.
+- [Pay Statement](https://developer.tryfinch.com/api-reference/payroll/pay-statement.md): Read detailed pay statements for each individual.
+- [Pay Statement Item](https://developer.tryfinch.com/api-reference/payroll/get-pay-statement-items.md): Retrieve a list of detailed pay statement items for the access token's connection account.
+- [Create Rule](https://developer.tryfinch.com/api-reference/payroll/create-rule.md): Custom rules can be created to associate specific attributes to pay statement items depending on the use case. For example, pay statement items that meet certain conditions can be labeled as a pre-tax 401k. This metadata can be retrieved where pay statement item information is available.
+- [Get Rules](https://developer.tryfinch.com/api-reference/payroll/get-rules.md): List all rules of a connection account.
+- [Update Rule](https://developer.tryfinch.com/api-reference/payroll/update-rule.md): Update a rule for a pay statement item.
+- [Delete Rule](https://developer.tryfinch.com/api-reference/payroll/delete-rule.md): Delete a rule for a pay statement item.
+- [Get All Pay Groups](https://developer.tryfinch.com/api-reference/payroll/get-pay-groups.md): Read company pay groups and frequencies
+- [Get Pay Group](https://developer.tryfinch.com/api-reference/payroll/get-pay-group.md): Read information from a single pay group
+- [Ledger Items](https://developer.tryfinch.com/api-reference/payroll/get-ledger-items.md): Read the ledger entries for one or more payments.
+- [Get All Deductions](https://developer.tryfinch.com/api-reference/deductions/get-all-deductions.md): List all company-wide deductions and contributions.
+- [Register Deduction](https://developer.tryfinch.com/api-reference/deductions/register-deduction.md): Register existing benefits from the customer on the provider, on Finch's end. Please use the `/provider` endpoint to view available types for each provider.
+- [Create Deduction](https://developer.tryfinch.com/api-reference/deductions/create-deduction.md): Creates a new company-wide deduction or contribution. Please use the `/providers` endpoint to view available types for each provider.
+- [Get Deduction](https://developer.tryfinch.com/api-reference/deductions/get-deduction.md): Lists deductions and contributions information for a given item
+- [Update Deduction](https://developer.tryfinch.com/api-reference/deductions/update-deduction.md): Updates an existing company-wide deduction or contribution
+- [Get Enrolled Individuals](https://developer.tryfinch.com/api-reference/deductions/get-enrolled-individuals.md): Lists individuals currently enrolled in a given deduction.
+- [Get Deductions for Individuals](https://developer.tryfinch.com/api-reference/deductions/get-deductions-for-individuals.md): Get enrollment information for the given individuals.
+- [Enroll Individuals in Deductions](https://developer.tryfinch.com/api-reference/deductions/enroll-individuals-in-deductions.md): Enroll an individual into a deduction or contribution. This is an overwrite operation. If the employee is already enrolled, the enrollment amounts will be adjusted. Making the same request multiple times will not create new enrollments, but will continue to set the state of the existing enrollment.
+- [Unenroll Individuals from Deductions](https://developer.tryfinch.com/api-reference/deductions/unenroll-individuals-from-deductions.md): Unenroll individuals from a deduction or contribution
+- [List Plans](https://developer.tryfinch.com/api-reference/benefits/list-plans.md): **Beta:** This endpoint is in beta and may change. Read the benefit plans offered by the company, including carrier, coverage tiers, and deduction codes.
+- [Get Plan](https://developer.tryfinch.com/api-reference/benefits/get-plan.md): **Beta:** This endpoint is in beta and may change. Read a single benefit plan by its Finch ID.
+- [List Enrollments](https://developer.tryfinch.com/api-reference/benefits/list-plan-enrollments.md): **Beta:** This endpoint is in beta and may change. Read individuals' enrollments in the company's benefit plans, including coverage dates and contributions.
+- [Get Enrollments](https://developer.tryfinch.com/api-reference/benefits/get-plan-enrollments.md): **Beta:** This endpoint is in beta and may change. Read enrollments by Finch ID. A maximum of 50 enrollments can be requested at once.
+- [List Dependents](https://developer.tryfinch.com/api-reference/benefits/list-plan-dependents.md): **Beta:** This endpoint is in beta and may change. Read the dependents covered under the benefit plans of the company, including their coverage and enrollments.
+- [Get Dependents](https://developer.tryfinch.com/api-reference/benefits/get-plan-dependents.md): **Beta:** This endpoint is in beta and may change. Read dependents by Finch ID. A maximum of 50 dependents can be requested at once.
+- [List Documents](https://developer.tryfinch.com/api-reference/documents/get-documents.md): **Beta:** This endpoint is in beta and may change. Retrieve a list of company-wide documents.
+- [Get Document](https://developer.tryfinch.com/api-reference/documents/get-document.md): **Beta:** This endpoint is in beta and may change. Retrieve details of a specific document by its ID.
+- [Create a new connect session](https://developer.tryfinch.com/api-reference/connect/new-session.md): Create a new connect session for an employer
+- [Create a new Connect session for reauthentication](https://developer.tryfinch.com/api-reference/connect/reauthenticate-session.md): Create a new Connect session for reauthenticating an existing connection
+- [Create Access Token](https://developer.tryfinch.com/api-reference/management/create-access-token.md): Exchange the authorization code for an access token
+- [Providers](https://developer.tryfinch.com/api-reference/management/providers.md): Return details on all available payroll and HR systems.
+- [Introspect](https://developer.tryfinch.com/api-reference/management/introspect.md): Read account information associated with an `access_token`
+- [Disconnect](https://developer.tryfinch.com/api-reference/management/disconnect.md): Disconnect one or more `access_token`s from your application.
+- [Disconnect Entity](https://developer.tryfinch.com/api-reference/management/disconnect-entity.md): Disconnect entity(s) from a connection without affecting other entities associated with the same connection.
+- [Request Forwarding](https://developer.tryfinch.com/api-reference/management/request-forwarding.md): The Forward API allows you to make direct requests to an employment system. If Finch's unified API doesn't have a data model that cleanly fits your needs, then Forward allows you to push or pull data models directly against an integration's API.
+- [List All Automated Jobs](https://developer.tryfinch.com/api-reference/management/list-all-automated-jobs.md): Get all automated jobs. Automated jobs are completed by a machine. By default, jobs are sorted in descending order by submission time. For scheduled jobs such as data syncs, only the next scheduled job is shown.
+- [Enqueue a New Automated Job](https://developer.tryfinch.com/api-reference/management/enqueue-a-new-automated-job.md): Enqueue an automated job.
+- [Retrieve an Automated Job](https://developer.tryfinch.com/api-reference/management/retrieve-an-automated-job.md): Get an automated job by `job_id`.
+- [Retrieve a Manual Job](https://developer.tryfinch.com/api-reference/management/retrieve-a-manual-job.md): Check the status and outcome of a job by `job_id`. This includes all deductions jobs including those for both automated and assisted integrations.
+- [Create a new Sandbox Connection](https://developer.tryfinch.com/api-reference/sandbox/create-sandbox-connection.md): Create a new connection (new company/provider pair) with a new account
+- [Create a new sandbox account](https://developer.tryfinch.com/api-reference/sandbox/create-sandbox-account.md): Create a new account for an existing connection (company/provider pair)
+- [Update a sandbox account](https://developer.tryfinch.com/api-reference/sandbox/update-sandbox-account.md): Update an existing sandbox account. Change the connection status to understand how the Finch API responds.
+- [Get configurations for sandbox jobs](https://developer.tryfinch.com/api-reference/sandbox/get-sandbox-jobs-configuration.md)
+- [Update configurations for sandbox jobs](https://developer.tryfinch.com/api-reference/sandbox/update-sandbox-jobs-configuration.md)
+- [Add a new sandbox payment](https://developer.tryfinch.com/api-reference/sandbox/create-sandbox-payment.md)
+- [Update sandbox individual](https://developer.tryfinch.com/api-reference/sandbox/update-sandbox-individual.md)
+- [Update sandbox employment](https://developer.tryfinch.com/api-reference/sandbox/update-sandbox-employment.md)
+- [Add new individuals to a sandbox company](https://developer.tryfinch.com/api-reference/sandbox/create-sandbox-employee.md)
+- [Update a sandbox company's data](https://developer.tryfinch.com/api-reference/sandbox/update-sandbox-company.md)
+- [Enqueue a new sandbox job](https://developer.tryfinch.com/api-reference/sandbox/refresh-job.md)
+- [Permissions](https://developer.tryfinch.com/api-reference/development-guides/Permissions.md)
+- [Headers](https://developer.tryfinch.com/api-reference/development-guides/Headers.md)
+- [API Versioning](https://developer.tryfinch.com/api-reference/development-guides/Versioning.md)
+- [Rate Limits](https://developer.tryfinch.com/api-reference/development-guides/Rate-Limits.md): In this guide, you'll learn about total rate limits for Finch, rate limits for specific IP Addresses, and how to handle rate limit errors.
+- [Handling API Responses](https://developer.tryfinch.com/api-reference/development-guides/Handling-API-Responses.md): Handle null values and 202 responses from the Finch API — why each occurs and the retry, backoff, and null-check behavior your application should implement.
+- [Error Handling](https://developer.tryfinch.com/api-reference/development-guides/errors/Error-Handling.md)
+- [Error Types](https://developer.tryfinch.com/api-reference/development-guides/errors/Error-Types.md)
+
+## OpenAPI Specs
+
+- [openapi](https://developer.tryfinch.com/openapi.json)
+
+## Optional
+
+- [Changelog](https://developer.tryfinch.com/changelog)
+- [API Status](https://status.tryfinch.com)

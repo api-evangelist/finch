@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Finch Auth Connect API",
+    "version": "2024-04-01"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a Finch Connect session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tryfinch.com/connect/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initializes the Connect authorization flow for an end-user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,142 @@
+{
+  "item": [
+    {
+      "id": "831c7151-8baf-43ce-8dd1-4b6034b3b71c",
+      "name": "Connect",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d4afc64e-4140-40be-9b03-e7a45c2c79df",
+          "name": "Create a Finch Connect session",
+          "request": {
+            "name": "Create a Finch Connect session",
+            "description": {
+              "content": "Initializes the Connect authorization flow for an end-user.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connect",
+                "sessions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"customer_email\": \"<string>\",\n  \"products\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redirect_uri\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f778c801-6ec8-4fe0-ad55-6ace00973a5b",
+              "name": "Connect session created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connect",
+                    "sessions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"customer_name\": \"<string>\",\n  \"customer_email\": \"<string>\",\n  \"products\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redirect_uri\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"session_id\": \"string\",\n  \"connect_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tryfinch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "bfb5759d-2108-4806-baf3-f11826ae3b18",
+    "name": "Finch Auth Connect API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Finch is a unified employment API that lets developers integrate with HRIS, payroll, and benefits systems through a single interface. The API exposes Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources, plus Sandbox endpoints for testing.\n\nContact Support:\n Name: Finch",
+      "type": "text/plain"
+    }
+  }
+}

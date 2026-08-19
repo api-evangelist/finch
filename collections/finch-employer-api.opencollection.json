@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Finch Auth Employer API",
+    "version": "2024-04-01"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get connected company information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tryfinch.com/employer/company"
+          },
+          "docs": "Get connected company information"
+        },
+        {
+          "info": {
+            "name": "List employees in the company directory",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tryfinch.com/employer/directory",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List employees in the company directory"
+        },
+        {
+          "info": {
+            "name": "Get individual records (PII)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tryfinch.com/employer/individual",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get individual records (PII)"
+        },
+        {
+          "info": {
+            "name": "Get employment records",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tryfinch.com/employer/employment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get employment records"
+        },
+        {
+          "info": {
+            "name": "List company payments (pay runs)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tryfinch.com/employer/payment",
+            "params": [
+              {
+                "name": "start_date",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "end_date",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List company payments (pay runs)"
+        },
+        {
+          "info": {
+            "name": "Get pay statements for one or more payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tryfinch.com/employer/pay-statement",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get pay statements for one or more payments"
+        },
+        {
+          "info": {
+            "name": "List company benefits",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tryfinch.com/employer/benefits"
+          },
+          "docs": "List company benefits"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
