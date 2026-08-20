@@ -28,6 +28,14 @@ tags:
   - Payroll
   - Benefits
   - HR
+  - Unified-API
+  - Workforce
+tags_raw:
+  - Employment
+  - HRIS
+  - Payroll
+  - Benefits
+  - HR
   - Unified API
   - Workforce
 url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/apis.yml
@@ -41,6 +49,8 @@ apis:
   humanURL: https://www.tryfinch.com/
   baseURL: https://api.tryfinch.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
