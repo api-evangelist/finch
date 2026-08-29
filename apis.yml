@@ -6,6 +6,18 @@ description: >-
   payments, pay statements, and benefits across hundreds of providers (ADP, Gusto, Paylocity, Workday, BambooHR,
   Rippling, Justworks, TriNet, and more). Finch Connect handles end-user authorization via OAuth.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
