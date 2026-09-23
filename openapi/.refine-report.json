@@ -1,9 +1,7 @@
 {
   "provider": "finch",
   "sources": [
-    "finch-auth-api-openapi.yml",
-    "finch-connect-api-openapi.yml",
-    "finch-employer-api-openapi.yml"
+    "_original/finch-openapi.yml"
   ],
   "outputs": [
     "finch-auth-api-openapi.yml",
@@ -13,6 +11,26 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "finch-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "finch-openapi.yml: tagged paths POST /connect/sessions -> Connect",
+    "finch-openapi.yml: tagged paths POST /auth/token -> Auth",
+    "finch-openapi.yml: tagged paths GET /employer/company -> Employer",
+    "finch-openapi.yml: tagged paths GET /employer/directory -> Employer",
+    "finch-openapi.yml: tagged paths POST /employer/individual -> Employer",
+    "finch-openapi.yml: tagged paths POST /employer/employment -> Employer",
+    "finch-openapi.yml: tagged paths GET /employer/payment -> Employer",
+    "finch-openapi.yml: tagged paths POST /employer/pay-statement -> Employer",
+    "finch-openapi.yml: tagged paths GET /employer/benefits -> Employer",
+    "finch-openapi.yml: declared missing tag: Auth",
+    "finch-openapi.yml: declared missing tag: Connect",
+    "finch-openapi.yml: declared missing tag: Employer",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "finch-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "finch-connect-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "finch-employer-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
