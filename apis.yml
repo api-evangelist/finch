@@ -41,8 +41,9 @@ tags:
   - Payroll
   - Benefits
   - Human Resources
-  - Unified-API
+  - Unified API
   - Workforce
+  - Integration
 tags_raw:
   - Employment
   - HRIS
@@ -51,6 +52,8 @@ tags_raw:
   - HR
   - Unified API
   - Workforce
+  - Unified-API
+  - Integration
 url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-05-19'

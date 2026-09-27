@@ -198,58 +198,6 @@ paths:
       - Employer
 components:
   schemas:
-    Paging:
-      type: object
-      properties:
-        count:
-          type: integer
-        offset:
-          type: integer
-    Payment:
-      type: object
-      properties:
-        id:
-          type: string
-        pay_period:
-          type: object
-          properties:
-            start_date:
-              type: string
-              format: date
-            end_date:
-              type: string
-              format: date
-        pay_date:
-          type: string
-          format: date
-        debit_date:
-          type: string
-          format: date
-        company_debit:
-          type: object
-        gross_pay:
-          type: object
-        net_pay:
-          type: object
-        employer_taxes:
-          type: object
-        employee_taxes:
-          type: object
-        individual_ids:
-          type: array
-          items:
-            type: string
-    CompanyBenefit:
-      type: object
-      properties:
-        benefit_id:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        frequency:
-          type: string
     Company:
       type: object
       properties:
@@ -305,6 +253,47 @@ components:
               type: string
         is_active:
           type: boolean
+    Paging:
+      type: object
+      properties:
+        count:
+          type: integer
+        offset:
+          type: integer
+    Individual:
+      type: object
+      properties:
+        individual_id:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            preferred_name:
+              type: string
+            dob:
+              type: string
+            gender:
+              type: string
+            ethnicity:
+              type: string
+            ssn:
+              type: string
+            emails:
+              type: array
+              items:
+                type: object
+            phone_numbers:
+              type: array
+              items:
+                type: object
+            residence:
+              type: object
     Employment:
       type: object
       properties:
@@ -344,40 +333,51 @@ components:
               type: object
             location:
               type: object
-    Individual:
+    Payment:
       type: object
       properties:
-        individual_id:
+        id:
           type: string
-        body:
+        pay_period:
           type: object
           properties:
-            id:
+            start_date:
               type: string
-            first_name:
+              format: date
+            end_date:
               type: string
-            last_name:
-              type: string
-            preferred_name:
-              type: string
-            dob:
-              type: string
-            gender:
-              type: string
-            ethnicity:
-              type: string
-            ssn:
-              type: string
-            emails:
-              type: array
-              items:
-                type: object
-            phone_numbers:
-              type: array
-              items:
-                type: object
-            residence:
-              type: object
+              format: date
+        pay_date:
+          type: string
+          format: date
+        debit_date:
+          type: string
+          format: date
+        company_debit:
+          type: object
+        gross_pay:
+          type: object
+        net_pay:
+          type: object
+        employer_taxes:
+          type: object
+        employee_taxes:
+          type: object
+        individual_ids:
+          type: array
+          items:
+            type: string
+    CompanyBenefit:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http
