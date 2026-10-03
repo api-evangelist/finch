@@ -198,68 +198,6 @@ paths:
       - Employer
 components:
   schemas:
-    Company:
-      type: object
-      properties:
-        id:
-          type: string
-        legal_name:
-          type: string
-        entity:
-          type: object
-          properties:
-            type:
-              type: string
-            subtype:
-              type: string
-        ein:
-          type: string
-        primary_email:
-          type: string
-        primary_phone_number:
-          type: string
-        departments:
-          type: array
-          items:
-            type: object
-        locations:
-          type: array
-          items:
-            type: object
-        accounts:
-          type: array
-          items:
-            type: object
-    IndividualSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        manager:
-          type: object
-          properties:
-            id:
-              type: string
-        department:
-          type: object
-          properties:
-            name:
-              type: string
-        is_active:
-          type: boolean
-    Paging:
-      type: object
-      properties:
-        count:
-          type: integer
-        offset:
-          type: integer
     Individual:
       type: object
       properties:
@@ -294,6 +232,95 @@ components:
                 type: object
             residence:
               type: object
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+        legal_name:
+          type: string
+        entity:
+          type: object
+          properties:
+            type:
+              type: string
+            subtype:
+              type: string
+        ein:
+          type: string
+        primary_email:
+          type: string
+        primary_phone_number:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        locations:
+          type: array
+          items:
+            type: object
+        accounts:
+          type: array
+          items:
+            type: object
+    Payment:
+      type: object
+      properties:
+        id:
+          type: string
+        pay_period:
+          type: object
+          properties:
+            start_date:
+              type: string
+              format: date
+            end_date:
+              type: string
+              format: date
+        pay_date:
+          type: string
+          format: date
+        debit_date:
+          type: string
+          format: date
+        company_debit:
+          type: object
+        gross_pay:
+          type: object
+        net_pay:
+          type: object
+        employer_taxes:
+          type: object
+        employee_taxes:
+          type: object
+        individual_ids:
+          type: array
+          items:
+            type: string
+    IndividualSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        manager:
+          type: object
+          properties:
+            id:
+              type: string
+        department:
+          type: object
+          properties:
+            name:
+              type: string
+        is_active:
+          type: boolean
     Employment:
       type: object
       properties:
@@ -333,40 +360,13 @@ components:
               type: object
             location:
               type: object
-    Payment:
+    Paging:
       type: object
       properties:
-        id:
-          type: string
-        pay_period:
-          type: object
-          properties:
-            start_date:
-              type: string
-              format: date
-            end_date:
-              type: string
-              format: date
-        pay_date:
-          type: string
-          format: date
-        debit_date:
-          type: string
-          format: date
-        company_debit:
-          type: object
-        gross_pay:
-          type: object
-        net_pay:
-          type: object
-        employer_taxes:
-          type: object
-        employee_taxes:
-          type: object
-        individual_ids:
-          type: array
-          items:
-            type: string
+        count:
+          type: integer
+        offset:
+          type: integer
     CompanyBenefit:
       type: object
       properties:
