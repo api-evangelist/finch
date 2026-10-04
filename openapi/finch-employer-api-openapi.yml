@@ -198,72 +198,6 @@ paths:
       - Employer
 components:
   schemas:
-    Individual:
-      type: object
-      properties:
-        individual_id:
-          type: string
-        body:
-          type: object
-          properties:
-            id:
-              type: string
-            first_name:
-              type: string
-            last_name:
-              type: string
-            preferred_name:
-              type: string
-            dob:
-              type: string
-            gender:
-              type: string
-            ethnicity:
-              type: string
-            ssn:
-              type: string
-            emails:
-              type: array
-              items:
-                type: object
-            phone_numbers:
-              type: array
-              items:
-                type: object
-            residence:
-              type: object
-    Company:
-      type: object
-      properties:
-        id:
-          type: string
-        legal_name:
-          type: string
-        entity:
-          type: object
-          properties:
-            type:
-              type: string
-            subtype:
-              type: string
-        ein:
-          type: string
-        primary_email:
-          type: string
-        primary_phone_number:
-          type: string
-        departments:
-          type: array
-          items:
-            type: object
-        locations:
-          type: array
-          items:
-            type: object
-        accounts:
-          type: array
-          items:
-            type: object
     Payment:
       type: object
       properties:
@@ -298,29 +232,6 @@ components:
           type: array
           items:
             type: string
-    IndividualSummary:
-      type: object
-      properties:
-        id:
-          type: string
-        first_name:
-          type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        manager:
-          type: object
-          properties:
-            id:
-              type: string
-        department:
-          type: object
-          properties:
-            name:
-              type: string
-        is_active:
-          type: boolean
     Employment:
       type: object
       properties:
@@ -360,6 +271,63 @@ components:
               type: object
             location:
               type: object
+    IndividualSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        manager:
+          type: object
+          properties:
+            id:
+              type: string
+        department:
+          type: object
+          properties:
+            name:
+              type: string
+        is_active:
+          type: boolean
+    Individual:
+      type: object
+      properties:
+        individual_id:
+          type: string
+        body:
+          type: object
+          properties:
+            id:
+              type: string
+            first_name:
+              type: string
+            last_name:
+              type: string
+            preferred_name:
+              type: string
+            dob:
+              type: string
+            gender:
+              type: string
+            ethnicity:
+              type: string
+            ssn:
+              type: string
+            emails:
+              type: array
+              items:
+                type: object
+            phone_numbers:
+              type: array
+              items:
+                type: object
+            residence:
+              type: object
     Paging:
       type: object
       properties:
@@ -378,6 +346,38 @@ components:
           type: string
         frequency:
           type: string
+    Company:
+      type: object
+      properties:
+        id:
+          type: string
+        legal_name:
+          type: string
+        entity:
+          type: object
+          properties:
+            type:
+              type: string
+            subtype:
+              type: string
+        ein:
+          type: string
+        primary_email:
+          type: string
+        primary_phone_number:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        locations:
+          type: array
+          items:
+            type: object
+        accounts:
+          type: array
+          items:
+            type: object
   securitySchemes:
     bearerAuth:
       type: http
