@@ -35,6 +35,10 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/finch.png
 access: 3rd-Party
 position: Consuming
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: vercel
 tags:
   - Employment
   - HRIS
@@ -44,6 +48,7 @@ tags:
   - Unified API
   - Workforce
   - Integration
+  - Employee Benefits
 tags_raw:
   - Employment
   - HRIS
@@ -54,6 +59,7 @@ tags_raw:
   - Workforce
   - Unified-API
   - Integration
+  - Employee Benefits
 url: https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-05-19'
@@ -116,6 +122,9 @@ apis:
   - type: Pricing
     url: https://www.tryfinch.com/pricing
 common:
+  - type: CapabilityMap
+    url: capabilities/finch-capability-edges.yml
+    name: Finch Business Capability Map
   - type: AgenticAccess
     url: agentic-access/finch-agentic-access.yml
   - type: TrustCenter
