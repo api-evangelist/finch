@@ -1,0 +1,27 @@
+slug: finch
+provider: Finch
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: Employer
+  spec_file: finch-employer-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.85
+  evidence: GET /employer/directory  listDirectory  List employees in the company directory; POST /employer/employment  getEmployment  Get
+    employment records; POST /employer/pay-statement  getPayStatements; GET /employer/benefits  listBenefits
+  reason: Operations read employee directory, individual PII, employment records, pay runs, pay statements
+    and company benefits from HRIS/payroll systems — this is employee record and payroll administration,
+    i.e. HR Operations Management under Human Capital Management. Benefits data is also present, which
+    is why confidence is not maximal between HR Ops and Compensation & Benefits.
