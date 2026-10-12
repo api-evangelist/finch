@@ -12,7 +12,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-abacus-hcm-isolved
   label: Abacus HCM isolved
@@ -23,7 +23,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-absolute-payroll-isolved
   label: Absolute Payroll isolved
@@ -34,7 +34,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-accountantsworld
   label: AccountantsWorld
@@ -45,7 +45,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-accupay-isolved
   label: Accupay isolved
@@ -56,7 +56,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ace-workforce-technologies-isolved
   label: Ace Workforce Technologies isolved
@@ -67,7 +67,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adams-keegan
   label: Adams Keegan
@@ -78,7 +78,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-comprehensive-services
   label: ADP Comprehensive Services
@@ -89,7 +89,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-enterprise
   label: ADP Enterprise
@@ -100,7 +100,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-run
   label: ADP Run
@@ -111,7 +111,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-teampay
   label: ADP Teampay
@@ -122,7 +122,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-totalsource
   label: ADP TotalSource
@@ -133,7 +133,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-vantage
   label: ADP Vantage
@@ -144,7 +144,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-workforce-now
   label: ADP Workforce Now
@@ -155,7 +155,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-next-gen
   label: ADP Next Gen
@@ -166,7 +166,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-advantage-payroll-services
   label: Advantage Payroll Services
@@ -177,7 +177,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-affiliated-hr-payroll-services-evolution
   label: Affiliated HR Payroll Services Evolution
@@ -188,7 +188,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-affiliated-hr-payroll-services-isolved
   label: Affiliated HR Payroll Services isolved
@@ -199,7 +199,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ahola
   label: Ahola
@@ -210,7 +210,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-alcott-hr
   label: Alcott HR
@@ -221,7 +221,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-alight
   label: Alight
@@ -232,7 +232,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-alliance-hcm
   label: Alliance HCM
@@ -243,7 +243,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-alphastaff
   label: AlphaStaff
@@ -254,7 +254,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-amcheck
   label: AmCheck
@@ -265,7 +265,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-amplify-hr
   label: Amplify HR
@@ -276,7 +276,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-apdata
   label: Apdata
@@ -287,7 +287,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-apex
   label: Apex
@@ -298,7 +298,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-aps-payroll
   label: APS Payroll
@@ -309,7 +309,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-armhr
   label: Armhr
@@ -320,7 +320,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-aspenhr
   label: AspenHR
@@ -331,7 +331,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-asset-hr
   label: Asset HR
@@ -342,7 +342,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-associated-tax-service
   label: Associated Tax Service
@@ -353,7 +353,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-asure-software
   label: Asure Software
@@ -364,7 +364,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-balance-point
   label: Balance Point
@@ -375,7 +375,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bambee
   label: Bambee
@@ -386,11 +386,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bamboohr
   label: BambooHR
-  partner: bamboohr
   partner_name: BambooHR
   category: hris
   type: contract
@@ -398,7 +397,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-baron-payroll-isolved
   label: Baron Payroll isolved
@@ -409,7 +408,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-basic
   label: BASIC
@@ -420,7 +419,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bayzat
   label: Bayzat
@@ -431,7 +430,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bbcs-payroll
   label: BBCS Payroll
@@ -442,7 +441,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bbsi
   label: BBSI
@@ -453,7 +452,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bcn-services
   label: BCN Services
@@ -464,7 +463,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bene-care
   label: Bene-Care
@@ -475,7 +474,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-big-fish-employer-services
   label: Big Fish Employer Services
@@ -486,7 +485,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-bizchecks-payroll
   label: Bizchecks Payroll
@@ -497,7 +496,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hibob
   label: HiBob
@@ -508,7 +507,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-business-online-payroll
   label: Business Online Payroll
@@ -519,7 +518,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-business-solver
   label: Business Solver
@@ -530,7 +529,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-c2
   label: C2
@@ -541,7 +540,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-candoor
   label: Candoor
@@ -552,7 +551,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ceridian-dayforce
   label: Ceridian Dayforce
@@ -563,7 +562,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ceridian-powerpay
   label: Ceridian Powerpay
@@ -574,7 +573,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-cezanne-hr
   label: Cezanne HR
@@ -585,11 +584,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-charliehr
   label: CharlieHR
-  partner: charliehr
   partner_name: CharlieHR
   category: hris
   type: contract
@@ -597,7 +595,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-charlotte-payroll
   label: Charlotte Payroll
@@ -608,7 +606,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-checkwriters
   label: Checkwriters
@@ -619,11 +617,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-clickup
   label: ClickUp
-  partner: clickup
   partner_name: ClickUp
   category: hris
   type: contract
@@ -631,11 +628,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-cmic
   label: CMiC
-  partner: cmic
   partner_name: CMiC
   category: hris
   type: contract
@@ -643,7 +639,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-coadvantage
   label: CoAdvantage
@@ -654,7 +650,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-coastal-payroll
   label: Coastal Payroll
@@ -665,7 +661,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-cognos-hr
   label: Cognos HR
@@ -676,7 +672,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-collage
   label: Collage
@@ -687,7 +683,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-common-sense-payroll
   label: Common Sense Payroll
@@ -698,7 +694,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-commonwealth-payroll-hr
   label: Commonwealth Payroll & HR
@@ -709,7 +705,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-connectpay
   label: ConnectPay
@@ -720,7 +716,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-contempo
   label: Contempo
@@ -731,7 +727,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-corporate-payroll-services
   label: Corporate Payroll Services
@@ -742,7 +738,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-costaff-hr
   label: CoStaff HR
@@ -753,7 +749,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-counter-point-hcm
   label: Counter Point HCM
@@ -764,7 +760,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-cpm-employer-services-isolved
   label: CPM Employer Services isolved
@@ -775,7 +771,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-creative-business-resources
   label: Creative Business Resources
@@ -786,7 +782,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-crescent-payroll-solutions
   label: Crescent Payroll Solutions
@@ -797,7 +793,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-criterion
   label: Criterion
@@ -808,7 +804,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-csc-paymaster
   label: CSC Paymaster
@@ -819,7 +815,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-darwinbox
   label: Darwinbox
@@ -830,7 +826,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-datis
   label: Datis
@@ -841,7 +837,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-decent
   label: Decent
@@ -852,7 +848,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-deel
   label: Deel
@@ -863,7 +859,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-deltek
   label: Deltek
@@ -874,11 +870,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-deluxe
   label: Deluxe
-  partner: deluxe
   partner_name: Deluxe
   category: hris
   type: contract
@@ -886,7 +881,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-dm-payroll-solutions
   label: DM Payroll Solutions
@@ -897,7 +892,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-dominion-payroll
   label: Dominion Payroll
@@ -908,7 +903,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-doyle-hcm
   label: Doyle HCM
@@ -919,7 +914,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ecca
   label: ECCA
@@ -930,7 +925,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ecms
   label: ECMS
@@ -941,7 +936,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-eddy
   label: Eddy
@@ -952,7 +947,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-elite-payroll-solutions
   label: Elite Payroll Solutions
@@ -963,7 +958,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ellucian
   label: Ellucian
@@ -974,7 +969,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-emcentrix
   label: EmCentrix
@@ -985,7 +980,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-emplicity
   label: Emplicity
@@ -996,7 +991,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-employdrive
   label: Employdrive
@@ -1007,7 +1002,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-employeenavigator
   label: EmployeeNavigator
@@ -1018,7 +1013,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-employer-flexible
   label: Employer Flexible
@@ -1029,11 +1024,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-employment-hero
   label: Employment Hero
-  partner: employment-hero
   partner_name: Employment Hero
   category: hris
   type: contract
@@ -1041,7 +1035,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-empower-hr
   label: EmPower HR
@@ -1052,7 +1046,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-engage-peo
   label: Engage PEO
@@ -1063,7 +1057,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-employer-services-corporation-esc
   label: Employer Services Corporation (ESC)
@@ -1074,7 +1068,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-everee
   label: Everee
@@ -1085,7 +1079,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-every-io
   label: every.io
@@ -1096,7 +1090,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-evolution-payroll-services
   label: Evolution Payroll Services
@@ -1107,7 +1101,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-excel-resources
   label: Excel Resources
@@ -1118,7 +1112,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-excelforce
   label: Excelforce
@@ -1129,7 +1123,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-extensishr
   label: ExtensisHR
@@ -1140,11 +1134,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-factorial-hr
   label: Factorial HR
-  partner: factorial-hr
   partner_name: Factorial HR
   category: hris
   type: contract
@@ -1152,7 +1145,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-fingercheck
   label: Fingercheck
@@ -1163,7 +1156,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-flock
   label: Flock
@@ -1174,11 +1167,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-freshteam
   label: Freshteam
-  partner: freshteam
   partner_name: Freshteam
   category: hris
   type: contract
@@ -1186,11 +1178,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-freshworks
   label: Freshworks
-  partner: freshworks
   partner_name: Freshworks
   category: hris
   type: contract
@@ -1198,7 +1189,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-fullstack-peo
   label: FullStack PEO
@@ -1209,7 +1200,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-gig-wage
   label: Gig Wage
@@ -1220,7 +1211,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-g-a-partners
   label: G&A Partners
@@ -1231,7 +1222,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-goco
   label: GoCo
@@ -1242,7 +1233,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-greenleaf
   label: Greenleaf
@@ -1253,7 +1244,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-greythr
   label: greytHR
@@ -1264,7 +1255,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-gtm-payroll-services-evolution
   label: GTM Payroll Services Evolution
@@ -1275,7 +1266,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-gtm-payroll-services-isolved
   label: GTM Payroll Services isolved
@@ -1286,11 +1277,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-gusto
   label: Gusto
-  partner: gusto
   partner_name: Gusto
   category: hris
   type: contract
@@ -1298,7 +1288,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-heartland
   label: Heartland
@@ -1309,7 +1299,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-helpside
   label: Helpside
@@ -1320,7 +1310,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-highflyer-hr
   label: Highflyer HR
@@ -1331,7 +1321,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-homebase
   label: Homebase
@@ -1342,7 +1332,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-horizon-payroll
   label: Horizon Payroll
@@ -1353,7 +1343,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-horizons
   label: Horizons
@@ -1364,7 +1354,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hr-butler
   label: HR Butler
@@ -1375,7 +1365,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hr-cloud
   label: HR Cloud
@@ -1386,7 +1376,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hro
   label: HRO
@@ -1397,7 +1387,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hrone
   label: HROne
@@ -1408,11 +1398,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hubstaff
   label: Hubstaff
-  partner: hubstaff
   partner_name: Hubstaff
   category: hris
   type: contract
@@ -1420,7 +1409,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-humaans
   label: Humaans
@@ -1431,7 +1420,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-humi
   label: Humi
@@ -1442,7 +1431,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-hybrid
   label: Hybrid
@@ -1453,7 +1442,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ibusinesssolutions
   label: iBusinessSolutions
@@ -1464,7 +1453,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-infinipay
   label: Infinipay
@@ -1475,7 +1464,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-infiniti-hr
   label: INFINITI HR
@@ -1486,11 +1475,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-infor
   label: Infor
-  partner: infor
   partner_name: Infor
   category: hris
   type: contract
@@ -1498,7 +1486,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-inova
   label: Inova
@@ -1509,7 +1497,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-insperity
   label: Insperity
@@ -1520,7 +1508,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-integrated-payroll-services
   label: Integrated Payroll Services
@@ -1531,7 +1519,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-iris-hr
   label: Iris HR
@@ -1542,7 +1530,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-isolved
   label: isolved
@@ -1553,11 +1541,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-justworks
   label: Justworks
-  partner: justworks
   partner_name: Justworks
   category: hris
   type: contract
@@ -1565,7 +1552,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-kabel
   label: Kabel
@@ -1576,11 +1563,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-keka
   label: Keka
-  partner: keka
   partner_name: Keka
   category: hris
   type: contract
@@ -1588,11 +1574,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-kenjo
   label: Kenjo
-  partner: kenjo
   partner_name: Kenjo
   category: hris
   type: contract
@@ -1600,7 +1585,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-keystone-payroll-isolved
   label: Keystone Payroll isolved
@@ -1611,7 +1596,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-lift-hcm
   label: Lift HCM
@@ -1622,7 +1607,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-miter
   label: Miter
@@ -1633,7 +1618,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-mp
   label: mp
@@ -1644,7 +1629,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-mpay
   label: MPAY
@@ -1655,11 +1640,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-multiplier
   label: Multiplier
-  partner: multiplier
   partner_name: Multiplier
   category: hris
   type: contract
@@ -1667,11 +1651,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-namely
   label: Namely
-  partner: namely
   partner_name: Namely
   category: hris
   type: contract
@@ -1679,7 +1662,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-naturalhr
   label: NaturalHR
@@ -1690,7 +1673,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-netchex
   label: Netchex
@@ -1701,7 +1684,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-newtek
   label: Newtek
@@ -1712,7 +1695,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-nextep
   label: Nextep
@@ -1723,7 +1706,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-north-bay-payroll
   label: North Bay Payroll
@@ -1734,7 +1717,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-nvision
   label: nVision
@@ -1745,7 +1728,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paychex-oasis
   label: Paychex Oasis
@@ -1756,7 +1739,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-obsidian-hr-isolved
   label: Obsidian HR isolved
@@ -1767,11 +1750,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-odoo
   label: odoo
-  partner: odoo
   partner_name: odoo
   category: hris
   type: contract
@@ -1779,7 +1761,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-omnihr
   label: OmniHR
@@ -1790,7 +1772,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-onepoint-hcm
   label: OnePoint HCM
@@ -1801,7 +1783,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-onesource-payroll
   label: OneSource Payroll
@@ -1812,11 +1794,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-onpay
   label: OnPay
-  partner: onpay
   partner_name: OnPay
   category: hris
   type: contract
@@ -1824,7 +1805,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-opolis
   label: Opolis
@@ -1835,11 +1816,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-oracle-fusion
   label: Oracle Fusion
-  partner: oracle-fusion
   partner_name: Oracle Fusion
   category: hris
   type: contract
@@ -1847,7 +1827,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-oyster-hr
   label: Oyster HR
@@ -1858,11 +1838,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-panther
   label: Panther
-  partner: panther
   partner_name: Panther
   category: hris
   type: contract
@@ -1870,7 +1849,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paragon-payroll-isolved
   label: Paragon Payroll isolved
@@ -1881,7 +1860,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-patriot
   label: Patriot
@@ -1892,7 +1871,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payusa
   label: PayUSA
@@ -1903,7 +1882,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paychex-flex
   label: Paychex Flex
@@ -1914,7 +1893,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paycom
   label: Paycom
@@ -1925,7 +1904,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paycor
   label: Paycor
@@ -1936,7 +1915,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payday-payroll
   label: Payday Payroll
@@ -1947,7 +1926,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payday-workforce-solutions
   label: Payday Workforce Solutions
@@ -1958,7 +1937,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payentry
   label: Payentry
@@ -1969,11 +1948,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payfit
   label: PayFit
-  partner: payfit
   partner_name: PayFit
   category: hris
   type: contract
@@ -1981,7 +1959,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payfluence
   label: Payfluence
@@ -1992,11 +1970,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paylocity
   label: Paylocity
-  partner: paylocity
   partner_name: Paylocity
   category: hris
   type: contract
@@ -2004,7 +1981,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paylogics
   label: Paylogics
@@ -2015,7 +1992,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paynorthwest
   label: PayNorthwest
@@ -2026,7 +2003,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paypro-hcs-isolved
   label: PayPro HCS isolved
@@ -2037,7 +2014,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll4construction
   label: Payroll4Construction
@@ -2048,7 +2025,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-network
   label: Payroll Network
@@ -2059,7 +2036,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-office-of-america
   label: Payroll Office of America
@@ -2070,7 +2047,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-plus-hcm-evolution
   label: Payroll Plus HCM Evolution
@@ -2081,7 +2058,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-plus-hcm-isolved
   label: Payroll Plus HCM isolved
@@ -2092,7 +2069,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-resource-group
   label: Payroll Resource Group
@@ -2103,7 +2080,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-solutions
   label: Payroll Solutions
@@ -2114,7 +2091,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-specialties
   label: Payroll Specialties
@@ -2125,7 +2102,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-vault
   label: Payroll Vault
@@ -2136,7 +2113,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payroll-on-time
   label: Payroll on Time
@@ -2147,7 +2124,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-paytime
   label: Paytime
@@ -2158,7 +2135,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-payworks
   label: Payworks
@@ -2169,7 +2146,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-pcs-hcm
   label: PCS HCM
@@ -2180,7 +2157,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-penta
   label: Penta
@@ -2191,7 +2168,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-people-lease
   label: People Lease
@@ -2202,7 +2179,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-peoplecore
   label: PeopleCore
@@ -2213,11 +2190,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-peopleforce
   label: PeopleForce
-  partner: peopleforce
   partner_name: PeopleForce
   category: hris
   type: contract
@@ -2225,7 +2201,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-peoplehum
   label: PeopleHum
@@ -2236,11 +2212,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-personio
   label: Personio
-  partner: personio
   partner_name: Personio
   category: hris
   type: contract
@@ -2248,7 +2223,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-platinum-group
   label: Platinum Group
@@ -2259,7 +2234,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-premier-payroll
   label: Premier Payroll
@@ -2270,7 +2245,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-premier-payroll-services
   label: Premier Payroll Services
@@ -2281,7 +2256,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-prestigepeo
   label: PrestigePEO
@@ -2292,7 +2267,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-primepay
   label: PrimePay
@@ -2303,7 +2278,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-prismhr
   label: PrismHR
@@ -2314,7 +2289,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-proliant
   label: Proliant
@@ -2325,7 +2300,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-propelhr
   label: PropelHR
@@ -2336,7 +2311,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-prosoftware
   label: ProSoftware
@@ -2347,7 +2322,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-proxus-hr
   label: Proxus HR
@@ -2358,7 +2333,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-qforce
   label: QForce
@@ -2369,7 +2344,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-quality-payroll-and-benefits
   label: Quality Payroll and Benefits
@@ -2380,7 +2355,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-questco
   label: Questco
@@ -2391,7 +2366,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-quickbooks-online-payroll
   label: QuickBooks Online Payroll
@@ -2402,7 +2377,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-quickhr
   label: QuickHR
@@ -2413,7 +2388,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-remote
   label: Remote
@@ -2424,7 +2399,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-remotepass
   label: RemotePass
@@ -2435,7 +2410,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-resourcing-edge
   label: Resourcing Edge
@@ -2446,11 +2421,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-restaurant365
   label: Restaurant365
-  partner: restaurant365
   partner_name: Restaurant365
   category: hris
   type: contract
@@ -2458,11 +2432,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-rippling
   label: Rippling
-  partner: rippling
   partner_name: Rippling
   category: hris
   type: contract
@@ -2470,7 +2443,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-rmi-peo
   label: RMI PEO
@@ -2481,7 +2454,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-adp-payroll-for-partners
   label: ADP Payroll for Partners
@@ -2492,7 +2465,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sage100
   label: Sage100
@@ -2503,11 +2476,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sage-hr
   label: Sage HR
-  partner: sage-hr
   partner_name: Sage HR
   category: hris
   type: contract
@@ -2515,7 +2487,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sage-payroll
   label: Sage Payroll
@@ -2526,7 +2498,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sapling
   label: Sapling
@@ -2537,7 +2509,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-savant-hcm-evolution
   label: Savant HCM Evolution
@@ -2548,7 +2520,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sequoia-one
   label: Sequoia One
@@ -2559,7 +2531,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sesame
   label: Sesame
@@ -2570,11 +2542,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-7shifts
   label: 7shifts
-  partner: 7shifts
   partner_name: 7shifts
   category: hris
   type: contract
@@ -2582,7 +2553,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sheakley
   label: Sheakley
@@ -2593,7 +2564,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-simploy
   label: Simploy
@@ -2604,7 +2575,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-skuad
   label: Skuad
@@ -2615,7 +2586,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-skyward
   label: Skyward
@@ -2626,7 +2597,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-solution-services
   label: Solution Services
@@ -2637,7 +2608,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sourceone
   label: SourceOne
@@ -2648,7 +2619,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-southeast-personnel-leasing
   label: Southeast Personnel Leasing
@@ -2659,7 +2630,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-square-payroll
   label: Square Payroll
@@ -2670,7 +2641,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-strategic-payroll-solutions-isolved
   label: Strategic Payroll Solutions isolved
@@ -2681,7 +2652,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-strongpay
   label: Strongpay
@@ -2692,11 +2663,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sap-successfactors
   label: SAP SuccessFactors
-  partner: sap-successfactors
   partner_name: SAP SuccessFactors
   category: hris
   type: contract
@@ -2704,7 +2674,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-suitepeople-netsuite
   label: SuitePeople (NetSuite)
@@ -2715,7 +2685,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-sunfish
   label: SunFish
@@ -2726,7 +2696,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-surepayroll
   label: SurePayroll
@@ -2737,7 +2707,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-synchr
   label: SyncHR
@@ -2748,7 +2718,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-synchrony-hr
   label: Synchrony HR
@@ -2759,7 +2729,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-talenox
   label: Talenox
@@ -2770,7 +2740,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-talenta
   label: Talenta
@@ -2781,7 +2751,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-tandemhr
   label: TandemHR
@@ -2792,7 +2762,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-teamworks-group
   label: Teamworks Group
@@ -2803,7 +2773,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-the-payroll-company
   label: The Payroll Company
@@ -2814,7 +2784,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-thread-hcm
   label: Thread HCM
@@ -2825,7 +2795,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-toast-payroll
   label: Toast Payroll
@@ -2836,11 +2806,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-trakstar
   label: Trakstar
-  partner: trakstar
   partner_name: Trakstar
   category: hris
   type: contract
@@ -2848,7 +2817,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-trinet-peo
   label: TriNet PEO
@@ -2859,7 +2828,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-trion
   label: Trion
@@ -2870,7 +2839,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-trustpoint
   label: Trustpoint
@@ -2881,11 +2850,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ukg-ready
   label: UKG Ready
-  partner: ukg-ready
   partner_name: UKG Ready
   category: hris
   type: contract
@@ -2893,11 +2861,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-ukg-pro
   label: UKG Pro
-  partner: ukg-pro
   partner_name: UKG Pro
   category: hris
   type: contract
@@ -2905,7 +2872,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-uzio
   label: Uzio
@@ -2916,7 +2883,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-velocity-global
   label: Velocity Global
@@ -2927,7 +2894,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-vensurehr
   label: VensureHR
@@ -2938,7 +2905,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-venture-workforce
   label: Venture Workforce
@@ -2949,7 +2916,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-vfficient
   label: Vfficient
@@ -2960,7 +2927,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-viewpoint-hr-management-spectrum
   label: Viewpoint HR Management Spectrum
@@ -2971,7 +2938,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-viewpoint-hr-management-vista
   label: Viewpoint HR Management Vista
@@ -2982,7 +2949,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-visionary-payroll-solutions
   label: Visionary Payroll Solutions
@@ -2993,7 +2960,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-viventium
   label: Viventium
@@ -3004,7 +2971,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-wagepoint
   label: Wagepoint
@@ -3015,11 +2982,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-warp
   label: Warp
-  partner: warp
   partner_name: Warp
   category: hris
   type: contract
@@ -3027,7 +2993,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-wave
   label: Wave
@@ -3038,7 +3004,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-webhr
   label: WebHR
@@ -3049,7 +3015,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-whirks
   label: Whirks
@@ -3060,7 +3026,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-winteam
   label: Winteam
@@ -3071,7 +3037,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-wolke
   label: Wolke
@@ -3082,11 +3048,10 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-workday
   label: Workday
-  partner: workday
   partner_name: Workday
   category: hris
   type: contract
@@ -3094,7 +3059,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: finch-workforce-junction
   label: Workforce Junction
@@ -3105,7 +3070,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-workforce
   label: Workforce
@@ -3116,7 +3081,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-worklio
   label: Worklio
@@ -3127,7 +3092,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-workplace-hcm
   label: Workplace HCM
@@ -3138,7 +3103,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-workzoom
   label: Workzoom
@@ -3149,7 +3114,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-wurk
   label: wurk
@@ -3160,7 +3125,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-xenium-hr
   label: Xenium HR
@@ -3171,7 +3136,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-xero-international
   label: Xero (International)
@@ -3182,7 +3147,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-xero-us
   label: Xero (US)
@@ -3193,7 +3158,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-trinet-hr-platform-fka-zenefits
   label: TriNet HR Platform (fka Zenefits)
@@ -3204,7 +3169,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-zimyo
   label: Zimyo
@@ -3215,7 +3180,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-zoho-payroll
   label: Zoho Payroll
@@ -3226,7 +3191,7 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
 - slug: finch-zuma
   label: Zuma
@@ -3237,5 +3202,5 @@
   evidence: https://api.tryfinch.com/providers
   source: edge
   relationship: system-coverage
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
