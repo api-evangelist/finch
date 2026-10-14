@@ -1,6 +1,7 @@
 generated: '2026-10-12'
 method: searched
 checked:
+- bamboohr/integrations/bamboohr-integration-edges.yml
 - https://api.tryfinch.com/providers
 marketplace_apps:
 - marketplace: hr-coverage-list
@@ -5235,3 +5236,22 @@ edges:
   - benefits
   detected_by: sweep-hr-stores.py
   detected: '2026-10-12'
+- partner_name: BambooHR (own)
+  partner: bamboohr
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bamboohr.com/integrations/listings/finch
+  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
+  apps:
+  - Finch
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Developer Resources
+source:
+- bamboohr/integrations/bamboohr-integration-edges.yml
