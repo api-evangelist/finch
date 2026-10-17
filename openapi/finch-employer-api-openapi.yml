@@ -232,6 +232,40 @@ components:
           type: array
           items:
             type: string
+    IndividualSummary:
+      type: object
+      properties:
+        id:
+          type: string
+        first_name:
+          type: string
+        middle_name:
+          type: string
+        last_name:
+          type: string
+        manager:
+          type: object
+          properties:
+            id:
+              type: string
+        department:
+          type: object
+          properties:
+            name:
+              type: string
+        is_active:
+          type: boolean
+    CompanyBenefit:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+        type:
+          type: string
+        description:
+          type: string
+        frequency:
+          type: string
     Employment:
       type: object
       properties:
@@ -271,29 +305,45 @@ components:
               type: object
             location:
               type: object
-    IndividualSummary:
+    Company:
       type: object
       properties:
         id:
           type: string
-        first_name:
+        legal_name:
           type: string
-        middle_name:
-          type: string
-        last_name:
-          type: string
-        manager:
+        entity:
           type: object
           properties:
-            id:
+            type:
               type: string
-        department:
-          type: object
-          properties:
-            name:
+            subtype:
               type: string
-        is_active:
-          type: boolean
+        ein:
+          type: string
+        primary_email:
+          type: string
+        primary_phone_number:
+          type: string
+        departments:
+          type: array
+          items:
+            type: object
+        locations:
+          type: array
+          items:
+            type: object
+        accounts:
+          type: array
+          items:
+            type: object
+    Paging:
+      type: object
+      properties:
+        count:
+          type: integer
+        offset:
+          type: integer
     Individual:
       type: object
       properties:
@@ -328,56 +378,6 @@ components:
                 type: object
             residence:
               type: object
-    Paging:
-      type: object
-      properties:
-        count:
-          type: integer
-        offset:
-          type: integer
-    CompanyBenefit:
-      type: object
-      properties:
-        benefit_id:
-          type: string
-        type:
-          type: string
-        description:
-          type: string
-        frequency:
-          type: string
-    Company:
-      type: object
-      properties:
-        id:
-          type: string
-        legal_name:
-          type: string
-        entity:
-          type: object
-          properties:
-            type:
-              type: string
-            subtype:
-              type: string
-        ein:
-          type: string
-        primary_email:
-          type: string
-        primary_phone_number:
-          type: string
-        departments:
-          type: array
-          items:
-            type: object
-        locations:
-          type: array
-          items:
-            type: object
-        accounts:
-          type: array
-          items:
-            type: object
   securitySchemes:
     bearerAuth:
       type: http
