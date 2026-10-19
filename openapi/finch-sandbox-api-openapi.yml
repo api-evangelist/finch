@@ -1,0 +1,1454 @@
+openapi: 3.2.0
+info:
+  title: Reference Sandbox API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Sandbox
+paths:
+  /sandbox/connections:
+    post:
+      summary: Create a new Sandbox Connection
+      operationId: post-sandbox-connections
+      description: Create a new connection (new company/provider pair) with a new account
+      tags:
+      - Sandbox
+      parameters: []
+      security:
+      - basicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                provider_id:
+                  type: string
+                  description: The provider associated with the connection
+                authentication_type:
+                  $ref: '#/components/schemas/AuthenticationType'
+                products:
+                  type: array
+                  items:
+                    type: string
+                employee_size:
+                  type: integer
+                  description: 'Optional: the size of the employer to be created with this connection. Defaults to 20. Note that if this is higher than 100, historical payroll data will not be generated, and instead only one pay period will be created.'
+              required:
+              - provider_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSandboxConnectionResponse'
+              examples:
+                success:
+                  value:
+                    connection_id: a237a1c3-1a5e-44ae-a8fd-81f76fd715c2
+                    entity_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                    account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    provider_id: gusto
+                    authentication_type: api_token
+                    products:
+                    - company
+                    - directory
+                    - individual
+                    access_token: 7eb55bcf-6593-4040-afac-252ee1f78e20
+                    token_type: bearer
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  clientID: process.env['FINCH_CLIENT_ID'], // This is the default and can be omitted\n  clientSecret: process.env['FINCH_CLIENT_SECRET'], // This is the default and can be omitted\n});\n\nconst connection = await client.sandbox.connections.create({ provider_id: 'provider_id' });\n\nconsole.log(connection.account_id);"
+      - lang: Python
+        source: "import os\nfrom finch import Finch\n\nclient = Finch(\n    client_id=os.environ.get(\"FINCH_CLIENT_ID\"),  # This is the default and can be omitted\n    client_secret=os.environ.get(\"FINCH_CLIENT_SECRET\"),  # This is the default and can be omitted\n)\nconnection = client.sandbox.connections.create(\n    provider_id=\"provider_id\",\n)\nprint(connection.account_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithClientID(\"4ab15e51-11ad-49f4-acae-f343b7794375\"),\n\t\toption.WithClientSecret(\"My Client Secret\"),\n\t)\n\tconnection, err := client.Sandbox.Connections.New(context.TODO(), finchgo.SandboxConnectionNewParams{\n\t\tProviderID: finchgo.F(\"provider_id\"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", connection.AccountID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.ConnectionCreateResponse;\nimport com.tryfinch.api.models.SandboxConnectionCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.fromEnv();\n\n        SandboxConnectionCreateParams params = SandboxConnectionCreateParams.builder()\n            .providerId(\"provider_id\")\n            .build();\n        ConnectionCreateResponse connection = client.sandbox().connections().create(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.ConnectionCreateResponse\nimport com.tryfinch.api.models.SandboxConnectionCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.fromEnv()\n\n    val params: SandboxConnectionCreateParams = SandboxConnectionCreateParams.builder()\n        .providerId(\"provider_id\")\n        .build()\n    val connection: ConnectionCreateResponse = client.sandbox().connections().create(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(client_id: "4ab15e51-11ad-49f4-acae-f343b7794375", client_secret: "My Client Secret")
+
+
+          connection = finch.sandbox.connections.create(provider_id: "provider_id")
+
+
+          puts(connection)'
+  /sandbox/connections/accounts:
+    parameters: []
+    post:
+      summary: Create a new sandbox account
+      operationId: post-sandbox-connections-accounts
+      description: Create a new account for an existing connection (company/provider pair)
+      tags:
+      - Sandbox
+      security:
+      - basicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company_id:
+                  type: string
+                  format: uuid
+                provider_id:
+                  type: string
+                  description: The provider associated with the `access_token`
+                authentication_type:
+                  $ref: '#/components/schemas/AuthenticationType'
+                products:
+                  type: array
+                  description: Optional, defaults to Organization products (`company`, `directory`, `employment`, `individual`)
+                  items:
+                    type: string
+              required:
+              - company_id
+              - provider_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connection_id:
+                    type: string
+                    format: uuid
+                    description: The ID of the new connection
+                  entity_id:
+                    type: string
+                    format: uuid
+                    description: The ID of the entity for this connection
+                  company_id:
+                    type: string
+                    format: uuid
+                    description: The Finch UUID of the company associated with the `access_token`.
+                  provider_id:
+                    type: string
+                    description: The ID of the provider associated with the `access_token`
+                  account_id:
+                    type: string
+                    format: uuid
+                    deprecated: true
+                    description: '[DEPRECATED] Use `connection_id` to associate a connection with an access token'
+                  authentication_type:
+                    $ref: '#/components/schemas/AuthenticationType'
+                  products:
+                    type: array
+                    items:
+                      type: string
+                  access_token:
+                    type: string
+                    format: uuid
+                required:
+                - connection_id
+                - entity_id
+                - company_id
+                - provider_id
+                - account_id
+                - authentication_type
+                - products
+                - access_token
+              examples:
+                Example 1:
+                  value:
+                    connection_id: a237a1c3-1a5e-44ae-a8fd-81f76fd715c2
+                    entity_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                    account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    provider_id: gusto
+                    authentication_type: credential
+                    products:
+                    - company
+                    access_token: 7eb55bcf-6593-4040-afac-252ee1f78e20
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  clientID: process.env['FINCH_CLIENT_ID'], // This is the default and can be omitted\n  clientSecret: process.env['FINCH_CLIENT_SECRET'], // This is the default and can be omitted\n});\n\nconst account = await client.sandbox.connections.accounts.create({\n  company_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',\n  provider_id: 'provider_id',\n});\n\nconsole.log(account.account_id);"
+      - lang: Python
+        source: "import os\nfrom finch import Finch\n\nclient = Finch(\n    client_id=os.environ.get(\"FINCH_CLIENT_ID\"),  # This is the default and can be omitted\n    client_secret=os.environ.get(\"FINCH_CLIENT_SECRET\"),  # This is the default and can be omitted\n)\naccount = client.sandbox.connections.accounts.create(\n    company_id=\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\",\n    provider_id=\"provider_id\",\n)\nprint(account.account_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithClientID(\"4ab15e51-11ad-49f4-acae-f343b7794375\"),\n\t\toption.WithClientSecret(\"My Client Secret\"),\n\t)\n\taccount, err := client.Sandbox.Connections.Accounts.New(context.TODO(), finchgo.SandboxConnectionAccountNewParams{\n\t\tCompanyID:  finchgo.F(\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\"),\n\t\tProviderID: finchgo.F(\"provider_id\"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", account.AccountID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccountCreateResponse;\nimport com.tryfinch.api.models.SandboxConnectionAccountCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.fromEnv();\n\n        SandboxConnectionAccountCreateParams params = SandboxConnectionAccountCreateParams.builder()\n            .companyId(\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\")\n            .providerId(\"provider_id\")\n            .build();\n        AccountCreateResponse account = client.sandbox().connections().accounts().create(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccountCreateResponse\nimport com.tryfinch.api.models.SandboxConnectionAccountCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.fromEnv()\n\n    val params: SandboxConnectionAccountCreateParams = SandboxConnectionAccountCreateParams.builder()\n        .companyId(\"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\")\n        .providerId(\"provider_id\")\n        .build()\n    val account: AccountCreateResponse = client.sandbox().connections().accounts().create(params)\n}"
+      - lang: Ruby
+        source: "require \"finch_api\"\n\nfinch = FinchAPI::Client.new(client_id: \"4ab15e51-11ad-49f4-acae-f343b7794375\", client_secret: \"My Client Secret\")\n\naccount = finch.sandbox.connections.accounts.create(\n  company_id: \"182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e\",\n  provider_id: \"provider_id\"\n)\n\nputs(account)"
+    put:
+      summary: Update a sandbox account
+      description: Update an existing sandbox account. Change the connection status to understand how the Finch API responds.
+      operationId: put-sandbox-connections-accounts
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                connection_status:
+                  $ref: '#/components/schemas/ConnectionStatus'
+            examples:
+              Example 1:
+                value:
+                  connection_status: reauth
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connection_id:
+                    type: string
+                    format: uuid
+                    description: The ID of the new connection
+                  entity_id:
+                    type: string
+                    format: uuid
+                    description: The ID of the entity whose status was updated
+                  account_id:
+                    type: string
+                    format: uuid
+                    deprecated: true
+                    description: '[DEPRECATED] Use `connection_id` to associate a connection with an access token'
+                  authentication_type:
+                    $ref: '#/components/schemas/AuthenticationType'
+                  company_id:
+                    type: string
+                    format: uuid
+                    description: The Finch UUID of the company associated with the `access_token`.
+                  provider_id:
+                    type: string
+                    description: The ID of the provider associated with the `access_token`
+                  products:
+                    type: array
+                    items:
+                      type: string
+                required:
+                - connection_id
+                - entity_id
+                - account_id
+                - authentication_type
+                - company_id
+                - provider_id
+                - products
+              examples:
+                success:
+                  value:
+                    connection_id: a237a1c3-1a5e-44ae-a8fd-81f76fd715c2
+                    entity_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                    account_id: 449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65
+                    provider_id: gusto
+                    authentication_type: credential
+                    products:
+                    - company
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst account = await client.sandbox.connections.accounts.update({ connection_status: 'reauth' });\n\nconsole.log(account.account_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\naccount = client.sandbox.connections.accounts.update(\n    connection_status=\"reauth\",\n)\nprint(account.account_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n\t\"github.com/Finch-API/finch-api-go/v2/shared\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\taccount, err := client.Sandbox.Connections.Accounts.Update(context.TODO(), finchgo.SandboxConnectionAccountUpdateParams{\n\t\tConnectionStatus: finchgo.F(shared.ConnectionStatusTypeReauth),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", account.AccountID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccountUpdateResponse;\nimport com.tryfinch.api.models.SandboxConnectionAccountUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        AccountUpdateResponse account = client.sandbox().connections().accounts().update();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccountUpdateResponse\nimport com.tryfinch.api.models.SandboxConnectionAccountUpdateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val account: AccountUpdateResponse = client.sandbox().connections().accounts().update()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          account = finch.sandbox.connections.accounts.update
+
+
+          puts(account)'
+  /sandbox/company:
+    put:
+      summary: Update a sandbox company's data
+      operationId: put-sandbox-company
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyWithoutId'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyWithoutId'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst company = await client.sandbox.company.update({\n  accounts: [{}],\n  departments: [{}],\n  ein: 'ein',\n  entity: {},\n  legal_name: 'legal_name',\n  locations: [\n    {\n      city: 'city',\n      country: 'country',\n      line1: 'line1',\n      line2: 'line2',\n      postal_code: 'postal_code',\n      state: 'state',\n    },\n  ],\n  primary_email: 'dev@stainless.com',\n  primary_phone_number: 'primary_phone_number',\n});\n\nconsole.log(company.accounts);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ncompany = client.sandbox.company.update(\n    accounts=[{}],\n    departments=[{}],\n    ein=\"ein\",\n    entity={},\n    legal_name=\"legal_name\",\n    locations=[{\n        \"city\": \"city\",\n        \"country\": \"country\",\n        \"line1\": \"line1\",\n        \"line2\": \"line2\",\n        \"postal_code\": \"postal_code\",\n        \"state\": \"state\",\n    }],\n    primary_email=\"dev@stainless.com\",\n    primary_phone_number=\"primary_phone_number\",\n)\nprint(company.accounts)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tcompany, err := client.Sandbox.Company.Update(context.TODO(), finchgo.SandboxCompanyUpdateParams{\n\t\tAccounts:    finchgo.F([]finchgo.SandboxCompanyUpdateParamsAccount{{}}),\n\t\tDepartments: finchgo.F([]finchgo.SandboxCompanyUpdateParamsDepartment{{}}),\n\t\tEin:         finchgo.F(\"ein\"),\n\t\tEntity:      finchgo.F(finchgo.SandboxCompanyUpdateParamsEntity{}),\n\t\tLegalName:   finchgo.F(\"legal_name\"),\n\t\tLocations: finchgo.F([]finchgo.LocationParam{{\n\t\t\tCity:       finchgo.F(\"city\"),\n\t\t\tCountry:    finchgo.F(\"country\"),\n\t\t\tLine1:      finchgo.F(\"line1\"),\n\t\t\tLine2:      finchgo.F(\"line2\"),\n\t\t\tPostalCode: finchgo.F(\"postal_code\"),\n\t\t\tState:      finchgo.F(\"state\"),\n\t\t}}),\n\t\tPrimaryEmail:       finchgo.F(\"dev@stainless.com\"),\n\t\tPrimaryPhoneNumber: finchgo.F(\"primary_phone_number\"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", company.Accounts)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.CompanyUpdateResponse;\nimport com.tryfinch.api.models.Location;\nimport com.tryfinch.api.models.SandboxCompanyUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        SandboxCompanyUpdateParams params = SandboxCompanyUpdateParams.builder()\n            .addAccount(SandboxCompanyUpdateParams.Account.builder().build())\n            .addDepartment(SandboxCompanyUpdateParams.Department.builder().build())\n            .ein(\"ein\")\n            .entity(SandboxCompanyUpdateParams.Entity.builder().build())\n            .legalName(\"legal_name\")\n            .addLocation(Location.builder()\n                .city(\"city\")\n                .country(\"country\")\n                .line1(\"line1\")\n                .line2(\"line2\")\n                .postalCode(\"postal_code\")\n                .state(\"state\")\n                .build())\n            .primaryEmail(\"dev@stainless.com\")\n            .primaryPhoneNumber(\"primary_phone_number\")\n            .build();\n        CompanyUpdateResponse company = client.sandbox().company().update(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.CompanyUpdateResponse\nimport com.tryfinch.api.models.Location\nimport com.tryfinch.api.models.SandboxCompanyUpdateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: SandboxCompanyUpdateParams = SandboxCompanyUpdateParams.builder()\n        .addAccount(SandboxCompanyUpdateParams.Account.builder().build())\n        .addDepartment(SandboxCompanyUpdateParams.Department.builder().build())\n        .ein(\"ein\")\n        .entity(SandboxCompanyUpdateParams.Entity.builder().build())\n        .legalName(\"legal_name\")\n        .addLocation(Location.builder()\n            .city(\"city\")\n            .country(\"country\")\n            .line1(\"line1\")\n            .line2(\"line2\")\n            .postalCode(\"postal_code\")\n            .state(\"state\")\n            .build())\n        .primaryEmail(\"dev@stainless.com\")\n        .primaryPhoneNumber(\"primary_phone_number\")\n        .build()\n    val company: CompanyUpdateResponse = client.sandbox().company().update(params)\n}"
+      - lang: Ruby
+        source: "require \"finch_api\"\n\nfinch = FinchAPI::Client.new(access_token: \"My Access Token\")\n\ncompany = finch.sandbox.company.update(\n  accounts: [{}],\n  departments: [{}],\n  ein: \"ein\",\n  entity: {},\n  legal_name: \"legal_name\",\n  locations: [\n    {city: \"city\", country: \"country\", line1: \"line1\", line2: \"line2\", postal_code: \"postal_code\", state: \"state\"}\n  ],\n  primary_email: \"dev@stainless.com\",\n  primary_phone_number: \"primary_phone_number\"\n)\n\nputs(company)"
+  /sandbox/directory:
+    post:
+      summary: Add new individuals to a sandbox company
+      operationId: post-sandbox-directory
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              description: Array of individuals to create. Takes all combined fields from `/individual` and `/employment` endpoints. All fields are optional.
+              items:
+                $ref: '#/components/schemas/individual_or_employment'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: The individuals which were created
+                items:
+                  type: object
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst directories = await client.sandbox.directory.create();\n\nconsole.log(directories);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ndirectories = client.sandbox.directory.create()\nprint(directories)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tdirectories, err := client.Sandbox.Directory.New(context.TODO(), finchgo.SandboxDirectoryNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", directories)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.DirectoryCreateResponse;\nimport com.tryfinch.api.models.SandboxDirectoryCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        List<DirectoryCreateResponse> directories = client.sandbox().directory().create();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.DirectoryCreateResponse\nimport com.tryfinch.api.models.SandboxDirectoryCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val directories: List<DirectoryCreateResponse> = client.sandbox().directory().create()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          directories = finch.sandbox.directory.create
+
+
+          puts(directories)'
+  /sandbox/individual/{individual_id}:
+    parameters:
+    - schema:
+        type: string
+      name: individual_id
+      in: path
+      required: true
+    put:
+      summary: Update sandbox individual
+      operationId: put-sandbox-individual-individual_id
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/IndividualWithoutId'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Individual'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst individual = await client.sandbox.individual.update('individual_id');\n\nconsole.log(individual.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nindividual = client.sandbox.individual.update(\n    individual_id=\"individual_id\",\n)\nprint(individual.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tindividual, err := client.Sandbox.Individual.Update(\n\t\tcontext.TODO(),\n\t\t\"individual_id\",\n\t\tfinchgo.SandboxIndividualUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", individual.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.IndividualUpdateResponse;\nimport com.tryfinch.api.models.SandboxIndividualUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        IndividualUpdateResponse individual = client.sandbox().individual().update(\"individual_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.IndividualUpdateResponse\nimport com.tryfinch.api.models.SandboxIndividualUpdateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val individual: IndividualUpdateResponse = client.sandbox().individual().update(\"individual_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          individual = finch.sandbox.individual.update("individual_id")
+
+
+          puts(individual)'
+  /sandbox/employment/{individual_id}:
+    parameters:
+    - schema:
+        type: string
+      name: individual_id
+      in: path
+      required: true
+    put:
+      summary: Update sandbox employment
+      operationId: put-sandbox-employment-individual_id
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmploymentWithoutId'
+            examples:
+              Example 1:
+                value:
+                  start_date: 3/4/2020
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Employment'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst employment = await client.sandbox.employment.update('individual_id', {\n  start_date: '3/4/2020',\n});\n\nconsole.log(employment.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nemployment = client.sandbox.employment.update(\n    individual_id=\"individual_id\",\n    start_date=\"3/4/2020\",\n)\nprint(employment.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\temployment, err := client.Sandbox.Employment.Update(\n\t\tcontext.TODO(),\n\t\t\"individual_id\",\n\t\tfinchgo.SandboxEmploymentUpdateParams{\n\t\t\tStartDate: finchgo.F(\"3/4/2020\"),\n\t\t},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", employment.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.EmploymentUpdateResponse;\nimport com.tryfinch.api.models.SandboxEmploymentUpdateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        EmploymentUpdateResponse employment = client.sandbox().employment().update(\"individual_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.EmploymentUpdateResponse\nimport com.tryfinch.api.models.SandboxEmploymentUpdateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val employment: EmploymentUpdateResponse = client.sandbox().employment().update(\"individual_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          employment = finch.sandbox.employment.update("individual_id")
+
+
+          puts(employment)'
+  /sandbox/payment:
+    post:
+      summary: Add a new sandbox payment
+      operationId: post-sandbox-payment
+      tags:
+      - Sandbox
+      security:
+      - bearerAuth: []
+      requestBody:
+        description: Fields to configure the payment. Takes all fields from the `/payment` endpoint. All fields are optional.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSandboxPaymentRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentIdentifiers'
+              examples:
+                Success:
+                  value:
+                    payment_id: some-payment-id
+                    pay_date: '2024-01-01'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst payment = await client.sandbox.payment.create();\n\nconsole.log(payment.payment_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npayment = client.sandbox.payment.create()\nprint(payment.payment_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpayment, err := client.Sandbox.Payment.New(context.TODO(), finchgo.SandboxPaymentNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", payment.PaymentID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.PaymentCreateResponse;\nimport com.tryfinch.api.models.SandboxPaymentCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        PaymentCreateResponse payment = client.sandbox().payment().create();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.PaymentCreateResponse\nimport com.tryfinch.api.models.SandboxPaymentCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val payment: PaymentCreateResponse = client.sandbox().payment().create()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          payment = finch.sandbox.payment.create
+
+
+          puts(payment)'
+  /sandbox/jobs:
+    post:
+      summary: Enqueue a new sandbox job
+      operationId: post-sandbox-job
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: The type of job to start. Currently the only supported type is `data_sync_all`
+                  enum:
+                  - data_sync_all
+              required:
+              - type
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: string
+                    format: uuid
+                    description: The id of the job that has been created.
+                  job_url:
+                    type: string
+                    description: The url that can be used to retrieve the job status
+                  allowed_refreshes:
+                    type: integer
+                    description: The number of allowed refreshes per hour (per hour, fixed window)
+                  remaining_refreshes:
+                    type: integer
+                    description: The number of remaining refreshes available (per hour, fixed window)
+                required:
+                - job_id
+                - job_url
+                - allowed_refreshes
+                - remaining_refreshes
+              examples:
+                Example 1:
+                  value:
+                    job_id: 453bd7d7-5355-4d6d-a38e-d9e7eb218c3f
+                    job_url: https://api.tryfinch.com/jobs/automated/453bd7d7-5355-4d6d-a38e-d9e7eb218c3f
+                    allowed_refreshes: 2
+                    remaining_refreshes: 1
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst job = await client.sandbox.jobs.create({ type: 'data_sync_all' });\n\nconsole.log(job.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\njob = client.sandbox.jobs.create(\n    type=\"data_sync_all\",\n)\nprint(job.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tjob, err := client.Sandbox.Jobs.New(context.TODO(), finchgo.SandboxJobNewParams{\n\t\tType: finchgo.F(finchgo.SandboxJobNewParamsTypeDataSyncAll),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", job.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.JobCreateResponse;\nimport com.tryfinch.api.models.SandboxJobCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        SandboxJobCreateParams params = SandboxJobCreateParams.builder()\n            .type(SandboxJobCreateParams.Type.DATA_SYNC_ALL)\n            .build();\n        JobCreateResponse job = client.sandbox().jobs().create(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.JobCreateResponse\nimport com.tryfinch.api.models.SandboxJobCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: SandboxJobCreateParams = SandboxJobCreateParams.builder()\n        .type(SandboxJobCreateParams.Type.DATA_SYNC_ALL)\n        .build()\n    val job: JobCreateResponse = client.sandbox().jobs().create(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          job = finch.sandbox.jobs.create(type: :data_sync_all)
+
+
+          puts(job)'
+  /sandbox/jobs/configuration:
+    get:
+      summary: Get configurations for sandbox jobs
+      operationId: get-sandbox-jobs-configuration
+      tags:
+      - Sandbox
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SandboxJobConfiguration'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst sandboxJobConfigurations = await client.sandbox.jobs.configuration.retrieve();\n\nconsole.log(sandboxJobConfigurations);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nsandbox_job_configurations = client.sandbox.jobs.configuration.retrieve()\nprint(sandbox_job_configurations)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tsandboxJobConfigurations, err := client.Sandbox.Jobs.Configuration.Get(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", sandboxJobConfigurations)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.SandboxJobConfiguration;\nimport com.tryfinch.api.models.SandboxJobConfigurationRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        List<SandboxJobConfiguration> sandboxJobConfigurations = client.sandbox().jobs().configuration().retrieve();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.SandboxJobConfiguration\nimport com.tryfinch.api.models.SandboxJobConfigurationRetrieveParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val sandboxJobConfigurations: List<SandboxJobConfiguration> = client.sandbox().jobs().configuration().retrieve()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          sandbox_job_configurations = finch.sandbox.jobs.configuration.retrieve
+
+
+          puts(sandbox_job_configurations)'
+    put:
+      summary: Update configurations for sandbox jobs
+      operationId: put-sandbox-jobs-configuration
+      tags:
+      - Sandbox
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SandboxJobConfiguration'
+        required: true
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SandboxJobConfiguration'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst sandboxJobConfiguration = await client.sandbox.jobs.configuration.update({\n  completion_status: 'complete',\n  type: 'data_sync_all',\n});\n\nconsole.log(sandboxJobConfiguration.completion_status);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nsandbox_job_configuration = client.sandbox.jobs.configuration.update(\n    completion_status=\"complete\",\n    type=\"data_sync_all\",\n)\nprint(sandbox_job_configuration.completion_status)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tsandboxJobConfiguration, err := client.Sandbox.Jobs.Configuration.Update(context.TODO(), finchgo.SandboxJobConfigurationUpdateParams{\n\t\tCompletionStatus: finchgo.F(finchgo.SandboxJobConfigurationUpdateParamsCompletionStatusComplete),\n\t\tType:             finchgo.F(finchgo.SandboxJobConfigurationUpdateParamsTypeDataSyncAll),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", sandboxJobConfiguration.CompletionStatus)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.SandboxJobConfiguration;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        SandboxJobConfiguration params = SandboxJobConfiguration.builder()\n            .completionStatus(SandboxJobConfiguration.CompletionStatus.COMPLETE)\n            .type(SandboxJobConfiguration.Type.DATA_SYNC_ALL)\n            .build();\n        SandboxJobConfiguration sandboxJobConfiguration = client.sandbox().jobs().configuration().update(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.SandboxJobConfiguration\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: SandboxJobConfiguration = SandboxJobConfiguration.builder()\n        .completionStatus(SandboxJobConfiguration.CompletionStatus.COMPLETE)\n        .type(SandboxJobConfiguration.Type.DATA_SYNC_ALL)\n        .build()\n    val sandboxJobConfiguration: SandboxJobConfiguration = client.sandbox().jobs().configuration().update(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          sandbox_job_configuration = finch.sandbox.jobs.configuration.update(completion_status: :complete, type: :data_sync_all)
+
+
+          puts(sandbox_job_configuration)'
+components:
+  schemas:
+    CompanyWithoutId:
+      type: object
+      properties:
+        legal_name:
+          type: string
+          description: The legal name of the company.
+          nullable: true
+        entity:
+          type: object
+          description: The entity type object.
+          nullable: true
+          properties:
+            type:
+              type: string
+              description: The tax payer type of the company.
+              enum:
+              - llc
+              - lp
+              - corporation
+              - sole_proprietor
+              - non_profit
+              - partnership
+              - cooperative
+              - null
+              nullable: true
+            subtype:
+              type: string
+              description: The tax payer subtype of the company.
+              enum:
+              - s_corporation
+              - c_corporation
+              - b_corporation
+              - null
+              nullable: true
+        primary_email:
+          type: string
+          description: The email of the main administrator on the account.
+          nullable: true
+          format: email
+        primary_phone_number:
+          type: string
+          description: 'The phone number of the main administrator on the account. Format: E.164, with extension where applicable, e.g. `+NNNNNNNNNNN xExtension`'
+          nullable: true
+        departments:
+          type: array
+          description: The array of company departments.
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            properties:
+              name:
+                type: string
+                description: The department name.
+                nullable: true
+              parent:
+                type: object
+                description: The parent department, if present.
+                nullable: true
+                properties:
+                  name:
+                    type: string
+                    description: The parent department's name.
+                    nullable: true
+        ein:
+          type: string
+          description: The employer identification number.
+          nullable: true
+        locations:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Location'
+        accounts:
+          type: array
+          description: An array of bank account objects associated with the payroll/HRIS system.
+          nullable: true
+          items:
+            type: object
+            properties:
+              routing_number:
+                type: string
+                description: A nine-digit code that's based on the U.S. Bank location where your account was opened.
+                nullable: true
+              account_name:
+                type: string
+                description: The name of the bank associated in the payroll/HRIS system.
+                nullable: true
+              institution_name:
+                type: string
+                description: Name of the banking institution.
+                nullable: true
+              account_type:
+                type: string
+                description: The type of bank account.
+                enum:
+                - checking
+                - savings
+                - null
+                nullable: true
+              account_number:
+                type: string
+                description: 10-12 digit number to specify the bank account
+                nullable: true
+      required:
+      - legal_name
+      - entity
+      - primary_email
+      - primary_phone_number
+      - departments
+      - ein
+      - locations
+      - accounts
+    AuthenticationType:
+      type: string
+      enum:
+      - api_token
+      - assisted
+      - credential
+      - oauth
+      title: AuthenticationType
+    CreateSandboxConnectionResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        account_id:
+          type: string
+          format: uuid
+        authentication_type:
+          $ref: '#/components/schemas/AuthenticationType'
+        company_id:
+          type: string
+          nullable: true
+          format: uuid
+        connection_id:
+          type: string
+        entity_id:
+          type: string
+        products:
+          type: array
+          items:
+            type: string
+        provider_id:
+          type: string
+        token_type:
+          type: string
+      required:
+      - access_token
+      - account_id
+      - authentication_type
+      - connection_id
+      - entity_id
+      - products
+      - provider_id
+      - token_type
+    CreateSandboxPaymentRequest:
+      type: object
+      properties:
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        pay_statements:
+          type: array
+          items:
+            type: object
+            properties:
+              individual_id:
+                type: string
+                format: uuid
+              type:
+                type: string
+                nullable: true
+                enum:
+                - off_cycle_payroll
+                - one_time_payment
+                - regular_payroll
+                - null
+                default: regular_payroll
+              payment_method:
+                type: string
+                nullable: true
+                enum:
+                - check
+                - direct_deposit
+                - other
+                - null
+                default: direct_deposit
+              total_hours:
+                type: number
+                minimum: 0
+                exclusiveMinimum: true
+              gross_pay:
+                type: integer
+                minimum: 0
+                exclusiveMinimum: true
+                maximum: 9007199254740991
+              net_pay:
+                type: integer
+                maximum: 9007199254740991
+              earnings:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    hours:
+                      type: number
+                    name:
+                      type: string
+                      minLength: 1
+                    type:
+                      type: string
+                      enum:
+                      - bonus
+                      - commission
+                      - double_overtime
+                      - other
+                      - overtime
+                      - pto
+                      - reimbursement
+                      - salary
+                      - severance
+                      - sick
+                      - tips
+                      - wage
+                      - '1099'
+              taxes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                    employer:
+                      type: boolean
+                    type:
+                      type: string
+                      enum:
+                      - federal
+                      - fica
+                      - local
+                      - state
+              employee_deductions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                      description: The deduction name. Required when type is specified.
+                    pre_tax:
+                      type: boolean
+                    type:
+                      type: string
+                      enum:
+                      - '457'
+                      - 401k
+                      - 401k_roth
+                      - 401k_loan
+                      - 403b
+                      - 403b_roth
+                      - 457_roth
+                      - commuter
+                      - custom_post_tax
+                      - custom_pre_tax
+                      - fsa_dependent_care
+                      - fsa_medical
+                      - hsa_post
+                      - hsa_pre
+                      - s125_dental
+                      - s125_medical
+                      - s125_vision
+                      - simple
+                      - simple_ira
+                      x-stainless-renameMap:
+                        _401k_loan: 401k_loan
+                        _401k_roth: 401k_roth
+                        _401k: 401k
+                        _403b_roth: 403b_roth
+                        _403b: 403b
+                        _457_roth: 457_roth
+                        _457: '457'
+              employer_contributions:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    amount:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                      description: The contribution name. Required when type is specified.
+                    type:
+                      type: string
+                      enum:
+                      - '457'
+                      - 401k
+                      - 401k_roth
+                      - 401k_loan
+                      - 403b
+                      - 403b_roth
+                      - 457_roth
+                      - commuter
+                      - custom_post_tax
+                      - custom_pre_tax
+                      - fsa_dependent_care
+                      - fsa_medical
+                      - hsa_post
+                      - hsa_pre
+                      - s125_dental
+                      - s125_medical
+                      - s125_vision
+                      - simple
+                      - simple_ira
+                      x-stainless-renameMap:
+                        _401k_loan: 401k_loan
+                        _401k_roth: 401k_roth
+                        _401k: 401k
+                        _403b_roth: 403b_roth
+                        _403b: 403b
+                        _457_roth: 457_roth
+                        _457: '457'
+            required:
+            - individual_id
+          maxItems: 10000
+          description: Array of pay statements to include in the payment.
+      description: Fields to configure the payment. Takes all fields from the `/payment` endpoint. All fields are optional.
+    Location:
+      type: object
+      nullable: true
+      properties:
+        line1:
+          type: string
+          nullable: true
+          description: Street address or PO box.
+        line2:
+          type: string
+          nullable: true
+          description: Apartment, suite, unit, or building.
+        city:
+          type: string
+          nullable: true
+          description: City, district, suburb, town, or village.
+        state:
+          type: string
+          nullable: true
+          description: The state code.
+        postal_code:
+          type: string
+          nullable: true
+          description: The postal code or zip code.
+        country:
+          type: string
+          nullable: true
+          description: The 2-letter ISO 3166 country code.
+        name:
+          type: string
+          nullable: true
+        source_id:
+          type: string
+          nullable: true
+      required:
+      - line1
+      - line2
+      - city
+      - state
+      - postal_code
+      - country
+      description: ''
+      title: Location
+      x-tags:
+      - Models
+    Employment:
+      title: Employment
+      allOf:
+      - $ref: '#/components/schemas/EmploymentWithoutId'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: A stable Finch `id` (UUID v4) for an individual in the company.
+            format: uuid
+    EmploymentWithoutId:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The legal first name of the individual.
+          nullable: true
+        middle_name:
+          type: string
+          description: The legal middle name of the individual.
+          nullable: true
+        last_name:
+          type: string
+          description: The legal last name of the individual.
+          nullable: true
+        title:
+          type: string
+          description: The current title of the individual.
+          nullable: true
+        manager:
+          type: object
+          description: The manager object representing the manager of the individual within the org.
+          nullable: true
+          properties:
+            id:
+              type: string
+              description: A stable Finch `id` (UUID v4) for an individual in the company.
+              format: uuid
+        department:
+          type: object
+          description: The department object.
+          nullable: true
+          properties:
+            name:
+              type: string
+              description: The name of the department associated with the individual.
+              nullable: true
+        employment:
+          type: object
+          description: The employment object.
+          nullable: true
+          properties:
+            type:
+              type: string
+              description: The main employment type of the individual.
+              enum:
+              - employee
+              - contractor
+              - null
+              nullable: true
+            subtype:
+              type: string
+              description: 'The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.'
+              enum:
+              - full_time
+              - intern
+              - part_time
+              - temp
+              - seasonal
+              - individual_contractor
+              - null
+              nullable: true
+        start_date:
+          $ref: '#/components/schemas/Date'
+        end_date:
+          $ref: '#/components/schemas/Date'
+        latest_rehire_date:
+          $ref: '#/components/schemas/Date'
+        is_active:
+          type: boolean
+          description: '`true` if the individual an an active employee or contractor at the company.'
+          nullable: true
+        employment_status:
+          type: string
+          description: The detailed employment status of the individual.
+          enum:
+          - active
+          - deceased
+          - leave
+          - onboarding
+          - prehire
+          - retired
+          - terminated
+          - null
+          nullable: true
+        flsa_status:
+          type: string
+          description: 'The FLSA status of the individual. Available options: `exempt`, `non_exempt`, `unknown`.'
+          enum:
+          - exempt
+          - non_exempt
+          - unknown
+          - null
+          nullable: true
+        class_code:
+          type: string
+          description: Worker's compensation classification code for this employee
+          nullable: true
+        location:
+          $ref: '#/components/schemas/Location'
+        income:
+          $ref: '#/components/schemas/Income'
+        income_history:
+          type: array
+          description: The array of income history.
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Income'
+        custom_fields:
+          type: array
+          nullable: true
+          description: Custom fields for the individual. These are fields which are defined by the employer in the system. Custom fields are not currently supported for assisted connections.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                nullable: true
+              value:
+                type:
+                - string
+                - array
+                - object
+                - number
+                - boolean
+                - 'null'
+                nullable: true
+        union_code:
+          type: string
+          nullable: true
+          description: The code identifying the union the employee is a member of, as configured in the payroll system.
+        union_local:
+          type: string
+          nullable: true
+          description: The local chapter or local number within the employee's union.
+        benefit_eligibility_class:
+          type: string
+          nullable: true
+          description: The employer defined benefit eligibility class that groups an employee into a set of eligible benefit plans, as stored by the provider. Null when not configured.
+        highly_compensated_employee:
+          type: boolean
+          nullable: true
+          description: IRS flag indicating whether the employee is classified as a Highly Compensated Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+        key_employee:
+          type: boolean
+          nullable: true
+          description: IRS flag indicating whether the employee is classified as a Key Employee for top-heavy testing purposes. US-only.
+        source_id:
+          type: string
+          nullable: true
+          description: The source system's unique employment identifier for this individual
+    PaymentIdentifiers:
+      type: object
+      properties:
+        payment_id:
+          type: string
+          description: The ID of the payment.
+        pay_date:
+          type: string
+          description: The date of the payment.
+      required:
+      - payment_id
+      - pay_date
+    individual_or_employment:
+      allOf:
+      - $ref: '#/components/schemas/IndividualWithoutId'
+      - $ref: '#/components/schemas/EmploymentWithoutId'
+    Date:
+      type: string
+      title: Date
+      nullable: true
+    Individual:
+      title: Individual
+      allOf:
+      - $ref: '#/components/schemas/IndividualWithoutId'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: A stable Finch `id` (UUID v4) for an individual in the company.
+            format: uuid
+    SandboxJobConfiguration:
+      title: SandboxJobConfiguration
+      type: object
+      properties:
+        type:
+          enum:
+          - data_sync_all
+        completion_status:
+          enum:
+          - complete
+          - reauth_error
+          - permissions_error
+          - error
+      required:
+      - type
+      - completion_status
+    ConnectionStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - connected
+      - error_no_account_setup
+      - error_permissions
+      - reauth
+    IndividualWithoutId:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The legal first name of the individual.
+          nullable: true
+        middle_name:
+          type: string
+          description: The legal middle name of the individual.
+          nullable: true
+        last_name:
+          type: string
+          description: The legal last name of the individual.
+          nullable: true
+        preferred_name:
+          type: string
+          description: The preferred name of the individual.
+          nullable: true
+        emails:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              data:
+                type: string
+              type:
+                type: string
+                enum:
+                - work
+                - personal
+                - null
+                nullable: true
+        phone_numbers:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            properties:
+              data:
+                type: string
+                nullable: true
+                description: 'The phone number. Format: E.164, with extension where applicable, e.g. `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from the provider is returned.'
+              type:
+                type: string
+                enum:
+                - work
+                - personal
+                - null
+                nullable: true
+        gender:
+          type: string
+          description: The gender of the individual.
+          enum:
+          - female
+          - male
+          - other
+          - decline_to_specify
+          - null
+          nullable: true
+        ethnicity:
+          type: string
+          enum:
+          - asian
+          - white
+          - black_or_african_american
+          - native_hawaiian_or_pacific_islander
+          - american_indian_or_alaska_native
+          - hispanic_or_latino
+          - two_or_more_races
+          - decline_to_specify
+          - null
+          description: The EEOC-defined ethnicity of the individual.
+          nullable: true
+        marital_status:
+          type: string
+          description: The employee's marital status, used for beneficiary designation and spousal consent workflows.
+          enum:
+          - single
+          - married
+          - divorced
+          - widowed
+          - domestic_partner
+          - unknown
+          - null
+          nullable: true
+        dob:
+          $ref: '#/components/schemas/Date'
+          nullable: true
+        ssn:
+          type: string
+          description: 'Social Security Number of the individual. This field is only available with the `ssn` scope enabled and the `options: { include: [''ssn''] }` param set in the body. [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).'
+          nullable: true
+        encrypted_ssn:
+          type: string
+          description: 'Social Security Number of the individual in **encrypted** format. This field is only available with the `ssn` scope enabled and the `options: { include: [''ssn''] }` param set in the body.'
+          nullable: true
+        residence:
+          $ref: '#/components/schemas/Location'
+    Income:
+      type: object
+      nullable: true
+      properties:
+        unit:
+          type: string
+          nullable: true
+          enum:
+          - yearly
+          - quarterly
+          - monthly
+          - semi_monthly
+          - bi_weekly
+          - weekly
+          - daily
+          - hourly
+          - fixed
+          - null
+          description: 'The income unit of payment. Options: `yearly`, `quarterly`, `monthly`, `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.'
+        amount:
+          type: integer
+          nullable: true
+          description: The income amount in cents.
+        currency:
+          type: string
+          nullable: true
+          description: The currency code.
+        effective_date:
+          type: string
+          nullable: true
+          format: date
+          description: The date the income amount went into effect.
+      required:
+      - unit
+      - amount
+      - currency
+      - effective_date
+      description: The employee's income as reported by the provider. This may not always be annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc, depending on what information the provider returns.
+      title: Income
+      x-tags:
+      - Models
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret

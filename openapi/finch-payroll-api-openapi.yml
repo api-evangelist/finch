@@ -1,0 +1,2066 @@
+openapi: 3.2.0
+info:
+  title: Reference Payroll API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Payroll
+paths:
+  /employer/payment:
+    get:
+      description: Read payroll and contractor related payments by the company.
+      summary: Payment
+      operationId: get-payment
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: start_date
+        in: query
+        required: true
+        description: The start date to retrieve payments by a company (inclusive) in `YYYY-MM-DD` format. Filters payments by their **pay_date** field.
+        schema:
+          type: string
+          format: date
+          example: '2021-01-01'
+      - name: end_date
+        in: query
+        required: true
+        description: The end date to retrieve payments by a company (inclusive) in `YYYY-MM-DD` format. Filters payments by their **pay_date** field.
+        schema:
+          type: string
+          format: date
+          example: '2021-01-01'
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Payment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPaymentsResponse'
+              examples:
+                Success:
+                  value:
+                  - id: 20aa7cf2-949d-4d4e-9c01-499b59501ded
+                    pay_period:
+                      start_date: '2019-08-01'
+                      end_date: '2019-08-15'
+                    pay_date: '2019-08-22'
+                    debit_date: '2019-08-22'
+                    company_debit:
+                      amount: 5300000
+                      currency: usd
+                    gross_pay:
+                      amount: 4000000
+                      currency: usd
+                    net_pay:
+                      amount: 3200000
+                      currency: usd
+                    employer_taxes:
+                      amount: 200000
+                      currency: usd
+                    employee_taxes:
+                      amount: 350000
+                      currency: usd
+                    individual_ids:
+                    - 54719e14-5ea7-4fda-9898-f4d9ccb83c1a
+                    - 0ab620fc-203e-44ad-916c-facc69250f6f
+                    pay_group_ids:
+                    - 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    - 9349eed4-4064-4641-ba8e-9e1ad7e1d014
+                    pay_frequencies:
+                    - monthly
+                    - weekly
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const payment of client.hris.payments.list({\n  end_date: '2021-01-01',\n  start_date: '2021-01-01',\n})) {\n  console.log(payment.id);\n}"
+      - lang: Python
+        source: "from datetime import date\nfrom finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.payments.list(\n    end_date=date.fromisoformat(\"2021-01-01\"),\n    start_date=date.fromisoformat(\"2021-01-01\"),\n)\npage = page.items[0]\nprint(page.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\t\"time\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Payments.List(context.TODO(), finchgo.HRISPaymentListParams{\n\t\tEndDate:   finchgo.F(time.Now()),\n\t\tStartDate: finchgo.F(time.Now()),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPaymentListPage;\nimport com.tryfinch.api.models.HrisPaymentListParams;\nimport java.time.LocalDate;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisPaymentListParams params = HrisPaymentListParams.builder()\n            .endDate(LocalDate.parse(\"2021-01-01\"))\n            .startDate(LocalDate.parse(\"2021-01-01\"))\n            .build();\n        HrisPaymentListPage page = client.hris().payments().list(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPaymentListPage\nimport com.tryfinch.api.models.HrisPaymentListParams\nimport java.time.LocalDate\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: HrisPaymentListParams = HrisPaymentListParams.builder()\n        .endDate(LocalDate.parse(\"2021-01-01\"))\n        .startDate(LocalDate.parse(\"2021-01-01\"))\n        .build()\n    val page: HrisPaymentListPage = client.hris().payments().list(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.payments.list(end_date: "2021-01-01", start_date: "2021-01-01")
+
+
+          puts(page)'
+  /employer/pay-statement:
+    post:
+      description: 'Read detailed pay statements for each individual.
+
+
+        Deduction and contribution types are supported by the payroll systems that supports Benefits.'
+      summary: Pay Statement
+      operationId: get-pay-statement
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  description: The array of batch requests. Maximum 10 payment_ids per request.
+                  minItems: 1
+                  maxItems: 10
+                  items:
+                    type: object
+                    properties:
+                      payment_id:
+                        type: string
+                        description: A stable Finch `id` (UUID v4) for a payment.
+                        format: uuid
+                      limit:
+                        type: integer
+                        description: Number of pay statements to return (defaults to 100, maximum 5000).
+                        default: 100
+                        maximum: 5000
+                        example: 50
+                      offset:
+                        type: integer
+                        description: Index to start from.
+                        example: 0
+                    required:
+                    - payment_id
+              required:
+              - requests
+            examples:
+              example1:
+                value:
+                  requests:
+                  - payment_id: fc8b024e-d373-4c9c-80fc-f1625383d142
+                    limit: 100
+                    offset: 0
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Pay statement data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPayStatementsResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - payment_id: fc8b024e-d373-4c9c-80fc-f1625383d142
+                      code: 200
+                      body:
+                        paging:
+                          count: 25
+                          offset: 10
+                        pay_statements:
+                        - individual_id: be7b048c-a6f3-4194-a017-2f537d4f3565
+                          type: regular_payroll
+                          payment_method: check
+                          total_hours: 42.5
+                          gross_pay:
+                            amount: 230000
+                            currency: usd
+                          net_pay:
+                            amount: 180000
+                            currency: usd
+                          earnings:
+                          - type: salary
+                            name: Salary
+                            amount: 230000
+                            currency: usd
+                            hours: 42.5
+                          taxes:
+                          - type: state
+                            name: State Withholding - OR
+                            employer: false
+                            amount: 0
+                            currency: usd
+                          employee_deductions:
+                          - name: Pre-Tax 401k
+                            amount: 50000
+                            currency: usd
+                            pre_tax: true
+                            type: 401k
+                          employer_contributions:
+                          - name: Employee Medical Insurance
+                            amount: 23272
+                            currency: usd
+                            type: s125_medical
+                RemainingPayStatement:
+                  value:
+                    responses:
+                    - payment_id: fc8b024e-d373-4c9c-80fc-f1625383d142
+                      code: 202
+                      body:
+                        code: 202
+                        finch_code: data_sync_in_progress
+                        message: The pay statements for this payment are being fetched. Please check back later.
+                        name: accepted
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '422':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+                - finch_code
+              examples:
+                BatchLimitExceeded:
+                  value:
+                    code: 422
+                    name: unprocessable_entity_error
+                    finch_code: batch_limit_exceeded
+                    message: Batch size exceeds the maximum of 10 payment_ids. Please reduce the number of payment_ids in your request.
+                PageSizeLimitExceeded:
+                  value:
+                    code: 422
+                    name: unprocessable_entity_error
+                    finch_code: page_size_limit_exceeded
+                    message: Page size exceeds the maximum of 5000 items. Please reduce the limit parameter.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const payStatementResponse of client.hris.payStatements.retrieveMany({\n  requests: [\n    {\n      payment_id: 'fc8b024e-d373-4c9c-80fc-f1625383d142',\n      limit: 100,\n      offset: 0,\n    },\n  ],\n})) {\n  console.log(payStatementResponse.payment_id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.pay_statements.retrieve_many(\n    requests=[{\n        \"payment_id\": \"fc8b024e-d373-4c9c-80fc-f1625383d142\",\n        \"limit\": 100,\n        \"offset\": 0,\n    }],\n)\npage = page.responses[0]\nprint(page.payment_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.PayStatements.GetMany(context.TODO(), finchgo.HRISPayStatementGetManyParams{\n\t\tRequests: finchgo.F([]finchgo.HRISPayStatementGetManyParamsRequest{{\n\t\t\tPaymentID: finchgo.F(\"fc8b024e-d373-4c9c-80fc-f1625383d142\"),\n\t\t\tLimit:     finchgo.F(int64(100)),\n\t\t\tOffset:    finchgo.F(int64(0)),\n\t\t}}),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementRetrieveManyPage;\nimport com.tryfinch.api.models.HrisPayStatementRetrieveManyParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisPayStatementRetrieveManyParams params = HrisPayStatementRetrieveManyParams.builder()\n            .addRequest(HrisPayStatementRetrieveManyParams.Request.builder()\n                .paymentId(\"fc8b024e-d373-4c9c-80fc-f1625383d142\")\n                .build())\n            .build();\n        HrisPayStatementRetrieveManyPage page = client.hris().payStatements().retrieveMany(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementRetrieveManyPage\nimport com.tryfinch.api.models.HrisPayStatementRetrieveManyParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: HrisPayStatementRetrieveManyParams = HrisPayStatementRetrieveManyParams.builder()\n        .addRequest(HrisPayStatementRetrieveManyParams.Request.builder()\n            .paymentId(\"fc8b024e-d373-4c9c-80fc-f1625383d142\")\n            .build())\n        .build()\n    val page: HrisPayStatementRetrieveManyPage = client.hris().payStatements().retrieveMany(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.pay_statements.retrieve_many(requests: [{payment_id: "fc8b024e-d373-4c9c-80fc-f1625383d142"}])
+
+
+          puts(page)'
+  /employer/pay-statement-item:
+    get:
+      description: Retrieve a list of detailed pay statement items for the access token's connection account.
+      summary: Pay Statement Item
+      operationId: get-pay-statement-item
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: categories
+        in: query
+        required: false
+        description: Comma-delimited list of pay statement item categories to filter on. If empty, defaults to all categories.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - earnings
+            - taxes
+            - employee_deductions
+            - employer_contributions
+        style: form
+        explode: false
+      - name: name
+        in: query
+        required: false
+        description: Case-insensitive partial match search by pay statement item name.
+        schema:
+          type: string
+      - name: type
+        in: query
+        required: false
+        description: String search by pay statement item type.
+        schema:
+          type: string
+          example: base_compensation
+      - name: start_date
+        in: query
+        required: false
+        description: The start date to retrieve pay statement items by via their last seen pay date (inclusive) in `YYYY-MM-DD` format.
+        schema:
+          type: string
+          format: date
+          example: '2024-01-01'
+      - name: end_date
+        in: query
+        required: false
+        description: The end date to retrieve pay statement items by via their last seen pay date in `YYYY-MM-DD` format.
+        schema:
+          type: string
+          format: date
+          example: '2024-07-01'
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Pay statement item data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPayStatementItemsResponse'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const payStatementItemListResponse of client.hris.payStatementItem.list()) {\n  console.log(payStatementItemListResponse.attributes);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.pay_statement_item.list()\npage = page.responses[0]\nprint(page.attributes)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.PayStatementItem.List(context.TODO(), finchgo.HRISPayStatementItemListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementItemListPage;\nimport com.tryfinch.api.models.HrisPayStatementItemListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisPayStatementItemListPage page = client.hris().payStatementItem().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementItemListPage\nimport com.tryfinch.api.models.HrisPayStatementItemListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisPayStatementItemListPage = client.hris().payStatementItem().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.pay_statement_item.list
+
+
+          puts(page)'
+  /employer/pay-statement-item/rule:
+    post:
+      summary: Create Rule
+      description: Custom rules can be created to associate specific attributes to pay statement items depending on the use case. For example, pay statement items that meet certain conditions can be labeled as a pre-tax 401k. This metadata can be retrieved where pay statement item information is available.
+      operationId: create-rule
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to create the rule for. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRuleRequest'
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRuleResponse'
+              examples:
+                Success:
+                  value:
+                    id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    priority: 1
+                    effective_start_date: '2025-01-01'
+                    effective_end_date: '2025-12-31'
+                    conditions:
+                    - field: name
+                      operator: equals
+                      value: Salary
+                    attributes:
+                      metadata:
+                        myLabel: My Value
+                    entity_type: pay_statement_item
+                    created_at: '2025-01-01T10:00:00Z'
+                    updated_at: '2025-01-01T10:00:00Z'
+        '400':
+          description: Malformed Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Bad Request:
+                  value:
+                    code: 400
+                    name: invalid_request_error
+                    finch_code: invalid_request
+                    message: 'Validation error: Array must contain at least 1 element(s) at "conditions"'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst rule = await client.hris.payStatementItem.rules.create();\n\nconsole.log(rule.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nrule = client.hris.pay_statement_item.rules.create()\nprint(rule.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\trule, err := client.HRIS.PayStatementItem.Rules.New(context.TODO(), finchgo.HRISPayStatementItemRuleNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", rule.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementItemRuleCreateParams;\nimport com.tryfinch.api.models.RuleCreateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        RuleCreateResponse rule = client.hris().payStatementItem().rules().create();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementItemRuleCreateParams\nimport com.tryfinch.api.models.RuleCreateResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val rule: RuleCreateResponse = client.hris().payStatementItem().rules().create()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          rule = finch.hris.pay_statement_item.rules.create
+
+
+          puts(rule)'
+    get:
+      summary: Get Rules
+      description: List all rules of a connection account.
+      operationId: get-rules
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to retrieve rules for. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRulesResponse'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const ruleListResponse of client.hris.payStatementItem.rules.list()) {\n  console.log(ruleListResponse.id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.pay_statement_item.rules.list()\npage = page.responses[0]\nprint(page.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.PayStatementItem.Rules.List(context.TODO(), finchgo.HRISPayStatementItemRuleListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementItemRuleListPage;\nimport com.tryfinch.api.models.HrisPayStatementItemRuleListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisPayStatementItemRuleListPage page = client.hris().payStatementItem().rules().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementItemRuleListPage\nimport com.tryfinch.api.models.HrisPayStatementItemRuleListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisPayStatementItemRuleListPage = client.hris().payStatementItem().rules().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.pay_statement_item.rules.list
+
+
+          puts(page)'
+  /employer/pay-statement-item/rule/{rule_id}:
+    parameters:
+    - schema:
+        type: string
+      name: rule_id
+      in: path
+      required: true
+    put:
+      summary: Update Rule
+      operationId: update-rule
+      description: Update a rule for a pay statement item.
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to update the rule for. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRuleRequest'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRuleResponse'
+              examples:
+                Success:
+                  value:
+                    id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    priority: 1
+                    effective_start_date: null
+                    effective_end_date: '2025-12-31'
+                    conditions:
+                    - field: name
+                      operator: equals
+                      value: Salary
+                    attributes:
+                      metadata:
+                        myLabel: My Value
+                    created_at: '2025-01-01T10:00:00Z'
+                    updated_at: '2025-02-13T08:30:00Z'
+        '400':
+          description: Malformed Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Bad Request:
+                  value:
+                    code: 400
+                    name: invalid_request_error
+                    finch_code: invalid_request
+                    message: 'Validation error: Array must contain at least 1 element(s) at "conditions"'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst rule = await client.hris.payStatementItem.rules.update('rule_id');\n\nconsole.log(rule.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nrule = client.hris.pay_statement_item.rules.update(\n    rule_id=\"rule_id\",\n)\nprint(rule.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\trule, err := client.HRIS.PayStatementItem.Rules.Update(\n\t\tcontext.TODO(),\n\t\t\"rule_id\",\n\t\tfinchgo.HRISPayStatementItemRuleUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", rule.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementItemRuleUpdateParams;\nimport com.tryfinch.api.models.RuleUpdateResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        RuleUpdateResponse rule = client.hris().payStatementItem().rules().update(\"rule_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementItemRuleUpdateParams\nimport com.tryfinch.api.models.RuleUpdateResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val rule: RuleUpdateResponse = client.hris().payStatementItem().rules().update(\"rule_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          rule = finch.hris.pay_statement_item.rules.update("rule_id")
+
+
+          puts(rule)'
+    delete:
+      summary: Delete Rule
+      operationId: delete-rule
+      description: Delete a rule for a pay statement item.
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to delete the rule for. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully Deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteRuleResponse'
+              examples:
+                Success:
+                  value:
+                    id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    priority: 1
+                    effective_end_date: '2025-12-31'
+                    conditions:
+                    - field: name
+                      operator: equals
+                      value: Salary
+                    attributes:
+                      metadata:
+                        myLabel: My Value
+                    created_at: '2025-01-01T10:00:00Z'
+                    updated_at: '2025-01-15T10:00:00Z'
+                    deleted_at: '2025-02-13T08:30:00Z'
+        '400':
+          description: Malformed Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Bad Request:
+                  value:
+                    code: 400
+                    name: invalid_request_error
+                    finch_code: invalid_request
+                    message: Rule 5d0b10a1-a09a-430f-81f1-20be735dc5e9 not found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst rule = await client.hris.payStatementItem.rules.delete('rule_id');\n\nconsole.log(rule.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nrule = client.hris.pay_statement_item.rules.delete(\n    rule_id=\"rule_id\",\n)\nprint(rule.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\trule, err := client.HRIS.PayStatementItem.Rules.Delete(\n\t\tcontext.TODO(),\n\t\t\"rule_id\",\n\t\tfinchgo.HRISPayStatementItemRuleDeleteParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", rule.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisPayStatementItemRuleDeleteParams;\nimport com.tryfinch.api.models.RuleDeleteResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        RuleDeleteResponse rule = client.hris().payStatementItem().rules().delete(\"rule_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisPayStatementItemRuleDeleteParams\nimport com.tryfinch.api.models.RuleDeleteResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val rule: RuleDeleteResponse = client.hris().payStatementItem().rules().delete(\"rule_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          rule = finch.hris.pay_statement_item.rules.delete("rule_id")
+
+
+          puts(rule)'
+  /employer/pay-groups:
+    parameters:
+    - schema:
+        type: string
+        format: uuid
+      name: individual_id
+      in: query
+      required: false
+    - schema:
+        type: array
+        items:
+          type: string
+      name: pay_frequencies
+      in: query
+      required: false
+      style: form
+      explode: false
+    get:
+      description: Read company pay groups and frequencies
+      summary: Get All Pay Groups
+      operationId: get-all-pay-groups
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Company pay groups
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllPayGroupsResponse'
+              examples:
+                Success:
+                  value:
+                  - id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    name: Monthly
+                    pay_frequencies:
+                    - monthly
+                  - id: 9349eed4-4064-4641-ba8e-9e1ad7e1d014
+                    name: Weekly
+                    pay_frequencies:
+                    - weekly
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const payGroupListResponse of client.payroll.payGroups.list()) {\n  console.log(payGroupListResponse.id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.payroll.pay_groups.list()\npage = page.items[0]\nprint(page.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.Payroll.PayGroups.List(context.TODO(), finchgo.PayrollPayGroupListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.PayrollPayGroupListPage;\nimport com.tryfinch.api.models.PayrollPayGroupListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        PayrollPayGroupListPage page = client.payroll().payGroups().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.PayrollPayGroupListPage\nimport com.tryfinch.api.models.PayrollPayGroupListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: PayrollPayGroupListPage = client.payroll().payGroups().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.payroll.pay_groups.list
+
+
+          puts(page)'
+  /employer/pay-groups/{pay_group_id}:
+    parameters:
+    - schema:
+        type: string
+      name: pay_group_id
+      in: path
+      required: true
+    get:
+      description: Read information from a single pay group
+      summary: Get Pay Group
+      operationId: get-pay-group
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Pay group data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPayGroupResponse'
+              examples:
+                Success:
+                  value:
+                    id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                    name: Monthly
+                    pay_frequencies:
+                    - monthly
+                    individual_ids:
+                    - be7b048c-a6f3-4194-a017-2f537d4f3565
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst payGroup = await client.payroll.payGroups.retrieve('pay_group_id');\n\nconsole.log(payGroup.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npay_group = client.payroll.pay_groups.retrieve(\n    pay_group_id=\"pay_group_id\",\n)\nprint(pay_group.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpayGroup, err := client.Payroll.PayGroups.Get(\n\t\tcontext.TODO(),\n\t\t\"pay_group_id\",\n\t\tfinchgo.PayrollPayGroupGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", payGroup.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.PayGroupRetrieveResponse;\nimport com.tryfinch.api.models.PayrollPayGroupRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        PayGroupRetrieveResponse payGroup = client.payroll().payGroups().retrieve(\"pay_group_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.PayGroupRetrieveResponse\nimport com.tryfinch.api.models.PayrollPayGroupRetrieveParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val payGroup: PayGroupRetrieveResponse = client.payroll().payGroups().retrieve(\"pay_group_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          pay_group = finch.payroll.pay_groups.retrieve("pay_group_id")
+
+
+          puts(pay_group)'
+  /employer/ledger-items:
+    post:
+      description: Read the ledger entries for one or more payments.
+      summary: Ledger Items
+      operationId: get-ledger-items
+      tags:
+      - Payroll
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  description: One entry per payment you want the ledger for.
+                  items:
+                    type: object
+                    properties:
+                      payment_id:
+                        type: string
+                        description: A stable Finch `id` (UUID v4) for a payment.
+                        format: uuid
+                      offset:
+                        type: integer
+                        minimum: 0
+                        description: The number of `ledger_items` to skip for this payment.
+                      limit:
+                        type: integer
+                        minimum: 1
+                        description: The maximum number of `ledger_items` to return for this payment.
+                    required:
+                    - payment_id
+              required:
+              - requests
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: The ledger for each requested payment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLedgerItemsResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - payment_id: fc8b024e-d373-4c9c-80fc-f1625383d142
+                      code: 200
+                      body:
+                        source: direct
+                        provider_description: null
+                        pay_date: '2022-05-20'
+                        totals:
+                          debit:
+                            amount: 5463791
+                            currency: usd
+                          credit:
+                            amount: 5463791
+                            currency: usd
+                          balanced: true
+                        paging:
+                          count: 2
+                          offset: 0
+                        ledger_items:
+                        - type: regular_wages
+                          account_type: RegularWages
+                          account_description: Regular Wages
+                          debit:
+                            amount: 5463791
+                            currency: usd
+                          credit:
+                            amount: 0
+                            currency: usd
+                        - type: cash_debit_net_pay
+                          account_type: DebitNetPay
+                          account_description: Employee Payment
+                          debit:
+                            amount: 0
+                            currency: usd
+                          credit:
+                            amount: 5463791
+                            currency: usd
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+components:
+  schemas:
+    Metadata:
+      type: object
+      description: The metadata to be attached to the entity by existing rules. It is a key-value pairs where the values can be of any type (string, number, boolean, object, array, etc.).
+      additionalProperties:
+        type: object
+        nullable: true
+    GetAllPayGroupsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: Finch id (uuidv4) for the pay group
+          name:
+            type: string
+            description: Name of the pay group
+          pay_frequencies:
+            type: array
+            items:
+              $ref: '#/components/schemas/PayFrequency'
+            description: List of pay frequencies associated with this pay group
+        required:
+        - id
+        - name
+        - pay_frequencies
+    Money:
+      type: object
+      nullable: true
+      properties:
+        amount:
+          type: integer
+          nullable: true
+          description: Amount for money object (in cents)
+        currency:
+          type: string
+      required:
+      - amount
+      - currency
+      title: Money
+      x-tags:
+      - Models
+    UpdateRuleRequest:
+      type: object
+      properties:
+        optionalProperty:
+          effective_start_date:
+            description: Specifies when the rule should begin applying based on the date.
+            $ref: '#/components/schemas/Date'
+          effective_end_date:
+            $ref: '#/components/schemas/Date'
+            description: Specifies when the rules should stop applying rules based on the date.
+          conditions:
+            type: array
+            items:
+              type: object
+              properties:
+                field:
+                  type: string
+                  description: The field to be checked in the rule.
+                operator:
+                  type: string
+                  description: The operator to be used in the rule.
+                  enum:
+                  - equals
+                value:
+                  type: string
+                  description: The value of the field to be checked in the rule.
+          attributes:
+            type: object
+            description: Specifies the fields to be applied when the condition is met.
+            properties:
+              metadata:
+                type: object
+                description: The metadata to be attached in the entity. It is a key-value pairs where the values can be of any type (string, number, boolean, object, array, etc.).
+                additionalProperties: true
+          entity_type:
+            type: string
+            description: The entity type to which the rule is applied.
+            enum:
+            - pay_statement_item
+    PayStatement:
+      type: object
+      properties:
+        individual_id:
+          type: string
+          description: A stable Finch `id` (UUID v4) for an individual in the company
+        type:
+          type: string
+          nullable: true
+          enum:
+          - off_cycle_payroll
+          - one_time_payment
+          - regular_payroll
+          - null
+          description: The type of the payment associated with the pay statement.
+        payment_method:
+          type: string
+          nullable: true
+          enum:
+          - check
+          - direct_deposit
+          - other
+          - null
+          description: The payment method.
+        total_hours:
+          type: number
+          nullable: true
+          description: The number of hours worked for this pay period
+        gross_pay:
+          $ref: '#/components/schemas/Money'
+        net_pay:
+          $ref: '#/components/schemas/Money'
+        earnings:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            properties:
+              type:
+                type: string
+                nullable: true
+                enum:
+                - salary
+                - wage
+                - reimbursement
+                - overtime
+                - severance
+                - double_overtime
+                - pto
+                - sick
+                - bonus
+                - commission
+                - tips
+                - '1099'
+                - other
+                - null
+                description: The type of earning.
+              name:
+                type: string
+                nullable: true
+                description: The exact name of the earning from the pay statement.
+              amount:
+                type: integer
+                nullable: true
+                description: The earnings amount in cents.
+              currency:
+                type: string
+                nullable: true
+                description: The earnings currency code.
+              hours:
+                type: number
+                nullable: true
+                description: The number of hours associated with this earning. (For salaried employees, this could be hours per pay period, `0` or `null`, depending on the provider).
+              attributes:
+                type: object
+                nullable: true
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                - metadata
+            required:
+            - type
+            - name
+            - amount
+            - currency
+            - hours
+          description: The array of earnings objects associated with this pay statement
+        taxes:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                nullable: true
+                enum:
+                - state
+                - federal
+                - local
+                - fica
+                - null
+                description: The type of taxes.
+              name:
+                type: string
+                nullable: true
+                description: The exact name of tax from the pay statement.
+              employer:
+                type: boolean
+                nullable: true
+                description: '`true` if the amount is paid by the employers.'
+              amount:
+                type: integer
+                nullable: true
+                description: The tax amount in cents.
+              currency:
+                type: string
+                nullable: true
+                description: The currency code.
+              attributes:
+                type: object
+                nullable: true
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                - metadata
+            required:
+            - type
+            - name
+            - employer
+            - currency
+          description: The array of taxes objects associated with this pay statement.
+        employee_deductions:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                nullable: true
+                description: The deduction name from the pay statement.
+              amount:
+                type: integer
+                nullable: true
+                description: The deduction amount in cents.
+              currency:
+                type: string
+                nullable: true
+                description: The deduction currency.
+              pre_tax:
+                type: boolean
+                nullable: true
+                description: Boolean indicating if the deduction is pre-tax.
+              type:
+                $ref: '#/components/schemas/BenefitType'
+              attributes:
+                type: object
+                nullable: true
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                - metadata
+            required:
+            - name
+            - amount
+            - currency
+            - pre_tax
+            - type
+          description: The array of deductions objects associated with this pay statement.
+        employer_contributions:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                nullable: true
+                description: The contribution name from the pay statement.
+              amount:
+                type: integer
+                nullable: true
+                description: The contribution amount in cents.
+              currency:
+                type: string
+                nullable: true
+                description: The contribution currency.
+              type:
+                $ref: '#/components/schemas/BenefitType'
+              attributes:
+                type: object
+                nullable: true
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/Metadata'
+                required:
+                - metadata
+            required:
+            - name
+            - currency
+            - type
+      required:
+      - individual_id
+      - type
+      - payment_method
+      - total_hours
+      - gross_pay
+      - net_pay
+      - earnings
+      - taxes
+      - employee_deductions
+      - employer_contributions
+      title: Pay Statement
+    LedgerTotals:
+      type: object
+      properties:
+        debit:
+          $ref: '#/components/schemas/LedgerMoney'
+        credit:
+          $ref: '#/components/schemas/LedgerMoney'
+        balanced:
+          type: boolean
+          description: '`true` when total debit equals total credit.'
+      required:
+      - debit
+      - credit
+      - balanced
+      title: Ledger Totals
+    UpdateRuleResponse:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Finch id (uuidv4) for the rule.
+            format: uuid
+          priority:
+            type: integer
+            description: The priority of the rule.
+          created_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was created.
+          updated_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was last updated.
+      - $ref: '#/components/schemas/CreateRuleRequest'
+    DeleteRuleResponse:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Finch id (uuidv4) for the rule.
+            format: uuid
+          priority:
+            type: integer
+            description: The priority of the rule.
+          created_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was created.
+          updated_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was last updated.
+          deleted_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was deleted.
+      - $ref: '#/components/schemas/CreateRuleRequest'
+    Error:
+      title: Error
+      type: object
+      description: Generic error response structure
+      properties:
+        code:
+          type: integer
+          description: The status code of the request.
+        name:
+          type: string
+          description: Identifier describing the error.
+        finch_code:
+          type: string
+          description: A descriptive identifier for the error.
+        message:
+          type: string
+          description: A short English description that provides more information about the error.
+      required:
+      - code
+      - name
+      - finch_code
+      - message
+    GetRulesResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateRuleResponse'
+      required:
+      - responses
+    BenefitType:
+      type: string
+      nullable: true
+      enum:
+      - '457'
+      - 401k
+      - 401k_roth
+      - 401k_loan
+      - 403b
+      - 403b_roth
+      - 457_roth
+      - commuter
+      - custom_post_tax
+      - custom_pre_tax
+      - fsa_dependent_care
+      - fsa_medical
+      - hsa_post
+      - hsa_pre
+      - s125_dental
+      - s125_medical
+      - s125_vision
+      - simple
+      - simple_ira
+      - null
+      description: Type of benefit.
+      title: BenefitType
+      x-tags:
+      - Models
+      x-stainless-renameMap:
+        _401k_loan: 401k_loan
+        _401k_roth: 401k_roth
+        _401k: 401k
+        _403b_roth: 403b_roth
+        _403b: 403b
+        _457_roth: 457_roth
+        _457: '457'
+    GetPayStatementsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              payment_id:
+                type: string
+              code:
+                type: integer
+              body:
+                anyOf:
+                - type: object
+                  properties:
+                    paging:
+                      type: object
+                      properties:
+                        count:
+                          type: integer
+                          description: The total number of elements for the entire query (not just the given page)
+                        offset:
+                          type: integer
+                          description: The current start index of the returned list of elements
+                      required:
+                      - offset
+                      title: Paging
+                      x-tags:
+                      - Models
+                    pay_statements:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/PayStatement'
+                  required:
+                  - paging
+                  - pay_statements
+                  title: PayStatementData
+                - $ref: '#/components/schemas/BatchError'
+                - type: object
+                  properties:
+                    code:
+                      type: number
+                      enum:
+                      - 202
+                    finch_code:
+                      type: string
+                      enum:
+                      - data_sync_in_progress
+                    message:
+                      type: string
+                      enum:
+                      - The pay statements for this payment are being fetched. Please check back later.
+                    name:
+                      type: string
+                      enum:
+                      - accepted
+                  required:
+                  - code
+                  - finch_code
+                  - message
+                  - name
+                  title: PayStatementDataSyncInProgress
+            required:
+            - payment_id
+            - code
+            - body
+      required:
+      - responses
+    GetLedgerItemsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            $ref: '#/components/schemas/LedgerBatchItem'
+      required:
+      - responses
+    GetPayGroupResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Finch id (uuidv4) for the pay group
+        name:
+          type: string
+          description: Name of the pay group
+        pay_frequencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/PayFrequency'
+          description: List of pay frequencies associated with this pay group
+        individual_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+            description: Finch id (uuidv4) for an individual assigned to this pay group
+      required:
+      - id
+      - name
+      - pay_frequencies
+      - individual_ids
+    PayFrequency:
+      type: string
+      enum:
+      - annually
+      - bi_weekly
+      - daily
+      - monthly
+      - other
+      - quarterly
+      - semi_annually
+      - semi_monthly
+      - weekly
+    LedgerEntry:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - regular_wages
+          - overtime_wages
+          - bonus_wages
+          - paid_leave_wages
+          - severance_wages
+          - equity_compensation
+          - other_earnings
+          - expense_reimbursement
+          - contractor_payment
+          - employer_donation
+          - employer_tax_fica
+          - employer_tax_unemployment
+          - employer_tax_disability_leave
+          - employer_tax_workers_comp
+          - employer_tax_local
+          - employer_tax_other
+          - employee_tax_income
+          - employee_tax_fica
+          - employee_tax_other
+          - employer_contribution_retirement
+          - employer_contribution_retirement_401k
+          - employer_contribution_retirement_403b
+          - employer_contribution_retirement_457
+          - employer_contribution_health
+          - employer_contribution_medical
+          - employer_contribution_dental
+          - employer_contribution_vision
+          - employer_contribution_other
+          - pretax_deduction
+          - posttax_deduction
+          - garnishment
+          - benefit_liability
+          - benefit_liability_retirement_401k
+          - benefit_liability_retirement_403b
+          - benefit_liability_retirement_457
+          - benefit_liability_medical
+          - benefit_liability_dental
+          - benefit_liability_vision
+          - tax_liability_accrual
+          - tax_receivable
+          - tax_credit_accrual
+          - employer_rd_tax_credit_offset
+          - cash_debit_net_pay
+          - cash_debit_tax_remittance
+          - cash_debit_other
+          - adjustment
+          - other
+          description: 'The normalized Finch classification for this entry, consistent across providers. See `account_type` for the provider''s own label.
+
+
+            Values marked `fallback` are returned when the provider does not identify the specific benefit.
+
+
+            ### Earnings: debits to Wage Expense
+
+            `regular_wages`, `overtime_wages`, `bonus_wages`, `paid_leave_wages`, `severance_wages`, `equity_compensation`, `other_earnings`
+
+
+            ### Non-wage compensation: debits to Operating Expense
+
+            `expense_reimbursement`, `contractor_payment`, `employer_donation`
+
+
+            ### Employer payroll taxes: debits to Payroll Tax Expense
+
+            `employer_tax_fica`, `employer_tax_unemployment`, `employer_tax_disability_leave`, `employer_tax_workers_comp`, `employer_tax_local`, `employer_tax_other`
+
+
+            ### Employee tax withholding: credits to Tax Payable
+
+            `employee_tax_income`, `employee_tax_fica`, `employee_tax_other`
+
+
+            ### Employer benefit contributions: debits to Employee Benefits Expense
+
+            `employer_contribution_retirement` (fallback), `employer_contribution_retirement_401k`, `employer_contribution_retirement_403b`, `employer_contribution_retirement_457`, `employer_contribution_health` (fallback), `employer_contribution_medical`, `employer_contribution_dental`, `employer_contribution_vision`, `employer_contribution_other`
+
+
+            ### Employee benefit deductions: credits to Benefit Liability
+
+            `pretax_deduction`, `posttax_deduction`, `garnishment`
+
+
+            ### Benefit remittance liability: credits owed to the carrier
+
+            `benefit_liability` (fallback), `benefit_liability_retirement_401k`, `benefit_liability_retirement_403b`, `benefit_liability_retirement_457`, `benefit_liability_medical`, `benefit_liability_dental`, `benefit_liability_vision`
+
+
+            ### Tax balance sheet
+
+            `tax_liability_accrual`, `tax_receivable`, `tax_credit_accrual` (generic), `employer_rd_tax_credit_offset`
+
+
+            ### Cash movements: credits to Cash
+
+            `cash_debit_net_pay`, `cash_debit_tax_remittance`, `cash_debit_other`
+
+
+            ### Fallback
+
+            `adjustment`, `other`'
+        account_type:
+          type: string
+          nullable: true
+          description: The provider's own account-type label, returned unmodified.
+        account_description:
+          type: string
+          nullable: true
+          description: The provider's own account description, returned unmodified.
+        debit:
+          $ref: '#/components/schemas/LedgerMoney'
+        credit:
+          $ref: '#/components/schemas/LedgerMoney'
+      required:
+      - type
+      - account_type
+      - account_description
+      - debit
+      - credit
+      title: Ledger Entry
+    GetPaymentsResponse:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            format: uuid
+            description: The unique id for the payment.
+          pay_period:
+            type: object
+            nullable: true
+            properties:
+              start_date:
+                $ref: '#/components/schemas/Date'
+              end_date:
+                $ref: '#/components/schemas/Date'
+            required:
+            - start_date
+            - end_date
+            description: The pay period object.
+          pay_date:
+            $ref: '#/components/schemas/Date'
+          debit_date:
+            $ref: '#/components/schemas/Date'
+          company_debit:
+            $ref: '#/components/schemas/Money'
+          gross_pay:
+            $ref: '#/components/schemas/Money'
+          net_pay:
+            $ref: '#/components/schemas/Money'
+          employer_taxes:
+            $ref: '#/components/schemas/Money'
+          employee_taxes:
+            $ref: '#/components/schemas/Money'
+          individual_ids:
+            type: array
+            nullable: true
+            items:
+              type: string
+              format: uuid
+            description: Array of every individual on this payment.
+          pay_group_ids:
+            type: array
+            nullable: true
+            items:
+              type: string
+              format: uuid
+            description: Array of the Finch id (uuidv4) of every pay group associated with this payment.
+          pay_frequencies:
+            type: array
+            nullable: true
+            items:
+              $ref: '#/components/schemas/PayFrequency'
+            description: List of pay frequencies associated with this payment.
+        required:
+        - id
+        - pay_period
+        - pay_date
+        - debit_date
+        - company_debit
+        - gross_pay
+        - net_pay
+        - employer_taxes
+        - employee_taxes
+        - individual_ids
+        - pay_group_ids
+        - pay_frequencies
+    AcceptedResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          default: 202
+        name:
+          type: string
+        finch_code:
+          type: string
+        message:
+          type: string
+      required:
+      - name
+      - finch_code
+      - message
+    BatchError:
+      type: object
+      properties:
+        code:
+          type: number
+        finch_code:
+          type: string
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - message
+      - name
+    GetPayStatementItemsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: The name of the pay statement item.
+              category:
+                type: string
+                enum:
+                - earnings
+                - taxes
+                - employee_deductions
+                - employer_contributions
+                description: The category of the pay statement item.
+              attributes:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    nullable: true
+                    description: The type of the pay statement item.
+                  pre_tax:
+                    type: boolean
+                    nullable: true
+                    description: '`true` if the pay statement item is pre-tax. This field is only available for employee deductions.'
+                  employer:
+                    type: boolean
+                    nullable: true
+                    description: '`true` if the amount is paid by the employers. This field is only available for taxes.'
+                  metadata:
+                    type: object
+                    nullable: true
+                    additionalProperties:
+                      nullable: true
+                    description: The metadata of the pay statement item derived by the rules engine if available. Each attribute will be a key-value pair defined by a rule.
+                required:
+                - metadata
+                description: The attributes of the pay statement item.
+            required:
+            - name
+            - category
+            - attributes
+      required:
+      - responses
+    LedgerBatchItem:
+      type: object
+      properties:
+        payment_id:
+          type: string
+        code:
+          type: integer
+        body:
+          anyOf:
+          - $ref: '#/components/schemas/LedgerItemsData'
+          - $ref: '#/components/schemas/BatchError'
+      required:
+      - payment_id
+      - code
+      - body
+      title: Ledger Batch Item
+    Date:
+      type: string
+      title: Date
+      nullable: true
+    LedgerMoney:
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount in cents.
+        currency:
+          type: string
+          nullable: true
+          description: The ISO 4217 currency code.
+      required:
+      - amount
+      - currency
+      title: Ledger Money
+    LedgerItemsData:
+      type: object
+      properties:
+        source:
+          type: string
+          enum:
+          - direct
+          - synthesized
+          description: '`direct` when the provider supplies the ledger; `synthesized` when Finch computes it from pay statements.'
+        provider_description:
+          type: string
+          nullable: true
+          description: The provider's own description for this ledger, returned unmodified. `null` when the provider gives none.
+        pay_date:
+          type: string
+          description: The payroll check date for this ledger, in `YYYY-MM-DD`.
+        totals:
+          $ref: '#/components/schemas/LedgerTotals'
+        paging:
+          type: object
+          properties:
+            count:
+              type: integer
+              description: The total number of elements for the entire query (not just the given page)
+            offset:
+              type: integer
+              description: The current start index of the returned list of elements
+          required:
+          - offset
+          title: Paging
+          x-tags:
+          - Models
+        ledger_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/LedgerEntry'
+      required:
+      - source
+      - provider_description
+      - pay_date
+      - totals
+      - paging
+      - ledger_items
+      title: Ledger Items Data
+    CreateRuleRequest:
+      type: object
+      properties:
+        effective_start_date:
+          description: Specifies when the rule should begin applying based on the date.
+          $ref: '#/components/schemas/Date'
+        effective_end_date:
+          $ref: '#/components/schemas/Date'
+          description: Specifies when the rules should stop applying rules based on the date.
+        conditions:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                description: The field to be checked in the rule.
+              operator:
+                type: string
+                description: The operator to be used in the rule.
+                enum:
+                - equals
+              value:
+                type: string
+                description: The value of the field to be checked in the rule.
+        attributes:
+          type: object
+          description: Specifies the fields to be applied when the condition is met.
+          properties:
+            metadata:
+              type: object
+              description: The metadata to be attached in the entity. It is a key-value pairs where the values can be of any type (string, number, boolean, object, array, etc.).
+              additionalProperties: true
+        entity_type:
+          type: string
+          description: The entity type to which the rule is applied.
+          enum:
+          - pay_statement_item
+    CreateRuleResponse:
+      allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            description: Finch id (uuidv4) for the rule.
+          priority:
+            type: integer
+            description: The priority of the rule.
+          created_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was created.
+          updated_at:
+            type: string
+            format: date-time
+            description: The datetime when the rule was last updated.
+      - $ref: '#/components/schemas/CreateRuleRequest'
+  parameters:
+    API-Version:
+      name: Finch-API-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: '2020-09-17'
+        format: date
+      description: Header used to specify the version for a given API request. Current version is 2020-09-17.
+      x-stainless-param: false
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: 'Used to indicate the original media type of the resource '
+      x-stainless-param: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret

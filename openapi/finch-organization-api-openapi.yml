@@ -1,0 +1,1383 @@
+openapi: 3.2.0
+info:
+  title: Reference Organization API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Organization
+paths:
+  /employer/company:
+    get:
+      description: Read basic company data
+      summary: Company
+      tags:
+      - Organization
+      operationId: get-company
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Basic company data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompanyResponse'
+              examples:
+                Success:
+                  value:
+                    id: 514aa2b7-898f-4ce7-bc05-c2fe993713e8
+                    legal_name: Acme, Inc.
+                    entity:
+                      type: corporation
+                      subtype: s_corporation
+                    ein: 12-3456789
+                    primary_email: founders@acme.com
+                    primary_phone_number: '+14475678901'
+                    departments:
+                    - name: Engineering
+                      parent: null
+                    - name: Platform
+                      parent:
+                        name: Engineering
+                    locations:
+                    - line1: 628 Bear Ave
+                      line2: Apt A
+                      city: Schenectady
+                      state: NY
+                      postal_code: '94301'
+                      country: US
+                    accounts:
+                    - routing_number: '123456789'
+                      account_name: CHECKING ACCOUNT
+                      institution_name: BANK OF AMERICA, N.A.
+                      account_type: checking
+                      account_number: '98765432'
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst company = await client.hris.company.retrieve();\n\nconsole.log(company.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ncompany = client.hris.company.retrieve()\nprint(company.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tcompany, err := client.HRIS.Company.Get(context.TODO(), finchgo.HRISCompanyGetParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", company.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.Company;\nimport com.tryfinch.api.models.HrisCompanyRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        Company company = client.hris().company().retrieve();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.Company\nimport com.tryfinch.api.models.HrisCompanyRetrieveParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val company: Company = client.hris().company().retrieve()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          company = finch.hris.company.retrieve
+
+
+          puts(company)'
+  /employer/directory:
+    get:
+      description: Read company directory and organization structure
+      summary: Directory
+      operationId: get-directory
+      tags:
+      - Organization
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: limit
+        in: query
+        description: Number of employees to return (defaults to 100, maximum 10000)
+        required: false
+        schema:
+          type: integer
+          default: 100
+          maximum: 10000
+      - name: offset
+        in: query
+        description: Index to start from (defaults to 0)
+        required: false
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Company directory and organization structure
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDirectoryResponse'
+              examples:
+                Success:
+                  value:
+                    paging:
+                      count: 25
+                      offset: 10
+                    individuals:
+                    - id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                      first_name: Jane
+                      middle_name: null
+                      last_name: Doe
+                      manager:
+                        id: c205b3fa-b626-4346-bf0f-ca065ab88d31
+                      department:
+                        name: Product
+                      is_active: true
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '422':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+                - finch_code
+              examples:
+                PageSizeLimitExceeded:
+                  value:
+                    code: 422
+                    name: unprocessable_entity_error
+                    finch_code: page_size_limit_exceeded
+                    message: Page size exceeds the maximum of 10000 items. Please reduce the limit parameter.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const individualInDirectory of client.hris.directory.list()) {\n  console.log(individualInDirectory.id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.directory.list()\npage = page.individuals[0]\nprint(page.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Directory.List(context.TODO(), finchgo.HRISDirectoryListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisDirectoryListPage;\nimport com.tryfinch.api.models.HrisDirectoryListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisDirectoryListPage page = client.hris().directory().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisDirectoryListPage\nimport com.tryfinch.api.models.HrisDirectoryListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisDirectoryListPage = client.hris().directory().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.directory.list
+
+
+          puts(page)'
+  /employer/individual:
+    post:
+      description: Read individual data, excluding income and employment data
+      summary: Individual
+      operationId: get-individual
+      tags:
+      - Organization
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  description: The array of batch requests. Maximum 10000 items per request.
+                  maxItems: 10000
+                  items:
+                    type: object
+                    properties:
+                      individual_id:
+                        type: string
+                    required:
+                    - individual_id
+                options:
+                  type: object
+                  nullable: true
+                  properties:
+                    include:
+                      type: array
+                      items:
+                        type: string
+              required:
+              - requests
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Individual data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIndividualsResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                      code: 200
+                      body:
+                        id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                        first_name: Jane
+                        middle_name: null
+                        last_name: Doe
+                        preferred_name: Janey
+                        emails:
+                        - data: jane@acme.com
+                          type: work
+                        - data: janed@personal.com
+                          type: personal
+                        phone_numbers:
+                        - data: '+14475678901'
+                          type: personal
+                        gender: female
+                        ethnicity: black_or_african_american
+                        marital_status: married
+                        dob: '1970-01-01'
+                        residence:
+                          line1: 123 Main St
+                          line2: Apt C
+                          city: Schenectady
+                          state: NY
+                          postal_code: '12345'
+                          country: US
+                BatchError:
+                  value:
+                    responses:
+                    - individual_id: 8b3f8edc-735d-4382-84d6-104eac2013b5
+                      code: 404
+                      body:
+                        code: 404
+                        finch_code: individual_not_found
+                        message: No individual with id 8b3f8edc-735d-4382-84d6-104eac2013b5 found
+                        name: not_found_error
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '422':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+                - finch_code
+              examples:
+                BatchLimitExceeded:
+                  value:
+                    code: 422
+                    name: unprocessable_entity_error
+                    finch_code: batch_limit_exceeded
+                    message: Batch size exceeds the maximum of 10000 items. Please reduce the number of items in your request.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const individualResponse of client.hris.individuals.retrieveMany({\n  requests: [{ individual_id: 'individual_id' }],\n})) {\n  console.log(individualResponse.individual_id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.individuals.retrieve_many(\n    requests=[{\n        \"individual_id\": \"individual_id\"\n    }],\n)\npage = page.responses[0]\nprint(page.individual_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Individuals.GetMany(context.TODO(), finchgo.HRISIndividualGetManyParams{\n\t\tRequests: finchgo.F([]finchgo.HRISIndividualGetManyParamsRequest{{\n\t\t\tIndividualID: finchgo.F(\"individual_id\"),\n\t\t}}),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisIndividualRetrieveManyPage;\nimport com.tryfinch.api.models.HrisIndividualRetrieveManyParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisIndividualRetrieveManyParams params = HrisIndividualRetrieveManyParams.builder()\n            .addRequest(HrisIndividualRetrieveManyParams.Request.builder()\n                .individualId(\"individual_id\")\n                .build())\n            .build();\n        HrisIndividualRetrieveManyPage page = client.hris().individuals().retrieveMany(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisIndividualRetrieveManyPage\nimport com.tryfinch.api.models.HrisIndividualRetrieveManyParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: HrisIndividualRetrieveManyParams = HrisIndividualRetrieveManyParams.builder()\n        .addRequest(HrisIndividualRetrieveManyParams.Request.builder()\n            .individualId(\"individual_id\")\n            .build())\n        .build()\n    val page: HrisIndividualRetrieveManyPage = client.hris().individuals().retrieveMany(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.individuals.retrieve_many(requests: [{individual_id: "individual_id"}])
+
+
+          puts(page)'
+  /employer/employment:
+    post:
+      description: Read individual employment and income data
+      summary: Employment
+      operationId: get-employment
+      tags:
+      - Organization
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Individual Ids Request Body
+              properties:
+                requests:
+                  type: array
+                  description: The array of batch requests. Maximum 10000 items per request.
+                  maxItems: 10000
+                  items:
+                    type: object
+                    properties:
+                      individual_id:
+                        type: string
+                        description: A stable Finch `id` (UUID v4) for an individual in the company.
+                    required:
+                    - individual_id
+              required:
+              - requests
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Employment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmploymentResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                      code: 200
+                      body:
+                        id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                        first_name: Jane
+                        middle_name: null
+                        last_name: Doe
+                        title: Customer Support
+                        manager:
+                          id: c205b3fa-b626-4346-bf0f-ca065ab88d31
+                        department:
+                          name: Product
+                        employment:
+                          type: employee
+                          subtype: full_time
+                        start_date: '2017-06-30'
+                        end_date: null
+                        latest_rehire_date: null
+                        is_active: true
+                        employment_status: onboarding
+                        flsa_status: exempt
+                        union_code: null
+                        union_local: null
+                        benefit_eligibility_class: null
+                        highly_compensated_employee: false
+                        key_employee: false
+                        class_code: '8810'
+                        location:
+                          line1: 12 Bird Drive
+                          line2: null
+                          city: Palo Alto
+                          state: CA
+                          postal_code: '94301'
+                          country: US
+                        income:
+                          unit: yearly
+                          amount: 10000000
+                          currency: usd
+                          effective_date: '2019-03-01'
+                        income_history:
+                        - unit: yearly
+                          amount: 9000000
+                          currency: usd
+                          effective_date: '2018-05-15'
+                        - unit: yearly
+                          amount: 8000000
+                          currency: usd
+                          effective_date: '2017-06-30'
+                        custom_fields:
+                        - name: tShirtSize
+                          value: L
+                        source_id: VWK-88a8505d
+                BatchError:
+                  value:
+                    responses:
+                    - individual_id: 8b3f8edc-735d-4382-84d6-104eac2013b5
+                      code: 404
+                      body:
+                        code: 404
+                        finch_code: individual_not_found
+                        message: No individual with id 8b3f8edc-735d-4382-84d6-104eac2013b5 found
+                        name: not_found_error
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '422':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+                - finch_code
+              examples:
+                BatchLimitExceeded:
+                  value:
+                    code: 422
+                    name: unprocessable_entity_error
+                    finch_code: batch_limit_exceeded
+                    message: Batch size exceeds the maximum of 10000 items. Please reduce the number of items in your request.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const employmentDataResponse of client.hris.employments.retrieveMany({\n  requests: [{ individual_id: 'individual_id' }],\n})) {\n  console.log(employmentDataResponse.individual_id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.employments.retrieve_many(\n    requests=[{\n        \"individual_id\": \"individual_id\"\n    }],\n)\npage = page.responses[0]\nprint(page.individual_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Employments.GetMany(context.TODO(), finchgo.HRISEmploymentGetManyParams{\n\t\tRequests: finchgo.F([]finchgo.HRISEmploymentGetManyParamsRequest{{\n\t\t\tIndividualID: finchgo.F(\"individual_id\"),\n\t\t}}),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisEmploymentRetrieveManyPage;\nimport com.tryfinch.api.models.HrisEmploymentRetrieveManyParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisEmploymentRetrieveManyParams params = HrisEmploymentRetrieveManyParams.builder()\n            .addRequest(HrisEmploymentRetrieveManyParams.Request.builder()\n                .individualId(\"individual_id\")\n                .build())\n            .build();\n        HrisEmploymentRetrieveManyPage page = client.hris().employments().retrieveMany(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisEmploymentRetrieveManyPage\nimport com.tryfinch.api.models.HrisEmploymentRetrieveManyParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: HrisEmploymentRetrieveManyParams = HrisEmploymentRetrieveManyParams.builder()\n        .addRequest(HrisEmploymentRetrieveManyParams.Request.builder()\n            .individualId(\"individual_id\")\n            .build())\n        .build()\n    val page: HrisEmploymentRetrieveManyPage = client.hris().employments().retrieveMany(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.employments.retrieve_many(requests: [{individual_id: "individual_id"}])
+
+
+          puts(page)'
+components:
+  schemas:
+    Location:
+      type: object
+      nullable: true
+      properties:
+        line1:
+          type: string
+          nullable: true
+          description: Street address or PO box.
+        line2:
+          type: string
+          nullable: true
+          description: Apartment, suite, unit, or building.
+        city:
+          type: string
+          nullable: true
+          description: City, district, suburb, town, or village.
+        state:
+          type: string
+          nullable: true
+          description: The state code.
+        postal_code:
+          type: string
+          nullable: true
+          description: The postal code or zip code.
+        country:
+          type: string
+          nullable: true
+          description: The 2-letter ISO 3166 country code.
+        name:
+          type: string
+          nullable: true
+        source_id:
+          type: string
+          nullable: true
+      required:
+      - line1
+      - line2
+      - city
+      - state
+      - postal_code
+      - country
+      description: ''
+      title: Location
+      x-tags:
+      - Models
+    GetCompanyResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: A stable Finch `id` (UUID v4) for the company.
+        legal_name:
+          type: string
+          nullable: true
+          description: The legal name of the company.
+        entity:
+          type: object
+          nullable: true
+          properties:
+            type:
+              type: string
+              nullable: true
+              enum:
+              - llc
+              - lp
+              - corporation
+              - sole_proprietor
+              - non_profit
+              - partnership
+              - cooperative
+              - null
+              description: The tax payer type of the company.
+            subtype:
+              type: string
+              nullable: true
+              enum:
+              - s_corporation
+              - c_corporation
+              - b_corporation
+              - null
+              description: The tax payer subtype of the company.
+          required:
+          - type
+          - subtype
+          description: The entity type object.
+        primary_email:
+          type: string
+          nullable: true
+          format: email
+          description: The email of the main administrator on the account.
+        primary_phone_number:
+          type: string
+          nullable: true
+          description: 'The phone number of the main administrator on the account. Format: E.164, with extension where applicable, e.g. `+NNNNNNNNNNN xExtension`'
+        departments:
+          type: array
+          nullable: true
+          items:
+            type: object
+            nullable: true
+            properties:
+              name:
+                type: string
+                nullable: true
+                description: The department name.
+              parent:
+                type: object
+                nullable: true
+                properties:
+                  name:
+                    type: string
+                    nullable: true
+                    description: The parent department's name.
+                required:
+                - name
+                description: The parent department, if present.
+            required:
+            - name
+            - parent
+          description: The array of company departments.
+        ein:
+          type: string
+          nullable: true
+          description: The employer identification number.
+        locations:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Location'
+        accounts:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              routing_number:
+                type: string
+                nullable: true
+                description: A nine-digit code that's based on the U.S. Bank location where your account was opened.
+              account_name:
+                type: string
+                nullable: true
+                description: The name of the bank associated in the payroll/HRIS system.
+              institution_name:
+                type: string
+                nullable: true
+                description: Name of the banking institution.
+              account_type:
+                type: string
+                nullable: true
+                enum:
+                - checking
+                - savings
+                - null
+                description: The type of bank account.
+              account_number:
+                type: string
+                nullable: true
+                description: 10-12 digit number to specify the bank account
+            required:
+            - routing_number
+            - account_name
+            - institution_name
+            - account_type
+            - account_number
+          description: An array of bank account objects associated with the payroll/HRIS system.
+      required:
+      - id
+      - legal_name
+      - entity
+      - primary_email
+      - primary_phone_number
+      - departments
+      - ein
+      - locations
+      - accounts
+      title: GetCompany
+    AcceptedResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          default: 202
+        name:
+          type: string
+        finch_code:
+          type: string
+        message:
+          type: string
+      required:
+      - name
+      - finch_code
+      - message
+    GetEmploymentResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              individual_id:
+                type: string
+                format: uuid
+                description: A stable Finch `id` (UUID v4) for an individual in the company.
+              code:
+                type: integer
+              body:
+                anyOf:
+                - type: object
+                  properties:
+                    first_name:
+                      type: string
+                      nullable: true
+                      description: The legal first name of the individual.
+                    middle_name:
+                      type: string
+                      nullable: true
+                      description: The legal middle name of the individual.
+                    last_name:
+                      type: string
+                      nullable: true
+                      description: The legal last name of the individual.
+                    title:
+                      type: string
+                      nullable: true
+                      description: The current title of the individual.
+                    manager:
+                      type: object
+                      nullable: true
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          description: A stable Finch `id` (UUID v4) for an individual in the company.
+                      required:
+                      - id
+                      description: The manager object representing the manager of the individual within the org.
+                    department:
+                      type: object
+                      nullable: true
+                      properties:
+                        name:
+                          type: string
+                          nullable: true
+                          description: The name of the department associated with the individual.
+                      required:
+                      - name
+                      description: The department object.
+                    employment:
+                      type: object
+                      nullable: true
+                      properties:
+                        type:
+                          type: string
+                          nullable: true
+                          enum:
+                          - employee
+                          - contractor
+                          - null
+                          description: The main employment type of the individual.
+                        subtype:
+                          type: string
+                          nullable: true
+                          enum:
+                          - full_time
+                          - intern
+                          - part_time
+                          - temp
+                          - seasonal
+                          - individual_contractor
+                          - null
+                          description: 'The secondary employment type of the individual. Options: `full_time`, `part_time`, `intern`, `temp`, `seasonal` and `individual_contractor`.'
+                      required:
+                      - type
+                      - subtype
+                      description: The employment object.
+                    start_date:
+                      $ref: '#/components/schemas/Date'
+                    end_date:
+                      $ref: '#/components/schemas/Date'
+                    latest_rehire_date:
+                      $ref: '#/components/schemas/Date'
+                    is_active:
+                      type: boolean
+                      nullable: true
+                      description: '`true` if the individual an an active employee or contractor at the company.'
+                    employment_status:
+                      type: string
+                      nullable: true
+                      enum:
+                      - active
+                      - deceased
+                      - leave
+                      - onboarding
+                      - prehire
+                      - retired
+                      - terminated
+                      - null
+                      description: The detailed employment status of the individual.
+                    flsa_status:
+                      type: string
+                      nullable: true
+                      enum:
+                      - exempt
+                      - non_exempt
+                      - unknown
+                      - null
+                      description: 'The FLSA status of the individual. Available options: `exempt`, `non_exempt`, `unknown`.'
+                    union_code:
+                      type: string
+                      nullable: true
+                      description: The code identifying the union the employee is a member of, as configured in the payroll system.
+                    union_local:
+                      type: string
+                      nullable: true
+                      description: The local chapter or local number within the employee's union.
+                    benefit_eligibility_class:
+                      type: string
+                      nullable: true
+                      description: The employer defined benefit eligibility class that groups an employee into a set of eligible benefit plans, as stored by the provider. Null when not configured.
+                    highly_compensated_employee:
+                      type: boolean
+                      nullable: true
+                      description: IRS flag indicating whether the employee is classified as a Highly Compensated Employee for nondiscrimination testing purposes (ADP/ACP tests). US-only.
+                    key_employee:
+                      type: boolean
+                      nullable: true
+                      description: IRS flag indicating whether the employee is classified as a Key Employee for top-heavy testing purposes. US-only.
+                    class_code:
+                      type: string
+                      nullable: true
+                      description: Worker's compensation classification code for this employee
+                    location:
+                      $ref: '#/components/schemas/Location'
+                    income:
+                      $ref: '#/components/schemas/Income'
+                    income_history:
+                      type: array
+                      nullable: true
+                      items:
+                        $ref: '#/components/schemas/Income'
+                      description: The array of income history.
+                    custom_fields:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            nullable: true
+                          value:
+                            type:
+                            - string
+                            - array
+                            - object
+                            - number
+                            - boolean
+                            - 'null'
+                            nullable: true
+                      description: Custom fields for the individual. These are fields which are defined by the employer in the system. Custom fields are not currently supported for assisted connections.
+                    source_id:
+                      type: string
+                      nullable: true
+                      description: The source system's unique employment identifier for this individual
+                    id:
+                      type: string
+                      format: uuid
+                      description: A stable Finch `id` (UUID v4) for an individual in the company.
+                    work_id:
+                      type: string
+                      nullable: true
+                      description: This field is deprecated in favour of `source_id`
+                      deprecated: true
+                  required:
+                  - first_name
+                  - middle_name
+                  - last_name
+                  - title
+                  - manager
+                  - department
+                  - employment
+                  - start_date
+                  - end_date
+                  - latest_rehire_date
+                  - is_active
+                  - employment_status
+                  - flsa_status
+                  - union_code
+                  - union_local
+                  - benefit_eligibility_class
+                  - highly_compensated_employee
+                  - key_employee
+                  - class_code
+                  - location
+                  - id
+                  title: EmploymentDataResponseBody
+                - $ref: '#/components/schemas/BatchError'
+            required:
+            - individual_id
+            - code
+            - body
+      required:
+      - responses
+    BatchError:
+      type: object
+      properties:
+        code:
+          type: number
+        finch_code:
+          type: string
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - message
+      - name
+    GetDirectoryResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        individuals:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+                description: A stable Finch `id` (UUID v4) for an individual in the company.
+              first_name:
+                type: string
+                nullable: true
+                description: The legal first name of the individual.
+              middle_name:
+                type: string
+                nullable: true
+                description: The legal middle name of the individual.
+              last_name:
+                type: string
+                nullable: true
+                description: The legal last name of the individual.
+              manager:
+                type: object
+                nullable: true
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+                    description: A stable Finch `id` (UUID v4) for an individual in the company.
+                required:
+                - id
+                description: The manager object.
+              department:
+                type: object
+                nullable: true
+                properties:
+                  name:
+                    type: string
+                    nullable: true
+                    description: The name of the department.
+                description: The department object.
+              is_active:
+                type: boolean
+                nullable: true
+                description: '`true` if the individual is an active employee or contractor at the company.'
+            required:
+            - id
+            - first_name
+            - middle_name
+            - last_name
+            - manager
+            - department
+            - is_active
+          description: The array of employees.
+      required:
+      - paging
+      - individuals
+    Date:
+      type: string
+      title: Date
+      nullable: true
+    Paging:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The total number of elements for the entire query (not just the given page)
+          x-stainless-pagination-property:
+            purpose: offset_total_count_field
+        offset:
+          type: integer
+          description: The current start index of the returned list of elements
+          x-stainless-pagination-property:
+            purpose: offset_count_start_field
+      required:
+      - offset
+      title: Paging
+      x-tags:
+      - Models
+    Income:
+      type: object
+      nullable: true
+      properties:
+        unit:
+          type: string
+          nullable: true
+          enum:
+          - yearly
+          - quarterly
+          - monthly
+          - semi_monthly
+          - bi_weekly
+          - weekly
+          - daily
+          - hourly
+          - fixed
+          - null
+          description: 'The income unit of payment. Options: `yearly`, `quarterly`, `monthly`, `semi_monthly`, `bi_weekly`, `weekly`, `daily`, `hourly`, and `fixed`.'
+        amount:
+          type: integer
+          nullable: true
+          description: The income amount in cents.
+        currency:
+          type: string
+          nullable: true
+          description: The currency code.
+        effective_date:
+          type: string
+          nullable: true
+          format: date
+          description: The date the income amount went into effect.
+      required:
+      - unit
+      - amount
+      - currency
+      - effective_date
+      description: The employee's income as reported by the provider. This may not always be annualized income, but may be in units of bi-weekly, semi-monthly, daily, etc, depending on what information the provider returns.
+      title: Income
+      x-tags:
+      - Models
+    GetIndividualsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              individual_id:
+                type: string
+              code:
+                type: integer
+              body:
+                anyOf:
+                - type: object
+                  properties:
+                    first_name:
+                      type: string
+                      nullable: true
+                      description: The legal first name of the individual.
+                    middle_name:
+                      type: string
+                      nullable: true
+                      description: The legal middle name of the individual.
+                    last_name:
+                      type: string
+                      nullable: true
+                      description: The legal last name of the individual.
+                    preferred_name:
+                      type: string
+                      nullable: true
+                      description: The preferred name of the individual.
+                    emails:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        properties:
+                          data:
+                            type: string
+                          type:
+                            type: string
+                            nullable: true
+                            enum:
+                            - work
+                            - personal
+                            - null
+                        required:
+                        - data
+                        - type
+                    phone_numbers:
+                      type: array
+                      nullable: true
+                      items:
+                        type: object
+                        nullable: true
+                        properties:
+                          data:
+                            type: string
+                            nullable: true
+                            description: 'The phone number. Format: E.164, with extension where applicable, e.g. `+NNNNNNNNNNN xExtension`. If the number cannot be parsed, the raw value from the provider is returned.'
+                          type:
+                            type: string
+                            nullable: true
+                            enum:
+                            - work
+                            - personal
+                            - null
+                        required:
+                        - data
+                        - type
+                    gender:
+                      type: string
+                      nullable: true
+                      enum:
+                      - female
+                      - male
+                      - other
+                      - decline_to_specify
+                      - null
+                      description: The gender of the individual.
+                    ethnicity:
+                      type: string
+                      nullable: true
+                      enum:
+                      - asian
+                      - white
+                      - black_or_african_american
+                      - native_hawaiian_or_pacific_islander
+                      - american_indian_or_alaska_native
+                      - hispanic_or_latino
+                      - two_or_more_races
+                      - decline_to_specify
+                      - null
+                      description: The EEOC-defined ethnicity of the individual.
+                    marital_status:
+                      type: string
+                      nullable: true
+                      enum:
+                      - single
+                      - married
+                      - divorced
+                      - widowed
+                      - domestic_partner
+                      - unknown
+                      - null
+                      description: The employee's marital status, used for beneficiary designation and spousal consent workflows.
+                    dob:
+                      anyOf:
+                      - type: 'null'
+                      - $ref: '#/components/schemas/Date'
+                    ssn:
+                      type: string
+                      nullable: true
+                      description: 'Social Security Number of the individual. This field is only available with the `ssn` scope enabled and the `options: { include: [''ssn''] }` param set in the body. [Click here to learn more about enabling the SSN field](/developer-resources/Enable-SSN-Field).'
+                    encrypted_ssn:
+                      type: string
+                      nullable: true
+                      description: 'Social Security Number of the individual in **encrypted** format. This field is only available with the `ssn` scope enabled and the `options: { include: [''ssn''] }` param set in the body.'
+                    residence:
+                      $ref: '#/components/schemas/Location'
+                    id:
+                      type: string
+                      format: uuid
+                      description: A stable Finch `id` (UUID v4) for an individual in the company.
+                  required:
+                  - first_name
+                  - middle_name
+                  - last_name
+                  - preferred_name
+                  - phone_numbers
+                  - gender
+                  - ethnicity
+                  - marital_status
+                  - dob
+                  - residence
+                  - id
+                  title: IndividualResponseBody
+                - $ref: '#/components/schemas/BatchError'
+            required:
+            - individual_id
+            - code
+            - body
+      required:
+      - responses
+  parameters:
+    API-Version:
+      name: Finch-API-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: '2020-09-17'
+        format: date
+      description: Header used to specify the version for a given API request. Current version is 2020-09-17.
+      x-stainless-param: false
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: 'Used to indicate the original media type of the resource '
+      x-stainless-param: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret

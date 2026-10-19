@@ -1,0 +1,1662 @@
+openapi: 3.2.0
+info:
+  title: Reference Deductions API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Deductions
+paths:
+  /employer/benefits:
+    get:
+      summary: Get All Deductions
+      description: List all company-wide deductions and contributions.
+      operationId: get-company-benefits
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompanyBenefitsResponse'
+              examples:
+                Success:
+                  value:
+                  - benefit_id: e8b90071-0c11-471c-86e8-e303ef2f6782
+                    type: 401k
+                    description: Example 401k
+                    frequency: every_paycheck
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const companyBenefit of client.hris.benefits.list()) {\n  console.log(companyBenefit.benefit_id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.benefits.list()\npage = page.items[0]\nprint(page.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Benefits.List(context.TODO(), finchgo.HRISBenefitListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitListPage;\nimport com.tryfinch.api.models.HrisBenefitListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisBenefitListPage page = client.hris().benefits().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitListPage\nimport com.tryfinch.api.models.HrisBenefitListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisBenefitListPage = client.hris().benefits().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.benefits.list
+
+
+          puts(page)'
+    post:
+      summary: Create Deduction
+      description: Creates a new company-wide deduction or contribution. Please use the `/providers` endpoint to view available types for each provider.
+      operationId: create-company-benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      tags:
+      - Deductions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/BenefitType'
+                description:
+                  $ref: '#/components/schemas/BenefitDescription'
+                frequency:
+                  $ref: '#/components/schemas/BenefitFrequency'
+                company_contribution:
+                  $ref: '#/components/schemas/BenefitCompanyMatchContribution'
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCompanyBenefitsResponse'
+              examples:
+                Success:
+                  value:
+                    benefit_id: e8b90071-0c11-471c-86e8-e303ef2f6782
+                    job_id: be1b3351-a88e-46c2-96e4-c2cf38e529a7
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: Malformed Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Bad Request:
+                  value:
+                    code: 400
+                    name: invalid_request_error
+                    finch_code: invalid_request
+                    message: '[body:description]: Not a valid string'
+        '422':
+          description: Request provided with unsupported parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Invalid Benefit:
+                  value:
+                    code: 422
+                    name: unprocessable_request_error
+                    finch_code: unsupported_paramters
+                    message: Provider does not support benefit type '401k'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst createCompanyBenefitsResponse = await client.hris.benefits.create();\n\nconsole.log(createCompanyBenefitsResponse.benefit_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ncreate_company_benefits_response = client.hris.benefits.create()\nprint(create_company_benefits_response.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tcreateCompanyBenefitsResponse, err := client.HRIS.Benefits.New(context.TODO(), finchgo.HRISBenefitNewParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", createCompanyBenefitsResponse.BenefitID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.CreateCompanyBenefitsResponse;\nimport com.tryfinch.api.models.HrisBenefitCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        CreateCompanyBenefitsResponse createCompanyBenefitsResponse = client.hris().benefits().create();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.CreateCompanyBenefitsResponse\nimport com.tryfinch.api.models.HrisBenefitCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val createCompanyBenefitsResponse: CreateCompanyBenefitsResponse = client.hris().benefits().create()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          create_company_benefits_response = finch.hris.benefits.create
+
+
+          puts(create_company_benefits_response)'
+  /employer/benefits/register:
+    post:
+      summary: Register Deduction
+      operationId: register-company-benefits
+      description: Register existing benefits from the customer on the provider, on Finch's end. Please use the `/provider` endpoint to view available types for each provider.
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  $ref: '#/components/schemas/BenefitType'
+                description:
+                  type: string
+                frequency:
+                  $ref: '#/components/schemas/BenefitFrequency'
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Successfully Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterCompanyBenefitResponse'
+              examples:
+                Success:
+                  value:
+                    benefit_id: e8b90071-0c11-471c-86e8-e303ef2f6782
+                    job_id: be1b3351-a88e-46c2-96e4-c2cf38e529a7
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: Requested adapter is not assisted benefits
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '422':
+          description: Request provided with unsupported parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Invalid Benefit:
+                  value:
+                    code: 422
+                    name: unprocessable_request_error
+                    finch_code: unsupported_paramters
+                    message: Provider does not support benefit type '401k'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst registerCompanyBenefitResponse = await client.hris.benefits.register();\n\nconsole.log(registerCompanyBenefitResponse.benefit_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nregister_company_benefit_response = client.hris.benefits.register()\nprint(register_company_benefit_response.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tregisterCompanyBenefitResponse, err := client.HRIS.Benefits.Register(context.TODO(), finchgo.HRISBenefitRegisterParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", registerCompanyBenefitResponse.BenefitID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitRegisterParams;\nimport com.tryfinch.api.models.RegisterCompanyBenefitResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        RegisterCompanyBenefitResponse registerCompanyBenefitResponse = client.hris().benefits().register();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitRegisterParams\nimport com.tryfinch.api.models.RegisterCompanyBenefitResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val registerCompanyBenefitResponse: RegisterCompanyBenefitResponse = client.hris().benefits().register()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          register_company_benefit_response = finch.hris.benefits.register
+
+
+          puts(register_company_benefit_response)'
+  /employer/benefits/meta:
+    get:
+      summary: '[Deprecated] Get Deductions Metadata'
+      operationId: get-company-benefits-meta
+      description: Get deductions metadata
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      tags:
+      - Deductions
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompanyBenefitsMetadataResponse'
+              examples:
+                Metadata Example:
+                  value:
+                  - type: 401k
+                    description: 401(k)
+                    employee_deduction:
+                    - fixed
+                    - percent
+                    company_contribution:
+                    - fixed
+                    - percent
+                    annual_maximum: true
+                    catch_up: true
+                    frequencies:
+                    - every_paycheck
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const supportedBenefit of client.hris.benefits.listSupportedBenefits()) {\n  console.log(supportedBenefit.annual_maximum);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.benefits.list_supported_benefits()\npage = page.items[0]\nprint(page.annual_maximum)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Benefits.ListSupportedBenefits(context.TODO(), finchgo.HRISBenefitListSupportedBenefitsParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitListSupportedBenefitsPage;\nimport com.tryfinch.api.models.HrisBenefitListSupportedBenefitsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisBenefitListSupportedBenefitsPage page = client.hris().benefits().listSupportedBenefits();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitListSupportedBenefitsPage\nimport com.tryfinch.api.models.HrisBenefitListSupportedBenefitsParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisBenefitListSupportedBenefitsPage = client.hris().benefits().listSupportedBenefits()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.benefits.list_supported_benefits
+
+
+          puts(page)'
+  /employer/benefits/{benefit_id}:
+    parameters:
+    - schema:
+        type: string
+      name: benefit_id
+      in: path
+      required: true
+    get:
+      summary: Get Deduction
+      operationId: get-company-benefit
+      description: Lists deductions and contributions information for a given item
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      tags:
+      - Deductions
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyBenefit'
+              examples:
+                Example Benefit:
+                  value:
+                    benefit_id: 6547e3aa-d887-4a77-bd41-17221e17cce3
+                    type: 401k
+                    description: Example 401k
+                    frequency: every_paycheck
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '404':
+          description: Benefit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not Found:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: benefit_not_found
+                    message: Benefit not found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst companyBenefit = await client.hris.benefits.retrieve('benefit_id');\n\nconsole.log(companyBenefit.benefit_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ncompany_benefit = client.hris.benefits.retrieve(\n    benefit_id=\"benefit_id\",\n)\nprint(company_benefit.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tcompanyBenefit, err := client.HRIS.Benefits.Get(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitGetParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", companyBenefit.BenefitID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.CompanyBenefit;\nimport com.tryfinch.api.models.HrisBenefitRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        CompanyBenefit companyBenefit = client.hris().benefits().retrieve(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.CompanyBenefit\nimport com.tryfinch.api.models.HrisBenefitRetrieveParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val companyBenefit: CompanyBenefit = client.hris().benefits().retrieve(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          company_benefit = finch.hris.benefits.retrieve("benefit_id")
+
+
+          puts(company_benefit)'
+    post:
+      summary: Update Deduction
+      operationId: update-company-benefits
+      description: Updates an existing company-wide deduction or contribution
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Updated name or description.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateCompanyBenefitResponse'
+              examples:
+                Success:
+                  value:
+                    benefit_id: 6547e3aa-d887-4a77-bd41-17221e17cce3
+                    job_id: be1b3351-a88e-46c2-96e4-c2cf38e529a7
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: Bad Request
+        '404':
+          description: Benefit Not Found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst updateCompanyBenefitResponse = await client.hris.benefits.update('benefit_id');\n\nconsole.log(updateCompanyBenefitResponse.benefit_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nupdate_company_benefit_response = client.hris.benefits.update(\n    benefit_id=\"benefit_id\",\n)\nprint(update_company_benefit_response.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tupdateCompanyBenefitResponse, err := client.HRIS.Benefits.Update(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitUpdateParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", updateCompanyBenefitResponse.BenefitID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitUpdateParams;\nimport com.tryfinch.api.models.UpdateCompanyBenefitResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        UpdateCompanyBenefitResponse updateCompanyBenefitResponse = client.hris().benefits().update(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitUpdateParams\nimport com.tryfinch.api.models.UpdateCompanyBenefitResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val updateCompanyBenefitResponse: UpdateCompanyBenefitResponse = client.hris().benefits().update(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          update_company_benefit_response = finch.hris.benefits.update("benefit_id")
+
+
+          puts(update_company_benefit_response)'
+  /employer/benefits/{benefit_id}/enrolled:
+    parameters:
+    - schema:
+        type: string
+      name: benefit_id
+      in: path
+      required: true
+    get:
+      summary: Get Enrolled Individuals
+      operationId: get-company-benefits-enrolled
+      description: Lists individuals currently enrolled in a given deduction.
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      tags:
+      - Deductions
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCompanyBenefitEnrolledIndividualsResponse'
+              examples:
+                Success:
+                  value:
+                    benefit_id: 6547e3aa-d887-4a77-bd41-17221e17cce3
+                    individual_ids:
+                    - 7fc9fb3a-2a62-47c1-9a5a-c9146483b58e
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '404':
+          description: Benefit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not Found:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: benefit_not_found
+                    message: Benefit not found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst response = await client.hris.benefits.individuals.enrolledIDs('benefit_id');\n\nconsole.log(response.benefit_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nresponse = client.hris.benefits.individuals.enrolled_ids(\n    benefit_id=\"benefit_id\",\n)\nprint(response.benefit_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tresponse, err := client.HRIS.Benefits.Individuals.EnrolledIDs(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitIndividualEnrolledIDsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", response.BenefitID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitIndividualEnrolledIdsParams;\nimport com.tryfinch.api.models.IndividualEnrolledIdsResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        IndividualEnrolledIdsResponse response = client.hris().benefits().individuals().enrolledIds(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitIndividualEnrolledIdsParams\nimport com.tryfinch.api.models.IndividualEnrolledIdsResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val response: IndividualEnrolledIdsResponse = client.hris().benefits().individuals().enrolledIds(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          response = finch.hris.benefits.individuals.enrolled_ids("benefit_id")
+
+
+          puts(response)'
+  /employer/benefits/{benefit_id}/individuals:
+    parameters:
+    - schema:
+        type: string
+      name: benefit_id
+      in: path
+      required: true
+    get:
+      summary: Get Deductions for Individuals
+      operationId: get-individual-benefits
+      description: Get enrollment information for the given individuals.
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - name: individual_ids
+        in: query
+        description: comma-delimited list of stable Finch uuids for each individual. If empty, defaults to all individuals
+        schema:
+          type: string
+          example: d675d2b7-6d7b-41a8-b2d3-001eb3fb88f6,d02a6346-1f08-4312-a064-49ff3cafaa7a
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualBenefits'
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '207':
+          description: Multi-Status (WebDAV)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndividualBenefits'
+        '404':
+          description: Benefit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not Found:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: benefit_not_found
+                    message: Benefit not found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\n// Automatically fetches more pages as needed.\nfor await (const individualBenefit of client.hris.benefits.individuals.retrieveManyBenefits(\n  'benefit_id',\n)) {\n  console.log(individualBenefit.individual_id);\n}"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\npage = client.hris.benefits.individuals.retrieve_many_benefits(\n    benefit_id=\"benefit_id\",\n)\npage = page.items[0]\nprint(page.individual_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tpage, err := client.HRIS.Benefits.Individuals.GetManyBenefits(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitIndividualGetManyBenefitsParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitIndividualRetrieveManyBenefitsPage;\nimport com.tryfinch.api.models.HrisBenefitIndividualRetrieveManyBenefitsParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        HrisBenefitIndividualRetrieveManyBenefitsPage page = client.hris().benefits().individuals().retrieveManyBenefits(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitIndividualRetrieveManyBenefitsPage\nimport com.tryfinch.api.models.HrisBenefitIndividualRetrieveManyBenefitsParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: HrisBenefitIndividualRetrieveManyBenefitsPage = client.hris().benefits().individuals().retrieveManyBenefits(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          page = finch.hris.benefits.individuals.retrieve_many_benefits("benefit_id")
+
+
+          puts(page)'
+    post:
+      summary: Enroll Individuals in Deductions
+      operationId: post-employer-individual-benefits-benefit_id
+      description: Enroll an individual into a deduction or contribution. This is an overwrite operation. If the employee is already enrolled, the enrollment amounts will be adjusted. Making the same request multiple times will not create new enrollments, but will continue to set the state of the existing enrollment.
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  individual_id:
+                    type: string
+                    description: Finch id (uuidv4) for the individual to enroll
+                  configuration:
+                    type: object
+                    properties:
+                      employee_deduction:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - fixed
+                            - percent
+                          amount:
+                            type: integer
+                            description: Amount in cents for fixed type or basis points (1/100th of a percent) for percent type
+                      company_contribution:
+                        type: object
+                        properties:
+                          type:
+                            type: string
+                            enum:
+                            - fixed
+                            - percent
+                            - tiered
+                          amount:
+                            type: integer
+                            description: Amount in cents for fixed type or basis points (1/100th of a percent) for percent type
+                          tiers:
+                            type: array
+                            description: Array of tier objects for tiered contribution matching (required when type is tiered)
+                            items:
+                              type: object
+                              properties:
+                                match:
+                                  type: integer
+                                  description: The employer match percentage in basis points (0-10000 = 0-100%)
+                                threshold:
+                                  type: integer
+                                  description: The employee contribution threshold in basis points (0-10000 = 0-100%)
+                              required:
+                              - match
+                              - threshold
+                      annual_maximum:
+                        type: integer
+                        nullable: true
+                        description: Maximum annual amount in cents
+                      annual_contribution_limit:
+                        type: string
+                        enum:
+                        - individual
+                        - family
+                        description: For HSA benefits only - whether the contribution limit is for an individual or family
+                      catch_up:
+                        type: boolean
+                        description: For retirement benefits only - whether catch up contributions are enabled
+                      effective_date:
+                        type: string
+                        format: date
+                        description: The date the enrollment will take effect
+              description: Array of the individual_id to enroll and a configuration object.
+            examples:
+              HSA:
+                value:
+                - individual_id: d02a6346-1f08-4312-a064-49ff3cafaa7a
+                  configuration:
+                    employee_deduction:
+                      type: fixed
+                      amount: 10000
+                    company_contribution:
+                      type: fixed
+                      amount: 0
+                    annual_maximum: null
+                    annual_contribution_limit: individual
+              Custom:
+                value:
+                - individual_id: string
+                  configuration:
+                    employee_deduction:
+                      type: fixed
+                      amount: 10000
+                    company_contribution:
+                      type: fixed
+                      amount: 0
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully enqueued job to enroll individuals in the benefit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnrollIndividualBenefitResponse'
+              examples:
+                Success:
+                  value:
+                    job_id: be1b3351-a88e-46c2-96e4-c2cf38e529a7
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: Malformed Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Malformed Request:
+                  value:
+                    code: 400
+                    name: bad_request_error
+                    finch_code: malformed_request
+                    message: Malformed request
+        '404':
+          description: Benefit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not Found:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: benefit_not_found
+                    message: Benefit not found
+        '422':
+          description: Unprocessable Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Cannot Enroll:
+                  value:
+                    code: 422
+                    name: unprocessable_request_error
+                    finch_code: unprocessable_parameters
+                    message: HSA enrollment are not currently available for this provider
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst enrolledIndividualBenefitResponse = await client.hris.benefits.individuals.enrollMany(\n  'benefit_id',\n);\n\nconsole.log(enrolledIndividualBenefitResponse.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nenrolled_individual_benefit_response = client.hris.benefits.individuals.enroll_many(\n    benefit_id=\"benefit_id\",\n)\nprint(enrolled_individual_benefit_response.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tenrolledIndividualBenefitResponse, err := client.HRIS.Benefits.Individuals.EnrollMany(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitIndividualEnrollManyParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", enrolledIndividualBenefitResponse.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.EnrolledIndividualBenefitResponse;\nimport com.tryfinch.api.models.HrisBenefitIndividualEnrollManyParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        EnrolledIndividualBenefitResponse enrolledIndividualBenefitResponse = client.hris().benefits().individuals().enrollMany(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.EnrolledIndividualBenefitResponse\nimport com.tryfinch.api.models.HrisBenefitIndividualEnrollManyParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val enrolledIndividualBenefitResponse: EnrolledIndividualBenefitResponse = client.hris().benefits().individuals().enrollMany(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          enrolled_individual_benefit_response = finch.hris.benefits.individuals.enroll_many("benefit_id")
+
+
+          puts(enrolled_individual_benefit_response)'
+    delete:
+      summary: Unenroll Individuals from Deductions
+      operationId: delete-individual-benefits
+      description: Unenroll individuals from a deduction or contribution
+      tags:
+      - Deductions
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: ''
+              properties:
+                individual_ids:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of individual_ids to unenroll.
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully enqueued job to unenroll individuals from the benefit
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnenrollIndividualBenefitResponse'
+              examples:
+                Success:
+                  value:
+                    job_id: be1b3351-a88e-46c2-96e4-c2cf38e529a7
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '404':
+          description: Benefit Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                Not Found:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: benefit_not_found
+                    message: Benefit not found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst unenrolledIndividualBenefitResponse = await client.hris.benefits.individuals.unenrollMany(\n  'benefit_id',\n);\n\nconsole.log(unenrolledIndividualBenefitResponse.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nunenrolled_individual_benefit_response = client.hris.benefits.individuals.unenroll_many(\n    benefit_id=\"benefit_id\",\n)\nprint(unenrolled_individual_benefit_response.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tunenrolledIndividualBenefitResponse, err := client.HRIS.Benefits.Individuals.UnenrollMany(\n\t\tcontext.TODO(),\n\t\t\"benefit_id\",\n\t\tfinchgo.HRISBenefitIndividualUnenrollManyParams{},\n\t)\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", unenrolledIndividualBenefitResponse.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.HrisBenefitIndividualUnenrollManyParams;\nimport com.tryfinch.api.models.UnenrolledIndividualBenefitResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        UnenrolledIndividualBenefitResponse unenrolledIndividualBenefitResponse = client.hris().benefits().individuals().unenrollMany(\"benefit_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.HrisBenefitIndividualUnenrollManyParams\nimport com.tryfinch.api.models.UnenrolledIndividualBenefitResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val unenrolledIndividualBenefitResponse: UnenrolledIndividualBenefitResponse = client.hris().benefits().individuals().unenrollMany(\"benefit_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          unenrolled_individual_benefit_response = finch.hris.benefits.individuals.unenroll_many("benefit_id")
+
+
+          puts(unenrolled_individual_benefit_response)'
+components:
+  schemas:
+    BenefitDescription:
+      type: string
+      title: BenefitDescription
+      description: Name of the benefit as it appears in the provider and pay statements. Recommend limiting this to <30 characters due to limitations in specific providers (e.g. Justworks).
+      x-tags:
+      - Models
+    UnenrollIndividualBenefitResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+      required:
+      - job_id
+    CompanyContribution:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - fixed
+            description: 'Contribution type. Supported values: "fixed" (amount in cents), "percent" (amount in basis points), or "tiered" (multi-tier matching).'
+          amount:
+            type: integer
+            description: Contribution amount in cents (for type=fixed) or basis points (for type=percent, where 100 = 1%). Not used for type=tiered.
+        required:
+        - type
+        - amount
+        title: CompanyContributionFixed
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - percent
+            description: 'Contribution type. Supported values: "fixed" (amount in cents), "percent" (amount in basis points), or "tiered" (multi-tier matching).'
+          amount:
+            type: integer
+            description: Contribution amount in cents (for type=fixed) or basis points (for type=percent, where 100 = 1%). Not used for type=tiered.
+        required:
+        - type
+        - amount
+        title: CompanyContributionPercent
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - tiered
+            description: 'Contribution type. Supported values: "fixed" (amount in cents), "percent" (amount in basis points), or "tiered" (multi-tier matching).'
+          tiers:
+            type: array
+            items:
+              type: object
+              properties:
+                match:
+                  type: integer
+                  minimum: 1
+                  maximum: 10000
+                threshold:
+                  type: integer
+                  minimum: 1
+                  maximum: 10000
+              required:
+              - match
+              - threshold
+            minItems: 1
+            description: Array of tier objects defining employer match tiers based on employee contribution thresholds. Required when type=tiered.
+        required:
+        - type
+        - tiers
+        title: CompanyContributionTiered
+      - nullable: true
+      description: Company contribution configuration. Supports fixed amounts (in cents), percentage-based contributions (in basis points where 100 = 1%), or tiered matching structures.
+      title: CompanyContribution
+      x-tags:
+      - Models
+    GetCompanyBenefitsResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/CompanyBenefit'
+      description: Array of company benefits.
+    GetCompanyBenefitsMetadataResponse:
+      type: array
+      nullable: true
+      items:
+        $ref: '#/components/schemas/BenefitFeature'
+    IndividualBenefits:
+      type: array
+      items:
+        type: object
+        properties:
+          individual_id:
+            type: string
+          code:
+            type: integer
+          body:
+            anyOf:
+            - type: object
+              properties:
+                employee_deduction:
+                  $ref: '#/components/schemas/EmployeeDeductionContribution'
+                company_contribution:
+                  $ref: '#/components/schemas/CompanyContribution'
+                annual_maximum:
+                  type: integer
+                  nullable: true
+                  description: If the benefit supports annual maximum, the amount in cents for this individual.
+                catch_up:
+                  type: boolean
+                  nullable: true
+                  description: If the benefit supports catch up (401k, 403b, etc.), whether catch up is enabled for this individual.
+                hsa_contribution_limit:
+                  type: string
+                  nullable: true
+                  enum:
+                  - individual
+                  - family
+                  - null
+                  description: Type for HSA contribution limit if the benefit is a HSA.
+              required:
+              - employee_deduction
+              - company_contribution
+              - annual_maximum
+              - catch_up
+              title: IndividualBenefit
+            - $ref: '#/components/schemas/BatchError'
+        required:
+        - individual_id
+        - code
+        - body
+      title: IndividualBenefits
+    Error:
+      title: Error
+      type: object
+      description: Generic error response structure
+      properties:
+        code:
+          type: integer
+          description: The status code of the request.
+        name:
+          type: string
+          description: Identifier describing the error.
+        finch_code:
+          type: string
+          description: A descriptive identifier for the error.
+        message:
+          type: string
+          description: A short English description that provides more information about the error.
+      required:
+      - code
+      - name
+      - finch_code
+      - message
+    EmployeeDeductionContribution:
+      oneOf:
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - fixed
+            description: 'Contribution type. Supported values: "fixed" (amount in cents) or "percent" (amount in basis points).'
+          amount:
+            type: integer
+            description: Contribution amount in cents (for type=fixed) or basis points (for type=percent, where 100 = 1%).
+        required:
+        - type
+        - amount
+        title: EmployeeDeductionContributionFixed
+      - type: object
+        properties:
+          type:
+            type: string
+            enum:
+            - percent
+            description: 'Contribution type. Supported values: "fixed" (amount in cents) or "percent" (amount in basis points).'
+          amount:
+            type: integer
+            description: Contribution amount in cents (for type=fixed) or basis points (for type=percent, where 100 = 1%).
+        required:
+        - type
+        - amount
+        title: EmployeeDeductionContributionPercent
+      - nullable: true
+      description: Employee deduction configuration. Supports both fixed amounts (in cents) and percentage-based contributions (in basis points where 100 = 1%).
+      title: EmployeeDeductionContribution
+      x-tags:
+      - Models
+    BenefitType:
+      type: string
+      nullable: true
+      enum:
+      - '457'
+      - 401k
+      - 401k_roth
+      - 401k_loan
+      - 403b
+      - 403b_roth
+      - 457_roth
+      - commuter
+      - custom_post_tax
+      - custom_pre_tax
+      - fsa_dependent_care
+      - fsa_medical
+      - hsa_post
+      - hsa_pre
+      - s125_dental
+      - s125_medical
+      - s125_vision
+      - simple
+      - simple_ira
+      - null
+      description: Type of benefit.
+      title: BenefitType
+      x-tags:
+      - Models
+      x-stainless-renameMap:
+        _401k_loan: 401k_loan
+        _401k_roth: 401k_roth
+        _401k: 401k
+        _403b_roth: 403b_roth
+        _403b: 403b
+        _457_roth: 457_roth
+        _457: '457'
+    CompanyBenefit:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+          format: uuid
+          description: The id of the benefit.
+        type:
+          $ref: '#/components/schemas/BenefitType'
+        description:
+          type: string
+          nullable: true
+        frequency:
+          $ref: '#/components/schemas/BenefitFrequency'
+        company_contribution:
+          $ref: '#/components/schemas/BenefitCompanyMatchContribution'
+      required:
+      - benefit_id
+      - type
+      - description
+      - frequency
+      title: CompanyBenefit
+    RegisterCompanyBenefitResponse:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+          format: uuid
+          description: The id of the benefit.
+        job_id:
+          type: string
+          format: uuid
+      required:
+      - benefit_id
+      - job_id
+    AcceptedResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          default: 202
+        name:
+          type: string
+        finch_code:
+          type: string
+        message:
+          type: string
+      required:
+      - name
+      - finch_code
+      - message
+    BatchError:
+      type: object
+      properties:
+        code:
+          type: number
+        finch_code:
+          type: string
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - message
+      - name
+    GetCompanyBenefitEnrolledIndividualsResponse:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+          format: uuid
+          description: The id of the benefit.
+        individual_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+            description: A stable Finch `id` (UUID v4) for an individual in the company.
+      required:
+      - benefit_id
+      - individual_ids
+    BenefitFeature:
+      type: object
+      properties:
+        description:
+          type: string
+          nullable: true
+        frequencies:
+          type: array
+          items:
+            $ref: '#/components/schemas/BenefitFrequency'
+          description: The list of frequencies supported by the provider for this benefit
+        employee_deduction:
+          type: array
+          nullable: true
+          items:
+            type: string
+            enum:
+            - fixed
+            - percent
+            - null
+          description: Supported deduction types. An empty array indicates deductions are not supported.
+        company_contribution:
+          type: array
+          nullable: true
+          items:
+            type: string
+            enum:
+            - fixed
+            - percent
+            - tiered
+            - null
+          description: Supported contribution types. An empty array indicates contributions are not supported.
+        annual_maximum:
+          type: boolean
+          nullable: true
+          description: Whether the provider supports an annual maximum for this benefit.
+        catch_up:
+          type: boolean
+          nullable: true
+          description: Whether the provider supports catch up for this benefit. This field will only be true for retirement benefits.
+        hsa_contribution_limit:
+          type: array
+          nullable: true
+          items:
+            type: string
+            enum:
+            - family
+            - individual
+            - null
+          description: Whether the provider supports HSA contribution limits. Empty if this feature is not supported for the benefit. This array only has values for HSA benefits.
+      required:
+      - description
+      - frequencies
+      - employee_deduction
+      - company_contribution
+      - annual_maximum
+      title: BenefitFeature
+    EnrollIndividualBenefitResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+      required:
+      - job_id
+    CreateCompanyBenefitsResponse:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+          format: uuid
+          description: The id of the benefit.
+        job_id:
+          type: string
+          format: uuid
+      required:
+      - benefit_id
+      - job_id
+    UpdateCompanyBenefitResponse:
+      type: object
+      properties:
+        benefit_id:
+          type: string
+          format: uuid
+          description: The id of the benefit.
+        job_id:
+          type: string
+          format: uuid
+      required:
+      - benefit_id
+      - job_id
+    BenefitCompanyMatchContribution:
+      type: object
+      nullable: true
+      properties:
+        type:
+          type: string
+          enum:
+          - match
+        tiers:
+          type: array
+          items:
+            type: object
+            properties:
+              match:
+                type: integer
+                minimum: 1
+                maximum: 10000
+              threshold:
+                type: integer
+                minimum: 1
+                maximum: 10000
+            required:
+            - match
+            - threshold
+          minItems: 1
+          maxItems: 3
+      required:
+      - type
+      - tiers
+      description: The company match for this benefit.
+      title: BenefitCompanyMatchContribution
+      x-tags:
+      - Models
+    BenefitFrequency:
+      type: string
+      nullable: true
+      enum:
+      - every_paycheck
+      - monthly
+      - one_time
+      - null
+      description: The frequency of the benefit deduction/contribution.
+      title: BenefitFrequency
+      x-tags:
+      - Models
+  parameters:
+    API-Version:
+      name: Finch-API-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: '2020-09-17'
+        format: date
+      description: Header used to specify the version for a given API request. Current version is 2020-09-17.
+      x-stainless-param: false
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: 'Used to indicate the original media type of the resource '
+      x-stainless-param: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret

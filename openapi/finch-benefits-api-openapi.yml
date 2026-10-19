@@ -1,0 +1,1338 @@
+openapi: 3.2.0
+info:
+  title: Reference Benefits API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Benefits
+paths:
+  /employer/plans:
+    get:
+      summary: List Plans
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read the benefit plans offered by the company, including carrier, coverage tiers, and deduction codes.'
+      operationId: list-plans
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: plan_type
+        in: query
+        required: false
+        description: Filter plans by type (e.g. `medical`, `dental`, `vision`). Case-insensitive. See `PlanType` for known values.
+        schema:
+          type: string
+          example: medical
+      - name: limit
+        in: query
+        required: false
+        description: Number of items to return (defaults to 50, maximum 50)
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+      - name: offset
+        in: query
+        required: false
+        description: Index to start from (defaults to 0)
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Benefit plan data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllPlansResponse'
+              examples:
+                Success:
+                  value:
+                    paging:
+                      count: 1
+                      offset: 0
+                    plans:
+                    - id: 3f0b5a2b-2b4a-4f4c-9f3e-5c4a2c1d9b70
+                      name: Acme PPO Medical
+                      type: medical
+                      description: Nationwide PPO medical coverage.
+                      network_type: ppo
+                      carrier:
+                        id: 7b2f0b1c-8f52-4a7e-91b4-3c9d9a3e6a11
+                        name: Blue Cross Blue Shield
+                      start_date: '2026-01-01'
+                      end_date: '2026-12-31'
+                      coverage_tiers:
+                      - employee_only
+                      - employee_family
+                      deduction_codes:
+                      - MED-PPO-EE
+                      - MED-PPO-ER
+                      - DEN-EE
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+              examples:
+                InvalidQueryParameter:
+                  value:
+                    code: 400
+                    name: bad_request
+                    finch_code: invalid_request
+                    message: 'Validation error: Expected number, received nan at "limit"'
+  /employer/plans/{plan_id}:
+    get:
+      summary: Get Plan
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read a single benefit plan by its Finch ID.'
+      operationId: get-plan
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: plan_id
+        in: path
+        required: true
+        description: The Finch ID of the benefit plan.
+        schema:
+          type: string
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Benefit plan data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPlanResponse'
+              examples:
+                Success:
+                  value:
+                    id: 3f0b5a2b-2b4a-4f4c-9f3e-5c4a2c1d9b70
+                    name: Acme PPO Medical
+                    type: medical
+                    description: Nationwide PPO medical coverage.
+                    network_type: ppo
+                    carrier:
+                      id: 7b2f0b1c-8f52-4a7e-91b4-3c9d9a3e6a11
+                      name: Blue Cross Blue Shield
+                    start_date: '2026-01-01'
+                    end_date: '2026-12-31'
+                    coverage_tiers:
+                    - employee_only
+                    - employee_family
+                    deduction_codes:
+                    - MED-PPO-EE
+                    - MED-PPO-ER
+                    - DEN-EE
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '404':
+          description: The requested plan does not exist
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+                - finch_code
+              examples:
+                PlanNotFound:
+                  value:
+                    code: 404
+                    name: not_found_error
+                    finch_code: item_not_found
+                    message: Plan 3f0b5a2b-2b4a-4f4c-9f3e-5c4a2c1d9b70 not found
+  /employer/plans-enrollments:
+    get:
+      summary: List Enrollments
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read individuals'' enrollments in the company''s benefit plans, including coverage dates and contributions.'
+      operationId: list-plan-enrollments
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: limit
+        in: query
+        required: false
+        description: Number of items to return (defaults to 50, maximum 50)
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+      - name: offset
+        in: query
+        required: false
+        description: Index to start from (defaults to 0)
+        schema:
+          type: integer
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Enrollment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllEnrollmentsResponse'
+              examples:
+                Success:
+                  value:
+                    paging:
+                      count: 1
+                      offset: 0
+                    enrollments:
+                    - id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                      individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                      plan_id: 3f0b5a2b-2b4a-4f4c-9f3e-5c4a2c1d9b70
+                      coverage_tier: employee_family
+                      coverage_start_date: '2026-01-01'
+                      coverage_end_date: null
+                      contributions:
+                        frequency: per_pay_period
+                        employee_contribution:
+                          amount: 12500
+                          currency: usd
+                        employer_contribution:
+                          amount: 37500
+                          currency: usd
+                      dependent_ids:
+                      - a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                      status: active
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+              examples:
+                InvalidQueryParameter:
+                  value:
+                    code: 400
+                    name: bad_request
+                    finch_code: invalid_request
+                    message: 'Validation error: Expected number, received nan at "limit"'
+    post:
+      summary: Get Enrollments
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read enrollments by Finch ID. A maximum of 50 enrollments can be requested at once.'
+      operationId: get-plan-enrollments
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: object
+                    properties:
+                      enrollment_id:
+                        type: string
+                        description: The Finch ID of the enrollment to read.
+                    required:
+                    - enrollment_id
+              required:
+              - requests
+            examples:
+              Request:
+                value:
+                  requests:
+                  - enrollment_id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Enrollment data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEnrollmentsResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - enrollment_id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                      code: 200
+                      body:
+                        id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                        individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                        plan_id: 3f0b5a2b-2b4a-4f4c-9f3e-5c4a2c1d9b70
+                        coverage_tier: employee_family
+                        coverage_start_date: '2026-01-01'
+                        coverage_end_date: null
+                        contributions:
+                          frequency: per_pay_period
+                          employee_contribution:
+                            amount: 12500
+                            currency: usd
+                          employer_contribution:
+                            amount: 37500
+                            currency: usd
+                        dependent_ids:
+                        - a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                        status: active
+                BatchError:
+                  value:
+                    responses:
+                    - enrollment_id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                      code: 404
+                      body:
+                        code: 404
+                        name: not_found_error
+                        finch_code: enrollment_not_found
+                        message: No enrollment with id 'ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55'
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+              examples:
+                InvalidQueryParameter:
+                  value:
+                    code: 400
+                    name: bad_request
+                    finch_code: invalid_request
+                    message: 'Validation error: Expected number, received nan at "limit"'
+  /employer/plans-dependents:
+    get:
+      summary: List Dependents
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read the dependents covered under the benefit plans of the company, including their coverage and enrollments.'
+      operationId: list-plan-dependents
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - name: limit
+        in: query
+        required: false
+        description: Number of items to return (defaults to 50, maximum 50)
+        schema:
+          type: integer
+          default: 50
+          maximum: 50
+      - name: offset
+        in: query
+        required: false
+        description: Index to start from (defaults to 0)
+        schema:
+          type: integer
+      - name: include
+        in: query
+        required: false
+        description: Comma-delimited list of additional fields to return. `ssn` requires the `employer:ssn` scope.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ssn
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Dependent data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllDependentsResponse'
+              examples:
+                Success:
+                  value:
+                    paging:
+                      count: 1
+                      offset: 0
+                    dependents:
+                    - dependent_id: a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                      first_name: Jamie
+                      last_name: Doe
+                      middle_name: null
+                      ssn: null
+                      date_of_birth: '2014-03-22'
+                      gender: female
+                      coverage:
+                      - individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                        relationship_to_individual: child
+                        enrollments:
+                        - id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                          type: medical
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+              examples:
+                InvalidQueryParameter:
+                  value:
+                    code: 400
+                    name: bad_request
+                    finch_code: invalid_request
+                    message: 'Validation error: Expected number, received nan at "limit"'
+    post:
+      summary: Get Dependents
+      description: '**Beta:** This endpoint is in beta and may change.
+
+        Read dependents by Finch ID. A maximum of 50 dependents can be requested at once.'
+      operationId: get-plan-dependents
+      tags:
+      - Benefits
+      parameters:
+      - name: entity_ids
+        in: query
+        required: false
+        description: The entity IDs to specify which entities' data to access. Provide exactly one entity ID per request; a maximum of one is accepted.
+        schema:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          maxItems: 1
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+        style: form
+        explode: true
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requests:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: object
+                    properties:
+                      dependent_id:
+                        type: string
+                        description: The Finch ID of the dependent to read.
+                    required:
+                    - dependent_id
+                options:
+                  type: object
+                  properties:
+                    include:
+                      type: array
+                      items:
+                        type: string
+                        enum:
+                        - ssn
+              required:
+              - requests
+            examples:
+              Request:
+                value:
+                  requests:
+                  - dependent_id: a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Dependent data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDependentsResponse'
+              examples:
+                Success:
+                  value:
+                    responses:
+                    - dependent_id: a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                      code: 200
+                      body:
+                        dependent_id: a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                        first_name: Jamie
+                        last_name: Doe
+                        middle_name: null
+                        ssn: null
+                        date_of_birth: '2014-03-22'
+                        gender: female
+                        coverage:
+                        - individual_id: 5d0b10a1-a09a-430f-81f1-20be735dc5e9
+                          relationship_to_individual: child
+                          enrollments:
+                          - id: ec2f4d10-6ad2-4e94-8f2f-4b0a1f3c2d55
+                            type: medical
+                BatchError:
+                  value:
+                    responses:
+                    - dependent_id: a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21
+                      code: 404
+                      body:
+                        code: 404
+                        name: not_found_error
+                        finch_code: item_not_found
+                        message: No dependent with id 'a8d6c0ec-8a0e-4a2f-9a3b-6f0f6e2b8f21' found
+        '202':
+          description: The request has been accepted for processing, but data is not yet available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcceptedResponse'
+              examples:
+                DataSyncInProgress:
+                  value:
+                    code: 202
+                    name: sync_in_progress
+                    finch_code: data_sync_in_progress
+                    message: The data being requested is being fetched. Please check back later.
+                AuthorizationPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: pending
+                    message: Authorization to this company's data is pending
+                AccountantSetupPending:
+                  value:
+                    code: 202
+                    name: authorization_pending
+                    finch_code: accountant_setup_pending
+                    message: Finch is still setting up the accountant user for this connection. Please try again later.
+        '400':
+          description: The request could not be processed due to a validation error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                  finch_code:
+                    type: string
+                required:
+                - code
+                - name
+                - message
+              examples:
+                InvalidQueryParameter:
+                  value:
+                    code: 400
+                    name: bad_request
+                    finch_code: invalid_request
+                    message: 'Validation error: Expected number, received nan at "limit"'
+components:
+  schemas:
+    PlanCoverageTier:
+      type: string
+      description: 'A coverage tier available on the benefit plan. Known values: `employee_only`, `employee_spouse`, `employee_children`, `employee_family`. Provider-specific values outside this list may also be returned.'
+    GetAllPlansResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        plans:
+          type: array
+          items:
+            $ref: '#/components/schemas/PlanResponse'
+          description: The array of benefit plans.
+      required:
+      - paging
+      - plans
+    PlanCarrier:
+      type: object
+      nullable: true
+      properties:
+        id:
+          type: string
+          nullable: true
+          description: The unique identifier of the insurance carrier.
+        name:
+          type: string
+          nullable: true
+          description: The name of the insurance carrier.
+      required:
+      - id
+      - name
+      description: The insurance carrier associated with the benefit plan.
+    GetAllEnrollmentsResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        enrollments:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnrollmentResponse'
+          description: The array of enrollments.
+      required:
+      - paging
+      - enrollments
+    EnrollmentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A stable Finch ID for the enrollment.
+        individual_id:
+          type: string
+          description: The Finch ID of the individual enrolled in the plan.
+        plan_id:
+          type: string
+          description: The Finch ID of the benefit plan.
+        coverage_tier:
+          $ref: '#/components/schemas/EnrollmentCoverageTier'
+        coverage_start_date:
+          type: string
+          nullable: true
+          description: The start date of coverage in ISO 8601 format (YYYY-MM-DD).
+        coverage_end_date:
+          type: string
+          nullable: true
+          description: The end date of coverage in ISO 8601 format (YYYY-MM-DD).
+        contributions:
+          $ref: '#/components/schemas/EnrollmentContributions'
+        dependent_ids:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: The Finch IDs of dependents covered under this enrollment.
+        status:
+          $ref: '#/components/schemas/EnrollmentStatus'
+      required:
+      - id
+      - individual_id
+      - plan_id
+      - coverage_tier
+      - coverage_start_date
+      - coverage_end_date
+      - contributions
+      - dependent_ids
+      - status
+    EnrollmentContributions:
+      type: object
+      nullable: true
+      properties:
+        frequency:
+          $ref: '#/components/schemas/ContributionFrequency'
+        employee_contribution:
+          $ref: '#/components/schemas/ContributionAmount'
+        employer_contribution:
+          allOf:
+          - $ref: '#/components/schemas/ContributionAmount'
+          - description: The employer's contribution amount.
+      required:
+      - frequency
+      - employee_contribution
+      - employer_contribution
+      description: The contribution details for the enrollment.
+    GetDependentsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              dependent_id:
+                type: string
+                description: The Finch ID of the dependent.
+              code:
+                type: integer
+                description: The HTTP status code of the response for this dependent.
+              body:
+                anyOf:
+                - $ref: '#/components/schemas/DependentResponse'
+                - $ref: '#/components/schemas/BatchError'
+            required:
+            - dependent_id
+            - code
+            - body
+          description: The batch response array.
+      required:
+      - responses
+    DependentCoverage:
+      type: object
+      properties:
+        individual_id:
+          type: string
+          description: The Finch ID of the individual in the company covering this dependent.
+        relationship_to_individual:
+          $ref: '#/components/schemas/DependentRelationshipType'
+        enrollments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependentEnrollment'
+          description: The enrollments this dependent is covered under via this individual.
+      required:
+      - individual_id
+      - relationship_to_individual
+      - enrollments
+    DependentGender:
+      type: string
+      nullable: true
+      enum:
+      - decline_to_specify
+      - female
+      - male
+      - other
+      - null
+      description: The dependent's gender.
+    ContributionAmount:
+      type: object
+      nullable: true
+      properties:
+        amount:
+          type: number
+          nullable: true
+          description: The contribution amount in cents.
+        currency:
+          type: string
+          nullable: true
+          description: The currency of the contribution amount (e.g. usd).
+      required:
+      - amount
+      - currency
+      description: The employee's contribution amount.
+    DependentRelationshipType:
+      type: string
+      enum:
+      - child
+      - disabled_dependent
+      - domestic_partner
+      - foster_child
+      - other
+      - spouse
+      - stepchild
+      - ward
+      description: The dependent's relationship to the covering individual.
+    GetPlanResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A stable Finch ID for the benefit plan.
+        name:
+          type: string
+          description: The name of the benefit plan.
+        type:
+          $ref: '#/components/schemas/PlanType'
+        description:
+          type: string
+          nullable: true
+          description: A description of the benefit plan.
+        network_type:
+          $ref: '#/components/schemas/PlanNetworkType'
+        carrier:
+          $ref: '#/components/schemas/PlanCarrier'
+        start_date:
+          type: string
+          description: The start date of the benefit plan in ISO 8601 format (YYYY-MM-DD).
+        end_date:
+          type: string
+          nullable: true
+          description: The end date of the benefit plan in ISO 8601 format (YYYY-MM-DD).
+        coverage_tiers:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/PlanCoverageTier'
+          description: 'The available coverage tiers for the benefit plan. Known values: `employee_only`, `employee_spouse`, `employee_children`, `employee_family`. Provider-specific values outside this list may also be returned.'
+        deduction_codes:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: The deduction codes associated with the benefit plan.
+      required:
+      - id
+      - name
+      - type
+      - description
+      - network_type
+      - carrier
+      - start_date
+      - end_date
+      - coverage_tiers
+      - deduction_codes
+    PlanType:
+      type: string
+      nullable: true
+      enum:
+      - commuter
+      - dental
+      - hsa
+      - fsa
+      - life_insurance
+      - long_term_disability
+      - medical
+      - other
+      - short_term_disability
+      - vision
+      - null
+      description: The type of the benefit plan.
+    EnrollmentCoverageTier:
+      type: string
+      nullable: true
+      description: 'The coverage tier of the enrollment. Known values: `employee_only`, `employee_spouse`, `employee_children`, `employee_family`. Provider-specific values outside this list may also be returned.'
+    AcceptedResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          default: 202
+        name:
+          type: string
+        finch_code:
+          type: string
+        message:
+          type: string
+      required:
+      - name
+      - finch_code
+      - message
+    BatchError:
+      type: object
+      properties:
+        code:
+          type: number
+        finch_code:
+          type: string
+        message:
+          type: string
+        name:
+          type: string
+      required:
+      - code
+      - message
+      - name
+    PlanResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: A stable Finch ID for the benefit plan.
+        name:
+          type: string
+          description: The name of the benefit plan.
+        type:
+          $ref: '#/components/schemas/PlanType'
+        description:
+          type: string
+          nullable: true
+          description: A description of the benefit plan.
+        network_type:
+          $ref: '#/components/schemas/PlanNetworkType'
+        carrier:
+          $ref: '#/components/schemas/PlanCarrier'
+        start_date:
+          type: string
+          description: The start date of the benefit plan in ISO 8601 format (YYYY-MM-DD).
+        end_date:
+          type: string
+          nullable: true
+          description: The end date of the benefit plan in ISO 8601 format (YYYY-MM-DD).
+        coverage_tiers:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/PlanCoverageTier'
+          description: 'The available coverage tiers for the benefit plan. Known values: `employee_only`, `employee_spouse`, `employee_children`, `employee_family`. Provider-specific values outside this list may also be returned.'
+        deduction_codes:
+          type: array
+          nullable: true
+          items:
+            type: string
+          description: The deduction codes associated with the benefit plan.
+      required:
+      - id
+      - name
+      - type
+      - description
+      - network_type
+      - carrier
+      - start_date
+      - end_date
+      - coverage_tiers
+      - deduction_codes
+    Paging:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The total number of elements for the entire query (not just the given page)
+          x-stainless-pagination-property:
+            purpose: offset_total_count_field
+        offset:
+          type: integer
+          description: The current start index of the returned list of elements
+          x-stainless-pagination-property:
+            purpose: offset_count_start_field
+      required:
+      - offset
+      title: Paging
+      x-tags:
+      - Models
+    GetEnrollmentsResponse:
+      type: object
+      properties:
+        responses:
+          type: array
+          items:
+            type: object
+            properties:
+              enrollment_id:
+                type: string
+                description: The Finch ID of the enrollment.
+              code:
+                type: integer
+                description: The HTTP status code of the response for this enrollment.
+              body:
+                anyOf:
+                - $ref: '#/components/schemas/EnrollmentResponse'
+                - $ref: '#/components/schemas/BatchError'
+            required:
+            - enrollment_id
+            - code
+            - body
+          description: The batch response array.
+      required:
+      - responses
+    DependentEnrollment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The Finch ID of the enrollment.
+        type:
+          type: string
+          nullable: true
+          enum:
+          - commuter
+          - dental
+          - hsa
+          - fsa
+          - life_insurance
+          - long_term_disability
+          - medical
+          - other
+          - short_term_disability
+          - vision
+          - null
+          description: The plan type of the enrollment.
+      required:
+      - id
+      - type
+    GetAllDependentsResponse:
+      type: object
+      properties:
+        paging:
+          $ref: '#/components/schemas/Paging'
+        dependents:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependentResponse'
+          description: The array of dependents.
+      required:
+      - paging
+      - dependents
+    PlanNetworkType:
+      type: string
+      nullable: true
+      enum:
+      - epo
+      - hdhp
+      - hmo
+      - other
+      - pos
+      - ppo
+      - null
+      description: The network type of the benefit plan.
+    ContributionFrequency:
+      type: string
+      description: 'The frequency of the contribution. Known values: `per_pay_period`, `weekly`, `bi_weekly`, `semi_monthly`, `monthly`, `quarterly`, `annually`. Provider-specific values outside this list may also be returned.'
+    EnrollmentStatus:
+      type: string
+      nullable: true
+      description: 'The status of the enrollment. Known values: `active`, `inactive`. Provider-specific values outside this list may also be returned.'
+    DependentResponse:
+      type: object
+      properties:
+        dependent_id:
+          type: string
+          description: A stable Finch ID for the dependent.
+        first_name:
+          type: string
+          description: The dependent's first name.
+        last_name:
+          type: string
+          description: The dependent's last name.
+        middle_name:
+          type: string
+          nullable: true
+          description: The dependent's middle name.
+        ssn:
+          type: string
+          nullable: true
+          description: The dependent's Social Security Number.
+        date_of_birth:
+          type: string
+          nullable: true
+          description: The dependent's date of birth in ISO 8601 format (YYYY-MM-DD).
+        gender:
+          $ref: '#/components/schemas/DependentGender'
+        coverage:
+          type: array
+          items:
+            $ref: '#/components/schemas/DependentCoverage'
+          description: The dependent's coverage, grouped by the individual covering them.
+      required:
+      - dependent_id
+      - first_name
+      - last_name
+      - middle_name
+      - ssn
+      - date_of_birth
+      - gender
+      - coverage
+  parameters:
+    API-Version:
+      name: Finch-API-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: '2020-09-17'
+        format: date
+      description: Header used to specify the version for a given API request. Current version is 2020-09-17.
+      x-stainless-param: false
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: 'Used to indicate the original media type of the resource '
+      x-stainless-param: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret

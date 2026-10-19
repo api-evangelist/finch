@@ -65,26 +65,6 @@ created: '2026-03-16'
 modified: '2026-05-19'
 specificationVersion: '0.23'
 apis:
-- aid: finch:finch-auth-api
-  name: Finch Auth API
-  description: The Auth API from Finch — 1 operation(s) for auth.
-  humanURL: https://www.tryfinch.com/
-  baseURL: https://api.tryfinch.com
-  tags:
-  - Authentication
-  tags_raw:
-  - Auth
-  properties:
-  - type: OpenAPI
-    url: openapi/finch-auth-api-openapi.yml
-  - type: Documentation
-    url: https://developer.tryfinch.com/
-  - type: APIReference
-    url: https://developer.tryfinch.com/api-reference/
-  - type: Signup
-    url: https://dashboard.tryfinch.com/signup
-  - type: Pricing
-    url: https://www.tryfinch.com/pricing
 - aid: finch:finch-connect-api
   name: Finch Connect API
   description: The Connect API from Finch — 1 operation(s) for connect.
@@ -103,16 +83,124 @@ apis:
     url: https://dashboard.tryfinch.com/signup
   - type: Pricing
     url: https://www.tryfinch.com/pricing
-- aid: finch:finch-employer-api
-  name: Finch Employer API
-  description: The Employer API from Finch — 7 operation(s) for employer.
+- aid: finch:finch-benefits-api
+  name: Finch Benefits API
+  description: The Benefits API from Finch — 4 operation(s) for benefits.
   humanURL: https://www.tryfinch.com/
   baseURL: https://api.tryfinch.com
   tags:
-  - Employer
+  - Benefits
   properties:
   - type: OpenAPI
-    url: openapi/finch-employer-api-openapi.yml
+    url: openapi/finch-benefits-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-deductions-api
+  name: Finch Deductions API
+  description: The Deductions API from Finch — 6 operation(s) for deductions.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Deductions
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-deductions-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-documents-api
+  name: Finch Documents API
+  description: The Documents API from Finch — 2 operation(s) for documents.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-documents-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-management-api
+  name: Finch Management API
+  description: The Management API from Finch — 9 operation(s) for management.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Management
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-management-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-organization-api
+  name: Finch Organization API
+  description: The Organization API from Finch — 4 operation(s) for organization.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Organization
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-organization-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-payroll-api
+  name: Finch Payroll API
+  description: The Payroll API from Finch — 8 operation(s) for payroll.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Payroll
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-payroll-api-openapi.yml
+  - type: Documentation
+    url: https://developer.tryfinch.com/
+  - type: APIReference
+    url: https://developer.tryfinch.com/api-reference/
+  - type: Signup
+    url: https://dashboard.tryfinch.com/signup
+  - type: Pricing
+    url: https://www.tryfinch.com/pricing
+- aid: finch:finch-sandbox-api
+  name: Finch Sandbox API
+  description: The Sandbox API from Finch — 9 operation(s) for sandbox.
+  humanURL: https://www.tryfinch.com/
+  baseURL: https://api.tryfinch.com
+  tags:
+  - Sandbox
+  properties:
+  - type: OpenAPI
+    url: openapi/finch-sandbox-api-openapi.yml
   - type: Documentation
     url: https://developer.tryfinch.com/
   - type: APIReference

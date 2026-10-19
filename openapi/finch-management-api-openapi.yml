@@ -1,0 +1,1826 @@
+openapi: 3.2.0
+info:
+  title: Reference Management API
+  version: '2020-09-17'
+  contact: {}
+  description: 'The Finch HRIS API provides a unified way to connect to a multitide of HRIS systems. The API requires an access token issued by Finch.
+
+
+    By default, Organization and Payroll requests use Finch''s Data Syncs. If a request is made before the initial sync has completed, Finch will request data live from the provider. The latency on live requests may range from seconds to minutes depending on the provider and batch size.
+
+    For automated integrations, Deductions requests (both read and write) are always made live to the provider. Latencies may range from seconds to minutes depending on the provider and batch size.
+
+
+    Employer products are specified by the product parameter, a space-separated list of products that your application requests from an employer authenticating through Finch Connect. Valid product names are—
+
+    - `company`: Read basic company data
+
+
+    - `directory`: Read company directory and organization structure
+
+
+    - `individual`: Read individual data, excluding income and employment data
+
+
+    - `employment`: Read individual employment and income data
+
+
+    - `payment`: Read payroll and contractor related payments by the company
+
+
+    - `pay_statement`: Read detailed pay statements for each individual
+
+
+    - `benefits`: Create and manage deductions and contributions and enrollment for an employer
+
+
+    ![Open in Postman](https://god.gw.postman.com/run-collection/21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4?action=collection%2Ffork&collection-url=entityId%3D21027137-08db0929-883d-4094-a9ce-dbf5a9bee4a4%26entityType%3Dcollection%26workspaceId%3D1edf19bc-e0a8-41e9-ac55-481a4b50790b)'
+servers:
+- url: https://api.tryfinch.com
+  description: ''
+tags:
+- name: Management
+paths:
+  /auth/token:
+    post:
+      summary: Create Access Token
+      operationId: create-access-token
+      description: Exchange the authorization code for an access token
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccessTokenRequest'
+      security: []
+      responses:
+        '200':
+          description: Access Token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccessTokenResponse'
+              examples:
+                Success:
+                  value:
+                    access_token: 7e965183-9332-423c-9259-3edafb332ad2
+                    token_type: bearer
+                    connection_id: bc3a2af9-ce03-46c4-9142-81abe789c64d
+                    customer_id: '1234567890'
+                    customer_name: Acme Inc
+                    account_id: ac3a2af9-ce03-46c4-9142-81abe789c64d
+                    client_type: production
+                    company_id: 4ab15e51-11ad-49f4-acae-f343b7794375
+                    connection_type: provider
+                    products:
+                    - directory
+                    - employment
+                    - individual
+                    provider_id: gusto
+                    entity_ids:
+                    - 550e8400-e29b-41d4-a716-446655440000
+                    - 6ba7b810-9dad-11d1-80b4-00c04fd430c8
+                    - 6ba7b811-9dad-11d1-80b4-00c04fd430c8
+      x-codeSamples:
+      - lang: JavaScript
+        source: 'import Finch from ''@tryfinch/finch-api'';
+
+
+          const client = new Finch();
+
+
+          const createAccessTokenResponse = await client.accessTokens.create({ code: ''code'' });
+
+
+          console.log(createAccessTokenResponse.connection_id);'
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch()\ncreate_access_token_response = client.access_tokens.create(\n    code=\"code\",\n)\nprint(create_access_token_response.connection_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t\toption.WithClientID(\"4ab15e51-11ad-49f4-acae-f343b7794375\"),\n\t\toption.WithClientSecret(\"My Client Secret\"),\n\t)\n\tcreateAccessTokenResponse, err := client.AccessTokens.New(context.TODO(), finchgo.AccessTokenNewParams{\n\t\tCode: finchgo.F(\"code\"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", createAccessTokenResponse.ConnectionID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccessTokenCreateParams;\nimport com.tryfinch.api.models.CreateAccessTokenResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        AccessTokenCreateParams params = AccessTokenCreateParams.builder()\n            .code(\"code\")\n            .build();\n        CreateAccessTokenResponse createAccessTokenResponse = client.accessTokens().create(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccessTokenCreateParams\nimport com.tryfinch.api.models.CreateAccessTokenResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: AccessTokenCreateParams = AccessTokenCreateParams.builder()\n        .code(\"code\")\n        .build()\n    val createAccessTokenResponse: CreateAccessTokenResponse = client.accessTokens().create(params)\n}"
+      - lang: Ruby
+        source: "require \"finch_api\"\n\nfinch = FinchAPI::Client.new(\n  access_token: \"My Access Token\",\n  client_id: \"4ab15e51-11ad-49f4-acae-f343b7794375\",\n  client_secret: \"My Client Secret\"\n)\n\ncreate_access_token_response = finch.access_tokens.create(code: \"code\")\n\nputs(create_access_token_response)"
+  /providers:
+    get:
+      summary: Providers
+      operationId: get-providers
+      description: Return details on all available payroll and HR systems.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetProvidersResponse'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch();\n\n// Automatically fetches more pages as needed.\nfor await (const providerListResponse of client.providers.list()) {\n  console.log(providerListResponse.id);\n}"
+      - lang: Python
+        source: 'from finch import Finch
+
+
+          client = Finch()
+
+          page = client.providers.list()
+
+          page = page.items[0]
+
+          print(page.id)'
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t\toption.WithClientID(\"4ab15e51-11ad-49f4-acae-f343b7794375\"),\n\t\toption.WithClientSecret(\"My Client Secret\"),\n\t)\n\tpage, err := client.Providers.List(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", page)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.ProviderListPage;\nimport com.tryfinch.api.models.ProviderListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        ProviderListPage page = client.providers().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.ProviderListPage\nimport com.tryfinch.api.models.ProviderListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val page: ProviderListPage = client.providers().list()\n}"
+      - lang: Ruby
+        source: "require \"finch_api\"\n\nfinch = FinchAPI::Client.new(\n  access_token: \"My Access Token\",\n  client_id: \"4ab15e51-11ad-49f4-acae-f343b7794375\",\n  client_secret: \"My Client Secret\"\n)\n\npage = finch.providers.list\n\nputs(page)"
+  /introspect:
+    get:
+      summary: Introspect
+      operationId: get-introspect
+      description: Read account information associated with an `access_token`
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntrospectResponse'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst introspection = await client.account.introspect();\n\nconsole.log(introspection.id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nintrospection = client.account.introspect()\nprint(introspection.id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tintrospection, err := client.Account.Introspect(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", introspection.ID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccountIntrospectParams;\nimport com.tryfinch.api.models.Introspection;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        Introspection introspection = client.account().introspect();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccountIntrospectParams\nimport com.tryfinch.api.models.Introspection\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val introspection: Introspection = client.account().introspect()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          introspection = finch.account.introspect
+
+
+          puts(introspection)'
+  /disconnect:
+    post:
+      summary: Disconnect
+      operationId: post-disconnect
+      description: Disconnect one or more `access_token`s from your application.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectResponse'
+              examples:
+                Success:
+                  value:
+                    status: success
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst disconnectResponse = await client.account.disconnect();\n\nconsole.log(disconnectResponse.status);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ndisconnect_response = client.account.disconnect()\nprint(disconnect_response.status)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tdisconnectResponse, err := client.Account.Disconnect(context.TODO())\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", disconnectResponse.Status)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccountDisconnectParams;\nimport com.tryfinch.api.models.DisconnectResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        DisconnectResponse disconnectResponse = client.account().disconnect();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccountDisconnectParams\nimport com.tryfinch.api.models.DisconnectResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val disconnectResponse: DisconnectResponse = client.account().disconnect()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          disconnect_response = finch.account.disconnect
+
+
+          puts(disconnect_response)'
+  /forward:
+    post:
+      summary: Request Forwarding
+      operationId: post-forward
+      description: 'The Forward API allows you to make direct requests to an employment system. If Finch''s unified API
+
+        doesn''t have a data model that cleanly fits your needs, then Forward allows you to push or pull
+
+        data models directly against an integration''s API.'
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForwardRequest'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForwardResponse'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst response = await client.requestForwarding.forward({ method: 'method', route: 'route' });\n\nconsole.log(response.request);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nresponse = client.request_forwarding.forward(\n    method=\"method\",\n    route=\"route\",\n)\nprint(response.request)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tresponse, err := client.RequestForwarding.Forward(context.TODO(), finchgo.RequestForwardingForwardParams{\n\t\tMethod: finchgo.F(\"method\"),\n\t\tRoute:  finchgo.F(\"route\"),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", response.Request)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.RequestForwardingForwardParams;\nimport com.tryfinch.api.models.RequestForwardingForwardResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        RequestForwardingForwardParams params = RequestForwardingForwardParams.builder()\n            .method(\"method\")\n            .route(\"route\")\n            .build();\n        RequestForwardingForwardResponse response = client.requestForwarding().forward(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.RequestForwardingForwardParams\nimport com.tryfinch.api.models.RequestForwardingForwardResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: RequestForwardingForwardParams = RequestForwardingForwardParams.builder()\n        .method(\"method\")\n        .route(\"route\")\n        .build()\n    val response: RequestForwardingForwardResponse = client.requestForwarding().forward(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          response = finch.request_forwarding.forward(method_: "method", route: "route")
+
+
+          puts(response)'
+  /jobs/automated:
+    get:
+      summary: List All Automated Jobs
+      operationId: get-jobs-automated
+      description: Get all automated jobs. Automated jobs are completed by a machine. By default, jobs are sorted in descending order by submission time. For scheduled jobs such as data syncs, only the next scheduled job is shown.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      - name: limit
+        in: query
+        description: Number of items to return
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Index to start from (defaults to 0)
+        required: false
+        schema:
+          type: integer
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Job was found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      quotas:
+                        type: object
+                        description: Information about remaining quotas for this connection. Only applicable for customers opted in to use Finch's Data Sync Refresh endpoint (`POST /jobs/automated`). Please contact a Finch representative for more details.
+                        properties:
+                          data_sync_all:
+                            type: object
+                            properties:
+                              allowed_refreshes:
+                                type: integer
+                              remaining_refreshes:
+                                type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AutomatedAsyncJob'
+                required:
+                - meta
+                - data
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  status:
+                    type: integer
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                required:
+                - statusCode
+                - status
+                - code
+                - name
+                - message
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 401
+                    status: 401
+                    code: 401
+                    message: 'Unauthorized request: no authentication given'
+                    name: unauthorized_request_error
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                  status:
+                    type: integer
+                  code:
+                    type: integer
+                  name:
+                    type: string
+                  message:
+                    type: string
+                required:
+                - statusCode
+                - status
+                - code
+                - name
+                - message
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 404
+                    status: 404
+                    code: 404
+                    message: could not find job with id job-fb3b25dc-02dc-48eb-9cfc-3f9837276884
+                    name: not_found_error
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst automateds = await client.jobs.automated.list();\n\nconsole.log(automateds.data);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nautomateds = client.jobs.automated.list()\nprint(automateds.data)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tautomateds, err := client.Jobs.Automated.List(context.TODO(), finchgo.JobAutomatedListParams{})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", automateds.Data)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AutomatedListResponse;\nimport com.tryfinch.api.models.JobAutomatedListParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        AutomatedListResponse automateds = client.jobs().automated().list();\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AutomatedListResponse\nimport com.tryfinch.api.models.JobAutomatedListParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val automateds: AutomatedListResponse = client.jobs().automated().list()\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          automateds = finch.jobs.automated.list
+
+
+          puts(automateds)'
+    post:
+      summary: Enqueue a New Automated Job
+      operationId: post-jobs-automated
+      description: 'Enqueue an automated job.
+
+
+        `data_sync_all`: Enqueue a job to re-sync all data for a connection. `data_sync_all` has a concurrency limit of 1 job at a time per connection. This means that if this endpoint is called while a job is already in progress for this connection, Finch will return the `job_id` of the job that is currently in progress. Finch allows a fixed window rate limit of 1 forced refresh per hour per connection.
+
+
+        `w4_form_employee_sync`: Enqueues a job for sync W-4 data for a particular individual, identified by `individual_id`. This feature is currently in beta.
+
+
+        This endpoint is available for *Scale* tier customers as an add-on. To request access to this endpoint, please contact your Finch account manager.'
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      - $ref: '#/components/parameters/Content-Type'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                title: data_sync_all
+                properties:
+                  type:
+                    type: string
+                    description: The type of job to start.
+                    enum:
+                    - data_sync_all
+                required:
+                - type
+              - type: object
+                title: w4_form_employee_sync
+                properties:
+                  type:
+                    type: string
+                    description: The type of job to start.
+                    enum:
+                    - w4_form_employee_sync
+                  params:
+                    type: object
+                    properties:
+                      individual_id:
+                        type: string
+                        description: The unique ID of the individual for W-4 data sync.
+                    required:
+                    - individual_id
+                required:
+                - type
+                - params
+              discriminator:
+                propertyName: type
+      security:
+      - bearerAuth: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomatedJobResponse'
+              examples:
+                Example 1:
+                  value:
+                    job_id: 453bd7d7-5355-4d6d-a38e-d9e7eb218c3f
+                    job_url: https://api.tryfinch.com/jobs/automated/453bd7d7-5355-4d6d-a38e-d9e7eb218c3f
+                    allowed_refreshes: 2
+                    remaining_refreshes: 1
+        '202':
+          description: Accepted. This response will be returned if a job is already enqueued for the connection. This case does not consume any job quota as it just returns the details of an existing job.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomatedJobResponse'
+              examples:
+                Example 1:
+                  value:
+                    job_id: de9113d6-e2fa-4c72-ba4a-ee1d8a4f8df6
+                    job_url: https://api.tryfinch.com/jobs/automated/de9113d6-e2fa-4c72-ba4a-ee1d8a4f8df6
+                    allowed_refreshes: 2
+                    remaining_refreshes: 2
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 400
+                    status: 400
+                    code: 400
+                    message: cannot create automated job for Assisted Connect token
+                    name: bad_request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Example 1:
+                  value:
+                    statusCode: 401
+                    status: 401
+                    code: 401
+                    message: 'Unauthorized request: no authentication given'
+                    name: unauthorized_request_error
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomatedJobResponse'
+              examples:
+                Example 1:
+                  value:
+                    job_id: de9113d6-e2fa-4c72-ba4a-ee1d8a4f8df6
+                    job_url: https://api.tryfinch.com/jobs/automated/de9113d6-e2fa-4c72-ba4a-ee1d8a4f8df6
+                    allowed_refreshes: 2
+                    remaining_refreshes: 0
+                    retry_at: '2019-08-24T14:15:22Z'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst automated = await client.jobs.automated.create({ type: 'data_sync_all' });\n\nconsole.log(automated.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nautomated = client.jobs.automated.create(\n    type=\"data_sync_all\",\n)\nprint(automated.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tautomated, err := client.Jobs.Automated.New(context.TODO(), finchgo.JobAutomatedNewParamsDataSyncAll{\n\t\tType: finchgo.F(finchgo.JobAutomatedNewParamsDataSyncAllTypeDataSyncAll),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", automated.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AutomatedCreateResponse;\nimport com.tryfinch.api.models.JobAutomatedCreateParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        JobAutomatedCreateParams.Body params = JobAutomatedCreateParams.Body.ofDataSyncAll();\n        AutomatedCreateResponse automated = client.jobs().automated().create(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AutomatedCreateResponse\nimport com.tryfinch.api.models.JobAutomatedCreateParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: JobAutomatedCreateParams.Body = JobAutomatedCreateParams.Body.ofDataSyncAll()\n    val automated: AutomatedCreateResponse = client.jobs().automated().create(params)\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          automated = finch.jobs.automated.create(body: {type: :data_sync_all})
+
+
+          puts(automated)'
+  /jobs/automated/{job_id}:
+    parameters:
+    - schema:
+        type: string
+      name: job_id
+      in: path
+      required: true
+    get:
+      summary: Retrieve an Automated Job
+      operationId: get-jobs-job_id
+      description: Get an automated job by `job_id`.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutomatedAsyncJob'
+        '404':
+          description: Not Found
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst automatedAsyncJob = await client.jobs.automated.retrieve('job_id');\n\nconsole.log(automatedAsyncJob.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nautomated_async_job = client.jobs.automated.retrieve(\n    \"job_id\",\n)\nprint(automated_async_job.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tautomatedAsyncJob, err := client.Jobs.Automated.Get(context.TODO(), \"job_id\")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", automatedAsyncJob.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AutomatedAsyncJob;\nimport com.tryfinch.api.models.JobAutomatedRetrieveParams;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        AutomatedAsyncJob automatedAsyncJob = client.jobs().automated().retrieve(\"job_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AutomatedAsyncJob\nimport com.tryfinch.api.models.JobAutomatedRetrieveParams\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val automatedAsyncJob: AutomatedAsyncJob = client.jobs().automated().retrieve(\"job_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          automated_async_job = finch.jobs.automated.retrieve("job_id")
+
+
+          puts(automated_async_job)'
+  /jobs/manual/{job_id}:
+    parameters:
+    - schema:
+        type: string
+      name: job_id
+      in: path
+      required: true
+    get:
+      summary: Retrieve a Manual Job
+      operationId: get-jobs-manual-job_id
+      description: Check the status and outcome of a job by `job_id`. This includes all deductions jobs including those for both automated and assisted integrations.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManualAsyncJob'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  finch_code:
+                    type: string
+                  name:
+                    type: string
+                  message:
+                    type: string
+                required:
+                - code
+                - finch_code
+                - name
+                - message
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                  finch_code:
+                    type: string
+                  name:
+                    type: string
+                  message:
+                    type: string
+                required:
+                - code
+                - finch_code
+                - name
+                - message
+              examples:
+                Example 1:
+                  value:
+                    code: 404
+                    finch_code: item_not_found
+                    name: not_found_error
+                    message: could not find job with id '49142223-78e0-4092-80e1-313f510b0977'
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst manualAsyncJob = await client.jobs.manual.retrieve('job_id');\n\nconsole.log(manualAsyncJob.job_id);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\nmanual_async_job = client.jobs.manual.retrieve(\n    \"job_id\",\n)\nprint(manual_async_job.job_id)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tmanualAsyncJob, err := client.Jobs.Manual.Get(context.TODO(), \"job_id\")\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", manualAsyncJob.JobID)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.JobManualRetrieveParams;\nimport com.tryfinch.api.models.ManualAsyncJob;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        ManualAsyncJob manualAsyncJob = client.jobs().manual().retrieve(\"job_id\");\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.JobManualRetrieveParams\nimport com.tryfinch.api.models.ManualAsyncJob\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val manualAsyncJob: ManualAsyncJob = client.jobs().manual().retrieve(\"job_id\")\n}"
+      - lang: Ruby
+        source: 'require "finch_api"
+
+
+          finch = FinchAPI::Client.new(access_token: "My Access Token")
+
+
+          manual_async_job = finch.jobs.manual.retrieve("job_id")
+
+
+          puts(manual_async_job)'
+  /disconnect-entity:
+    post:
+      summary: Disconnect Entity
+      operationId: post-disconnect-entity
+      description: Disconnect entity(s) from a connection without affecting other entities associated with the same connection.
+      tags:
+      - Management
+      parameters:
+      - $ref: '#/components/parameters/API-Version'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisconnectEntityRequest'
+            examples:
+              Sample:
+                value:
+                  entity_ids:
+                  - 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                  - 5e6f7a8b-9c10-4d11-a12b-c13d14e15f16
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DisconnectEntityResponse'
+              examples:
+                Success:
+                  value:
+                    status: success
+        '400':
+          description: Bad request. Either the request body is malformed (missing or invalid entity_ids) or one or more entity IDs failed validation.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/DisconnectEntityErrorResponse'
+                - $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                NotFound:
+                  summary: One or more entity IDs not found
+                  value:
+                    errors:
+                    - entityId: 3c90c3cc-0d44-4b50-8888-8dd25736052a
+                      error: NOT_FOUND
+                BadRequest:
+                  summary: Malformed request (missing or invalid entity_ids)
+                  value:
+                    statusCode: 400
+                    status: 400
+                    code: 400
+                    name: BadRequestError
+                    message: entity_ids must be a non-empty array of UUIDs.
+      x-codeSamples:
+      - lang: JavaScript
+        source: "import Finch from '@tryfinch/finch-api';\n\nconst client = new Finch({\n  accessToken: 'My Access Token',\n});\n\nconst disconnectEntityResponse = await client.account.disconnectEntity({\n  entity_ids: ['3c90c3cc-0d44-4b50-8888-8dd25736052a', '5e6f7a8b-9c10-4d11-a12b-c13d14e15f16'],\n});\n\nconsole.log(disconnectEntityResponse.status);"
+      - lang: Python
+        source: "from finch import Finch\n\nclient = Finch(\n    access_token=\"My Access Token\",\n)\ndisconnect_entity_response = client.account.disconnect_entity(\n    entity_ids=[\"3c90c3cc-0d44-4b50-8888-8dd25736052a\", \"5e6f7a8b-9c10-4d11-a12b-c13d14e15f16\"],\n)\nprint(disconnect_entity_response.status)"
+      - lang: Go
+        source: "package main\n\nimport (\n\t\"context\"\n\t\"fmt\"\n\n\t\"github.com/Finch-API/finch-api-go/v2\"\n\t\"github.com/Finch-API/finch-api-go/v2/option\"\n)\n\nfunc main() {\n\tclient := finchgo.NewClient(\n\t\toption.WithAccessToken(\"My Access Token\"),\n\t)\n\tdisconnectEntityResponse, err := client.Account.DisconnectEntity(context.TODO(), finchgo.AccountDisconnectEntityParams{\n\t\tEntityIDs: finchgo.F([]string{\"3c90c3cc-0d44-4b50-8888-8dd25736052a\", \"5e6f7a8b-9c10-4d11-a12b-c13d14e15f16\"}),\n\t})\n\tif err != nil {\n\t\tpanic(err.Error())\n\t}\n\tfmt.Printf(\"%+v\\n\", disconnectEntityResponse.Status)\n}\n"
+      - lang: Java
+        source: "package com.tryfinch.api.example;\n\nimport com.tryfinch.api.client.FinchClient;\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient;\nimport com.tryfinch.api.models.AccountDisconnectEntityParams;\nimport com.tryfinch.api.models.DisconnectEntityResponse;\n\npublic final class Main {\n    private Main() {}\n\n    public static void main(String[] args) {\n        FinchClient client = FinchOkHttpClient.builder()\n            .fromEnv()\n            .accessToken(\"My Access Token\")\n            .build();\n\n        AccountDisconnectEntityParams params = AccountDisconnectEntityParams.builder()\n            .addEntityId(\"3c90c3cc-0d44-4b50-8888-8dd25736052a\")\n            .addEntityId(\"5e6f7a8b-9c10-4d11-a12b-c13d14e15f16\")\n            .build();\n        DisconnectEntityResponse disconnectEntityResponse = client.account().disconnectEntity(params);\n    }\n}"
+      - lang: Kotlin
+        source: "package com.tryfinch.api.example\n\nimport com.tryfinch.api.client.FinchClient\nimport com.tryfinch.api.client.okhttp.FinchOkHttpClient\nimport com.tryfinch.api.models.AccountDisconnectEntityParams\nimport com.tryfinch.api.models.DisconnectEntityResponse\n\nfun main() {\n    val client: FinchClient = FinchOkHttpClient.builder()\n        .fromEnv()\n        .accessToken(\"My Access Token\")\n        .build()\n\n    val params: AccountDisconnectEntityParams = AccountDisconnectEntityParams.builder()\n        .addEntityId(\"3c90c3cc-0d44-4b50-8888-8dd25736052a\")\n        .addEntityId(\"5e6f7a8b-9c10-4d11-a12b-c13d14e15f16\")\n        .build()\n    val disconnectEntityResponse: DisconnectEntityResponse = client.account().disconnectEntity(params)\n}"
+      - lang: Ruby
+        source: "require \"finch_api\"\n\nfinch = FinchAPI::Client.new(access_token: \"My Access Token\")\n\ndisconnect_entity_response = finch.account.disconnect_entity(\n  entity_ids: [\"3c90c3cc-0d44-4b50-8888-8dd25736052a\", \"5e6f7a8b-9c10-4d11-a12b-c13d14e15f16\"]\n)\n\nputs(disconnect_entity_response)"
+components:
+  schemas:
+    DisconnectResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: If the request is successful, Finch will return "success" (HTTP 200 status).
+      required:
+      - status
+    ManualAsyncJob:
+      title: ManualAsyncJob
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+          - pending
+          - in_progress
+          - error
+          - complete
+        body:
+          type: array
+          description: Specific information about the job, such as individual statuses for batch jobs.
+          nullable: true
+          items:
+            nullable: true
+      required:
+      - job_id
+      - status
+      - body
+    ErrorResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+        status:
+          type: integer
+        code:
+          type: integer
+        name:
+          type: string
+        message:
+          type: string
+      required:
+      - statusCode
+      - status
+      - code
+      - name
+      - message
+    SupportedFields:
+      type: object
+      nullable: true
+      properties:
+        company:
+          $ref: '#/components/schemas/SupportedCompanyFields'
+        directory:
+          $ref: '#/components/schemas/SupportedDirectoryFields'
+        individual:
+          $ref: '#/components/schemas/SupportedIndividualFields'
+        employment:
+          $ref: '#/components/schemas/SupportedEmploymentFields'
+        payment:
+          $ref: '#/components/schemas/SupportedPaymentFields'
+        pay_statement:
+          $ref: '#/components/schemas/SupportedPayStatementFields'
+        pay_group:
+          $ref: '#/components/schemas/SupportedPayGroupFields'
+        plans:
+          $ref: '#/components/schemas/SupportedPlanFields'
+        plan_enrollments:
+          $ref: '#/components/schemas/SupportedPlanEnrollmentFields'
+        plan_dependents:
+          $ref: '#/components/schemas/SupportedPlanDependentFields'
+      description: The supported data fields returned by our HR, payroll, and benefits endpoints
+    DisconnectEntityResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: If the request is successful, Finch will return "success" (HTTP 200 status).
+      required:
+      - status
+    SupportedIndividualFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        first_name:
+          type: boolean
+        middle_name:
+          type: boolean
+        last_name:
+          type: boolean
+        preferred_name:
+          type: boolean
+        dob:
+          type: boolean
+        gender:
+          type: boolean
+        ethnicity:
+          type: boolean
+        ssn:
+          type: boolean
+        encrypted_ssn:
+          type: boolean
+        emails:
+          type: object
+          properties:
+            data:
+              type: boolean
+            type:
+              type: boolean
+        phone_numbers:
+          type: object
+          properties:
+            data:
+              type: boolean
+            type:
+              type: boolean
+        residence:
+          type: object
+          properties:
+            city:
+              type: boolean
+            country:
+              type: boolean
+            line1:
+              type: boolean
+            line2:
+              type: boolean
+            postal_code:
+              type: boolean
+            state:
+              type: boolean
+    SupportedEmploymentFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        first_name:
+          type: boolean
+        middle_name:
+          type: boolean
+        last_name:
+          type: boolean
+        title:
+          type: boolean
+        start_date:
+          type: boolean
+        end_date:
+          type: boolean
+        is_active:
+          type: boolean
+        employment_status:
+          type: boolean
+        income_history:
+          type: boolean
+        class_code:
+          type: boolean
+        custom_fields:
+          type: boolean
+        department:
+          type: object
+          properties:
+            name:
+              type: boolean
+        employment:
+          type: object
+          properties:
+            type:
+              type: boolean
+            subtype:
+              type: boolean
+        income:
+          type: object
+          properties:
+            amount:
+              type: boolean
+            currency:
+              type: boolean
+            unit:
+              type: boolean
+        location:
+          type: object
+          properties:
+            line1:
+              type: boolean
+            line2:
+              type: boolean
+            city:
+              type: boolean
+            state:
+              type: boolean
+            postal_code:
+              type: boolean
+            country:
+              type: boolean
+        manager:
+          type: object
+          nullable: true
+          properties:
+            id:
+              type: boolean
+    SupportedPayGroupFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        name:
+          type: boolean
+        pay_frequencies:
+          type: boolean
+        individual_ids:
+          type: boolean
+    AutomatedJobResponse:
+      type: object
+      properties:
+        job_id:
+          type: string
+          format: uuid
+          description: The id of the job that has been created.
+        job_url:
+          type: string
+          description: The url that can be used to retrieve the job status
+        allowed_refreshes:
+          type: integer
+          description: The number of allowed refreshes per hour (per hour, fixed window)
+        remaining_refreshes:
+          type: integer
+          description: The number of remaining refreshes available (per hour, fixed window)
+        retry_at:
+          type: string
+          description: ISO 8601 timestamp indicating when to retry the request
+      required:
+      - allowed_refreshes
+      - remaining_refreshes
+    GetProvidersResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/Provider'
+    DisconnectEntityErrorResponse:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/DisconnectEntityErrorItem'
+          description: List of entity IDs that failed validation and their error codes.
+      required:
+      - errors
+    SupportedPlanDependentFields:
+      type: object
+      properties:
+        dependent_id:
+          type: boolean
+        first_name:
+          type: boolean
+        last_name:
+          type: boolean
+        middle_name:
+          type: boolean
+        date_of_birth:
+          type: boolean
+        gender:
+          type: boolean
+        ssn:
+          type: boolean
+        coverage:
+          type: object
+          properties:
+            relationship_to_individual:
+              type: boolean
+            individual_id:
+              type: boolean
+            enrollments:
+              type: object
+              properties:
+                id:
+                  type: boolean
+                type:
+                  type: boolean
+    CreateAccessTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: The access token for the connection
+        token_type:
+          type: string
+          description: The RFC 8693 token type (Finch uses `bearer` tokens)
+        connection_id:
+          type: string
+          description: The Finch UUID of the connection associated with the `access_token`
+        customer_id:
+          type: string
+          nullable: true
+          description: The ID of your customer you provided to Finch when a connect session was created for this connection
+        customer_name:
+          type: string
+          nullable: true
+          description: The name of your customer you provided to Finch when a connect session was created for this connection
+        account_id:
+          type: string
+          description: '[DEPRECATED] Use `connection_id` to identify the connection instead of this account ID'
+          deprecated: true
+        client_type:
+          $ref: '#/components/schemas/ClientType'
+        company_id:
+          type: string
+          description: The Finch UUID of the company associated with the `access_token`.
+        connection_type:
+          $ref: '#/components/schemas/ConnectionType'
+        products:
+          type: array
+          items:
+            type: string
+          description: An array of the authorized products associated with the `access_token`
+        provider_id:
+          type: string
+          description: The ID of the provider associated with the `access_token`
+        entity_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: An array of entity IDs that can be accessed with this access token
+      required:
+      - access_token
+      - token_type
+      - connection_id
+      - client_type
+      - connection_type
+      - products
+      - provider_id
+      - entity_ids
+    SupportedCompanyFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        legal_name:
+          type: boolean
+        entity:
+          type: object
+          properties:
+            type:
+              type: boolean
+            subtype:
+              type: boolean
+        primary_email:
+          type: boolean
+        primary_phone_number:
+          type: boolean
+        ein:
+          type: boolean
+        accounts:
+          type: object
+          properties:
+            routing_number:
+              type: boolean
+            account_name:
+              type: boolean
+            institution_name:
+              type: boolean
+            account_type:
+              type: boolean
+            account_number:
+              type: boolean
+        departments:
+          type: object
+          properties:
+            name:
+              type: boolean
+            parent:
+              type: object
+              properties:
+                name:
+                  type: boolean
+        locations:
+          type: object
+          properties:
+            line1:
+              type: boolean
+            line2:
+              type: boolean
+            city:
+              type: boolean
+            state:
+              type: boolean
+            postal_code:
+              type: boolean
+            country:
+              type: boolean
+    CreateAccessTokenRequest:
+      type: object
+      properties:
+        client_id:
+          type: string
+          format: uuid
+          description: The client ID for your application
+        client_secret:
+          type: string
+          description: The client secret for your application
+        code:
+          type: string
+          description: The authorization code received from the authorization server
+        redirect_uri:
+          type: string
+          description: The redirect URI used in the authorization request (optional)
+      required:
+      - code
+    ForwardResponse:
+      type: object
+      properties:
+        headers:
+          type: object
+          nullable: true
+          additionalProperties:
+            nullable: true
+          description: The HTTP headers of the forwarded request's response, exactly as received from the underlying integration's API.
+        statusCode:
+          type: integer
+          description: The HTTP status code of the forwarded request's response, exactly received from the underlying integration's API. This value will be returned as an integer.
+        data:
+          type: string
+          nullable: true
+          description: A string representation of the HTTP response body of the forwarded request's response received from the underlying integration's API. This field may be null in the case where the upstream system's response is empty.
+        request:
+          type: object
+          properties:
+            method:
+              type: string
+              description: 'The HTTP method that was specified for the forwarded request. Valid values include: `GET` , `POST` , `PUT` , `DELETE` , and `PATCH`.'
+            route:
+              type: string
+              description: The URL route path that was specified for the forwarded request.
+            headers:
+              type: object
+              nullable: true
+              additionalProperties:
+                type: string
+              description: The HTTP headers that were specified for the forwarded request.
+            params:
+              type: object
+              nullable: true
+              additionalProperties:
+                nullable: true
+              description: The query parameters that were specified for the forwarded request.
+            data:
+              anyOf:
+              - type: string
+              - type: object
+                additionalProperties:
+                  nullable: true
+              - nullable: true
+              - nullable: true
+              description: The body that was specified for the forwarded request.
+          required:
+          - method
+          - route
+          description: An object containing details of your original forwarded request, for your ease of reference.
+      required:
+      - statusCode
+      - request
+    EntityConnectionStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - connected
+      - error_no_account_setup
+      - error_permissions
+      - reauth
+      - disconnected
+      description: The status of the entity connection
+    SupportedPaymentFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        pay_date:
+          type: boolean
+        debit_date:
+          type: boolean
+        company_debit:
+          type: boolean
+        gross_pay:
+          type: boolean
+        net_pay:
+          type: boolean
+        employer_taxes:
+          type: boolean
+        employee_taxes:
+          type: boolean
+        individual_ids:
+          type: boolean
+        pay_period:
+          type: object
+          properties:
+            start_date:
+              type: boolean
+            end_date:
+              type: boolean
+        pay_group_ids:
+          type: boolean
+        pay_frequencies:
+          type: boolean
+    AutomatedAsyncJob:
+      title: AutomatedAsyncJob
+      type: object
+      properties:
+        job_id:
+          type: string
+          description: The id of the job that has been created.
+          format: uuid
+        job_url:
+          type: string
+          description: The url that can be used to retrieve the job status
+        type:
+          type: string
+          description: The type of automated job
+          enum:
+          - data_sync_all
+          - w4_form_employee_sync
+        status:
+          type: string
+          enum:
+          - pending
+          - in_progress
+          - complete
+          - error
+          - reauth_error
+          - permissions_error
+        created_at:
+          type: string
+          format: date-time
+          description: The datetime when the job was created. for scheduled jobs, this will be the initial connection time. For ad-hoc jobs, this will be the time the creation request was received.
+        scheduled_at:
+          type: string
+          format: date-time
+          description: The datetime a job is scheduled to be run. For scheduled jobs, this datetime can be in the future if the job has not yet been enqueued. For ad-hoc jobs, this field will be null.
+          nullable: true
+        started_at:
+          type: string
+          format: date-time
+          description: The datetime a job entered into the job queue.
+          nullable: true
+        completed_at:
+          type: string
+          format: date-time
+          description: The datetime the job completed.
+          nullable: true
+        params:
+          type: object
+          description: The input parameters for the job.
+          nullable: true
+          properties:
+            individual_id:
+              type: string
+              description: The ID of the individual that the job was completed for.
+      required:
+      - job_id
+      - job_url
+      - type
+      - status
+      - created_at
+      - scheduled_at
+      - started_at
+      - completed_at
+      - params
+    DisconnectEntityErrorItem:
+      type: object
+      properties:
+        entityId:
+          type: string
+          format: uuid
+          description: The entity ID that failed.
+        error:
+          type: string
+          enum:
+          - NOT_FOUND
+          description: The error code indicating why the entity could not be disconnected.
+      required:
+      - entityId
+      - error
+    ForwardRequest:
+      type: object
+      properties:
+        method:
+          type: string
+          description: 'The HTTP method for the forwarded request. Valid values include: `GET` , `POST` , `PUT` , `DELETE` , and `PATCH`.'
+        route:
+          type: string
+          description: The URL route path for the forwarded request. This value must begin with a forward-slash ( / ) and may only contain alphanumeric characters, hyphens, and underscores.
+        params:
+          type: object
+          nullable: true
+          additionalProperties:
+            nullable: true
+          description: The query parameters for the forwarded request. This value must be specified as a valid JSON object rather than a query string.
+        data:
+          type: string
+          nullable: true
+          description: The body for the forwarded request. This value must be specified as either a string or a valid JSON object.
+        request_headers:
+          type: object
+          nullable: true
+          additionalProperties:
+            nullable: true
+          description: 'The HTTP headers to include on the forwarded request. This value must be specified as an object of key-value pairs. Example: `{"Content-Type": "application/xml", "X-API-Version": "v1" }`'
+      required:
+      - method
+      - route
+    ConnectionStatusDetail:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/ConnectionStatus'
+        message:
+          type: string
+        last_successful_sync:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: string
+          - nullable: true
+          description: The datetime when the connection was last successfully synced
+      required:
+      - status
+    SupportedDirectoryFields:
+      type: object
+      properties:
+        paging:
+          type: object
+          properties:
+            count:
+              type: boolean
+            offset:
+              type: boolean
+        individuals:
+          type: object
+          properties:
+            id:
+              type: boolean
+            first_name:
+              type: boolean
+            middle_name:
+              type: boolean
+            last_name:
+              type: boolean
+            is_active:
+              type: boolean
+            department:
+              type: boolean
+              nullable: true
+            manager:
+              type: object
+              properties:
+                id:
+                  type: boolean
+    DisconnectEntityRequest:
+      type: object
+      properties:
+        entity_ids:
+          type: array
+          items:
+            type: string
+            format: uuid
+          minItems: 1
+          description: Array of entity UUIDs to disconnect. At least one entity ID must be provided.
+      required:
+      - entity_ids
+    SupportedPlanEnrollmentFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        individual_id:
+          type: boolean
+        plan_id:
+          type: boolean
+        status:
+          type: boolean
+        coverage_tier:
+          type: boolean
+        coverage_start_date:
+          type: boolean
+        coverage_end_date:
+          type: boolean
+        contributions:
+          type: object
+          properties:
+            frequency:
+              type: boolean
+            employee_contribution:
+              type: object
+              properties:
+                amount:
+                  type: boolean
+                currency:
+                  type: boolean
+            employer_contribution:
+              type: object
+              properties:
+                amount:
+                  type: boolean
+                currency:
+                  type: boolean
+        dependent_ids:
+          type: boolean
+    ConnectionType:
+      type: string
+      enum:
+      - finch
+      - provider
+      description: 'The type of the connection associated with the token.
+
+        - `provider` - connection to an external provider
+
+        - `finch` - finch-generated data.'
+      title: ConnectionType
+    ClientType:
+      type: string
+      enum:
+      - development
+      - production
+      - sandbox
+      description: The type of application associated with a token.
+      title: ClientType
+    AuthenticationMethodDetail:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+          - assisted
+          - credential
+          - api_token
+          - api_credential
+          - oauth
+          description: The type of authentication method
+        connection_status:
+          $ref: '#/components/schemas/ConnectionStatusDetail'
+        products:
+          type: array
+          items:
+            type: string
+          description: An array of the authorized products associated with the `access_token`
+      required:
+      - type
+    SupportedPlanFields:
+      type: object
+      properties:
+        id:
+          type: boolean
+        name:
+          type: boolean
+        start_date:
+          type: boolean
+        type:
+          type: boolean
+        description:
+          type: boolean
+        network_type:
+          type: boolean
+        deduction_codes:
+          type: boolean
+        carrier:
+          type: object
+          properties:
+            id:
+              type: boolean
+            name:
+              type: boolean
+        end_date:
+          type: boolean
+        coverage_tiers:
+          type: boolean
+    MultiAccountEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The connection account ID for this entity
+        name:
+          type: string
+          nullable: true
+          description: The name of the entity (payroll provider company name)
+        source_id:
+          type: string
+          nullable: true
+          description: The source ID of the entity
+        status:
+          $ref: '#/components/schemas/EntityConnectionStatus'
+      required:
+      - id
+      - name
+      - source_id
+      - status
+    ConnectionStatus:
+      type: string
+      enum:
+      - pending
+      - processing
+      - connected
+      - error_no_account_setup
+      - error_permissions
+      - reauth
+    SupportedPayStatementFields:
+      type: object
+      properties:
+        paging:
+          type: object
+          properties:
+            count:
+              type: boolean
+            offset:
+              type: boolean
+          required:
+          - count
+          - offset
+        pay_statements:
+          type: object
+          properties:
+            individual_id:
+              type: boolean
+            type:
+              type: boolean
+            payment_method:
+              type: boolean
+            total_hours:
+              type: boolean
+            gross_pay:
+              type: boolean
+            net_pay:
+              type: boolean
+            earnings:
+              type: object
+              properties:
+                type:
+                  type: boolean
+                name:
+                  type: boolean
+                amount:
+                  type: boolean
+                currency:
+                  type: boolean
+            employee_deductions:
+              type: object
+              properties:
+                name:
+                  type: boolean
+                amount:
+                  type: boolean
+                type:
+                  type: boolean
+                pre_tax:
+                  type: boolean
+                currency:
+                  type: boolean
+            employer_contributions:
+              type: object
+              properties:
+                name:
+                  type: boolean
+                amount:
+                  type: boolean
+                currency:
+                  type: boolean
+            taxes:
+              type: object
+              properties:
+                type:
+                  type: boolean
+                name:
+                  type: boolean
+                employer:
+                  type: boolean
+                amount:
+                  type: boolean
+                currency:
+                  type: boolean
+    Provider:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the payroll provider used in Connect.
+        display_name:
+          type: string
+          description: The display name of the payroll provider.
+        products:
+          type: array
+          items:
+            type: string
+          description: The list of Finch products supported on this payroll provider.
+        icon:
+          type: string
+          description: The url to the official icon of the payroll provider.
+        logo:
+          type: string
+          description: The url to the official logo of the payroll provider.
+        mfa_required:
+          type: boolean
+          description: whether MFA is required for the provider.
+        primary_color:
+          type: string
+          description: The hex code for the primary color of the payroll provider.
+        manual:
+          type: boolean
+          description: '[DEPRECATED] Whether the Finch integration with this provider uses the Assisted Connect Flow by default. This field is now deprecated. Please check for a `type` of `assisted` in the `authentication_methods` field instead.'
+          deprecated: true
+        beta:
+          type: boolean
+          description: '`true` if the integration is in a beta state, `false` otherwise'
+        authentication_methods:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum:
+                - assisted
+                - credential
+                - api_token
+                - api_credential
+                - oauth
+                - api
+                description: The type of authentication method
+              benefits_support:
+                type: object
+                additionalProperties:
+                  nullable: true
+                description: The supported benefit types and their configurations
+              supported_fields:
+                $ref: '#/components/schemas/SupportedFields'
+            required:
+            - type
+          description: The authentication methods supported by the provider.
+      required:
+      - id
+      - display_name
+      - products
+    GetIntrospectResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The Finch UUID of the token being introspected
+        connection_id:
+          type: string
+          description: The Finch UUID of the connection associated with the `access_token`
+        connection_status:
+          $ref: '#/components/schemas/ConnectionStatusDetail'
+        client_id:
+          type: string
+          description: The client ID of the application associated with the `access_token`
+        client_type:
+          $ref: '#/components/schemas/ClientType'
+        connection_type:
+          $ref: '#/components/schemas/ConnectionType'
+        company_id:
+          type: string
+          description: The Finch UUID of the company associated with the `access_token`.
+        account_id:
+          type: string
+          description: '[DEPRECATED] Use `connection_id` to associate tokens with a Finch connection instead of this account ID'
+          deprecated: true
+        customer_id:
+          type: string
+          nullable: true
+          description: The ID of your customer you provided to Finch when a connect session was created for this connection
+        customer_name:
+          type: string
+          nullable: true
+          description: The name of your customer you provided to Finch when a connect session was created for this connection
+        customer_email:
+          type: string
+          nullable: true
+          description: The email of your customer you provided to Finch when a connect session was created for this connection
+        authentication_methods:
+          type: array
+          items:
+            $ref: '#/components/schemas/AuthenticationMethodDetail'
+        products:
+          type: array
+          items:
+            type: string
+          description: An array of the authorized products associated with the `access_token`.
+        username:
+          type: string
+          nullable: true
+          description: The account username used for login associated with the `access_token`.
+        provider_id:
+          type: string
+          description: The ID of the provider associated with the `access_token`.
+        payroll_provider_id:
+          type: string
+          description: '[DEPRECATED] Use `provider_id` to identify the provider instead of this payroll provider ID.'
+          deprecated: true
+        manual:
+          type: boolean
+          description: Whether the connection associated with the `access_token` uses the Assisted Connect Flow. (`true` if using Assisted Connect, `false` if connection is automated)
+        entities:
+          type: array
+          items:
+            $ref: '#/components/schemas/MultiAccountEntity'
+          description: Array of detailed entity information for each connected account in multi-account mode
+      required:
+      - id
+      - connection_id
+      - connection_status
+      - client_id
+      - client_type
+      - connection_type
+      - products
+      - provider_id
+  parameters:
+    API-Version:
+      name: Finch-API-Version
+      in: header
+      required: true
+      schema:
+        type: string
+        default: '2020-09-17'
+        format: date
+      description: Header used to specify the version for a given API request. Current version is 2020-09-17.
+      x-stainless-param: false
+    Content-Type:
+      name: Content-Type
+      in: header
+      required: true
+      schema:
+        type: string
+        default: application/json
+      description: 'Used to indicate the original media type of the resource '
+      x-stainless-param: false
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Please use your Access Token
+    basicAuth:
+      type: http
+      scheme: basic
+      description: Please use base64 encoded client_id:client_secret
