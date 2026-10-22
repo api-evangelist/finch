@@ -8,10 +8,27 @@ marketplace_apps:
   channel: provider-built
   app: finch
   url: https://api.tryfinch.com/providers
-  app_count: 291
+  app_count: 292
   adapter: sweep-hr-stores.py:finch
-  listed: 291
+  listed: 292
 edges:
+- partner_name: BambooHR (own)
+  partner: bamboohr
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bamboohr.com/integrations/listings/finch
+  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
+  apps:
+  - Finch
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Developer Resources
 - partner_name: AAP isolved
   partner: null
   partner_match: null
@@ -31,7 +48,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Abacus HCM isolved
   partner: null
   partner_match: null
@@ -51,7 +68,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Absolute Payroll isolved
   partner: null
   partner_match: null
@@ -71,7 +88,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: AccountantsWorld
   partner: null
   partner_match: null
@@ -91,7 +108,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Accupay isolved
   partner: null
   partner_match: null
@@ -111,7 +128,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Ace Workforce Technologies isolved
   partner: null
   partner_match: null
@@ -131,7 +148,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Adams Keegan
   partner: null
   partner_match: null
@@ -148,7 +165,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Comprehensive Services
   partner: null
   partner_match: null
@@ -168,7 +185,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Enterprise
   partner: null
   partner_match: null
@@ -185,7 +202,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Run
   partner: null
   partner_match: null
@@ -206,7 +223,7 @@ edges:
   - pay_statement
   - documents
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Teampay
   partner: null
   partner_match: null
@@ -223,7 +240,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP TotalSource
   partner: null
   partner_match: null
@@ -243,7 +260,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Vantage
   partner: null
   partner_match: null
@@ -260,7 +277,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Workforce Now
   partner: null
   partner_match: null
@@ -284,7 +301,7 @@ edges:
   - plans_enrollments
   - plans_dependents
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Next Gen
   partner: null
   partner_match: null
@@ -301,7 +318,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Advantage Payroll Services
   partner: null
   partner_match: null
@@ -318,7 +335,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Affiliated HR Payroll Services Evolution
   partner: null
   partner_match: null
@@ -335,7 +352,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Affiliated HR Payroll Services isolved
   partner: null
   partner_match: null
@@ -355,7 +372,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Ahola
   partner: null
   partner_match: null
@@ -375,7 +392,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Alcott HR
   partner: null
   partner_match: null
@@ -392,7 +409,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Alight
   partner: null
   partner_match: null
@@ -409,7 +426,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Alliance HCM
   partner: null
   partner_match: null
@@ -426,7 +443,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: AlphaStaff
   partner: null
   partner_match: null
@@ -445,7 +462,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: AmCheck
   partner: null
   partner_match: null
@@ -465,7 +482,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Amplify HR
   partner: null
   partner_match: null
@@ -484,7 +501,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Apdata
   partner: null
   partner_match: null
@@ -501,7 +518,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Apex
   partner: null
   partner_match: null
@@ -518,7 +535,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: APS Payroll
   partner: null
   partner_match: null
@@ -535,7 +552,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Armhr
   partner: null
   partner_match: null
@@ -552,7 +569,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: AspenHR
   partner: null
   partner_match: null
@@ -572,7 +589,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Asset HR
   partner: null
   partner_match: null
@@ -589,7 +606,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Associated Tax Service
   partner: null
   partner_match: null
@@ -606,7 +623,7 @@ edges:
   - employment
   - company
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Asure Software
   partner: null
   partner_match: null
@@ -623,7 +640,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Balance Point
   partner: null
   partner_match: null
@@ -640,7 +657,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Bambee
   partner: null
   partner_match: null
@@ -657,7 +674,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: BambooHR
   partner: null
   partner_match: null
@@ -675,7 +692,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Baron Payroll isolved
   partner: null
   partner_match: null
@@ -695,7 +712,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: BASIC
   partner: null
   partner_match: null
@@ -712,7 +729,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Bayzat
   partner: null
   partner_match: null
@@ -729,7 +746,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: BBCS Payroll
   partner: null
   partner_match: null
@@ -746,7 +763,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: BBSI
   partner: null
   partner_match: null
@@ -763,7 +780,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: BCN Services
   partner: null
   partner_match: null
@@ -780,7 +797,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Bene-Care
   partner: null
   partner_match: null
@@ -797,7 +814,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Big Fish Employer Services
   partner: null
   partner_match: null
@@ -814,7 +831,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Bizchecks Payroll
   partner: null
   partner_match: null
@@ -831,7 +848,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: HiBob
   partner: null
   partner_match: null
@@ -848,7 +865,7 @@ edges:
   - employment
   - company
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Business Online Payroll
   partner: null
   partner_match: null
@@ -865,7 +882,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Business Solver
   partner: null
   partner_match: null
@@ -882,7 +899,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: C2
   partner: null
   partner_match: null
@@ -901,7 +918,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Candoor
   partner: null
   partner_match: null
@@ -921,7 +938,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Ceridian Dayforce
   partner: null
   partner_match: null
@@ -941,7 +958,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Ceridian Powerpay
   partner: null
   partner_match: null
@@ -958,7 +975,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Cezanne HR
   partner: null
   partner_match: null
@@ -975,7 +992,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CharlieHR
   partner: null
   partner_match: null
@@ -992,7 +1009,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Charlotte Payroll
   partner: null
   partner_match: null
@@ -1009,7 +1026,23 @@ edges:
   - directory
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
+- partner_name: ChartHop
+  partner: null
+  partner_match: null
+  partner_candidate: charthop
+  type: contract
+  channel: provider-built
+  relationship: system-coverage
+  direction: provider-built
+  evidence: https://api.tryfinch.com/providers
+  category: hris
+  operations:
+  - individual
+  - directory
+  - employment
+  detected_by: sweep-hr-stores.py
+  detected: '2026-10-19'
 - partner_name: Checkwriters
   partner: null
   partner_match: null
@@ -1026,7 +1059,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ClickUp
   partner: null
   partner_match: null
@@ -1043,7 +1076,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CMiC
   partner: null
   partner_match: null
@@ -1060,7 +1093,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CoAdvantage
   partner: null
   partner_match: null
@@ -1077,7 +1110,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Coastal Payroll
   partner: null
   partner_match: null
@@ -1097,7 +1130,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Cognos HR
   partner: null
   partner_match: null
@@ -1116,7 +1149,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Collage
   partner: null
   partner_match: null
@@ -1133,7 +1166,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Common Sense Payroll
   partner: null
   partner_match: null
@@ -1153,7 +1186,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Commonwealth Payroll & HR
   partner: null
   partner_match: null
@@ -1170,7 +1203,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ConnectPay
   partner: null
   partner_match: null
@@ -1187,7 +1220,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Contempo
   partner: null
   partner_match: null
@@ -1207,7 +1240,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Corporate Payroll Services
   partner: null
   partner_match: null
@@ -1224,7 +1257,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CoStaff HR
   partner: null
   partner_match: null
@@ -1244,7 +1277,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Counter Point HCM
   partner: null
   partner_match: null
@@ -1263,7 +1296,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CPM Employer Services isolved
   partner: null
   partner_match: null
@@ -1283,7 +1316,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Creative Business Resources
   partner: null
   partner_match: null
@@ -1302,7 +1335,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Crescent Payroll Solutions
   partner: null
   partner_match: null
@@ -1319,7 +1352,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Criterion
   partner: null
   partner_match: null
@@ -1336,7 +1369,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: CSC Paymaster
   partner: null
   partner_match: null
@@ -1353,7 +1386,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Darwinbox
   partner: null
   partner_match: null
@@ -1370,7 +1403,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Datis
   partner: null
   partner_match: null
@@ -1387,7 +1420,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Decent
   partner: null
   partner_match: null
@@ -1404,7 +1437,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Deel
   partner: null
   partner_match: null
@@ -1423,7 +1456,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Deltek
   partner: null
   partner_match: null
@@ -1440,7 +1473,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Deluxe
   partner: null
   partner_match: null
@@ -1457,7 +1490,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: DM Payroll Solutions
   partner: null
   partner_match: null
@@ -1474,7 +1507,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Dominion Payroll
   partner: null
   partner_match: null
@@ -1494,7 +1527,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Doyle HCM
   partner: null
   partner_match: null
@@ -1511,7 +1544,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ECCA
   partner: null
   partner_match: null
@@ -1531,7 +1564,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ECMS
   partner: null
   partner_match: null
@@ -1548,7 +1581,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Eddy
   partner: null
   partner_match: null
@@ -1565,7 +1598,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Elite Payroll Solutions
   partner: null
   partner_match: null
@@ -1582,7 +1615,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Ellucian
   partner: null
   partner_match: null
@@ -1598,7 +1631,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: EmCentrix
   partner: null
   partner_match: null
@@ -1615,7 +1648,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Emplicity
   partner: null
   partner_match: null
@@ -1632,7 +1665,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Employdrive
   partner: null
   partner_match: null
@@ -1652,7 +1685,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: EmployeeNavigator
   partner: null
   partner_match: null
@@ -1669,7 +1702,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Employer Flexible
   partner: null
   partner_match: null
@@ -1686,7 +1719,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Employment Hero
   partner: null
   partner_match: null
@@ -1702,7 +1735,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: EmPower HR
   partner: null
   partner_match: null
@@ -1721,7 +1754,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Engage PEO
   partner: null
   partner_match: null
@@ -1740,7 +1773,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Employer Services Corporation (ESC)
   partner: null
   partner_match: null
@@ -1757,7 +1790,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Everee
   partner: null
   partner_match: null
@@ -1774,7 +1807,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: every.io
   partner: null
   partner_match: null
@@ -1793,7 +1826,7 @@ edges:
   - individual
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Evolution Payroll Services
   partner: null
   partner_match: null
@@ -1810,7 +1843,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Excel Resources
   partner: null
   partner_match: null
@@ -1827,7 +1860,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Excelforce
   partner: null
   partner_match: null
@@ -1844,7 +1877,7 @@ edges:
   - employment
   - company
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ExtensisHR
   partner: null
   partner_match: null
@@ -1863,7 +1896,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Factorial HR
   partner: null
   partner_match: null
@@ -1880,7 +1913,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Fingercheck
   partner: null
   partner_match: null
@@ -1898,7 +1931,7 @@ edges:
   - employment
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Flock
   partner: null
   partner_match: null
@@ -1915,7 +1948,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Freshteam
   partner: null
   partner_match: null
@@ -1932,7 +1965,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Freshworks
   partner: null
   partner_match: null
@@ -1949,7 +1982,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: FullStack PEO
   partner: null
   partner_match: null
@@ -1968,7 +2001,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Gig Wage
   partner: null
   partner_match: null
@@ -1985,7 +2018,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: G&A Partners
   partner: null
   partner_match: null
@@ -2004,7 +2037,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: GoCo
   partner: null
   partner_match: null
@@ -2021,7 +2054,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Greenleaf
   partner: null
   partner_match: null
@@ -2038,7 +2071,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: greytHR
   partner: null
   partner_match: null
@@ -2055,7 +2088,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: GTM Payroll Services Evolution
   partner: null
   partner_match: null
@@ -2072,7 +2105,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: GTM Payroll Services isolved
   partner: null
   partner_match: null
@@ -2089,7 +2122,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Gusto
   partner: null
   partner_match: null
@@ -2109,7 +2142,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Heartland
   partner: null
   partner_match: null
@@ -2129,7 +2162,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Helpside
   partner: null
   partner_match: null
@@ -2146,7 +2179,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Highflyer HR
   partner: null
   partner_match: null
@@ -2163,7 +2196,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Homebase
   partner: null
   partner_match: null
@@ -2180,7 +2213,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Horizon Payroll
   partner: null
   partner_match: null
@@ -2200,7 +2233,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Horizons
   partner: null
   partner_match: null
@@ -2217,7 +2250,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: HR Butler
   partner: null
   partner_match: null
@@ -2237,7 +2270,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: HR Cloud
   partner: null
   partner_match: null
@@ -2254,7 +2287,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: HRO
   partner: null
   partner_match: null
@@ -2271,7 +2304,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: HROne
   partner: null
   partner_match: null
@@ -2288,7 +2321,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Hubstaff
   partner: null
   partner_match: null
@@ -2305,7 +2338,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Humaans
   partner: null
   partner_match: null
@@ -2322,7 +2355,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Humi
   partner: null
   partner_match: null
@@ -2339,7 +2372,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Hybrid
   partner: null
   partner_match: null
@@ -2359,7 +2392,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: iBusinessSolutions
   partner: null
   partner_match: null
@@ -2379,7 +2412,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Infinipay
   partner: null
   partner_match: null
@@ -2396,7 +2429,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: INFINITI HR
   partner: null
   partner_match: null
@@ -2415,7 +2448,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Infor
   partner: null
   partner_match: null
@@ -2432,7 +2465,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Inova
   partner: null
   partner_match: null
@@ -2449,7 +2482,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Insperity
   partner: null
   partner_match: null
@@ -2469,7 +2502,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Integrated Payroll Services
   partner: null
   partner_match: null
@@ -2489,7 +2522,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Iris HR
   partner: null
   partner_match: null
@@ -2506,7 +2539,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: isolved
   partner: null
   partner_match: null
@@ -2526,7 +2559,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Justworks
   partner: null
   partner_match: null
@@ -2547,7 +2580,7 @@ edges:
   - benefits
   - documents
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Kabel
   partner: null
   partner_match: null
@@ -2567,7 +2600,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Keka
   partner: null
   partner_match: null
@@ -2584,7 +2617,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Kenjo
   partner: null
   partner_match: null
@@ -2601,7 +2634,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Keystone Payroll isolved
   partner: null
   partner_match: null
@@ -2618,7 +2651,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Lift HCM
   partner: null
   partner_match: null
@@ -2638,7 +2671,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Miter
   partner: null
   partner_match: null
@@ -2658,7 +2691,7 @@ edges:
   - payment
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: mp
   partner: null
   partner_match: null
@@ -2675,7 +2708,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: MPAY
   partner: null
   partner_match: null
@@ -2692,7 +2725,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Multiplier
   partner: null
   partner_match: null
@@ -2709,7 +2742,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Namely
   partner: null
   partner_match: null
@@ -2727,7 +2760,7 @@ edges:
   - employment
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: NaturalHR
   partner: null
   partner_match: null
@@ -2744,7 +2777,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Netchex
   partner: null
   partner_match: null
@@ -2764,7 +2797,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Newtek
   partner: null
   partner_match: null
@@ -2781,7 +2814,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Nextep
   partner: null
   partner_match: null
@@ -2798,7 +2831,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: North Bay Payroll
   partner: null
   partner_match: null
@@ -2815,7 +2848,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: nVision
   partner: null
   partner_match: null
@@ -2832,7 +2865,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paychex Oasis
   partner: null
   partner_match: null
@@ -2852,7 +2885,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Obsidian HR isolved
   partner: null
   partner_match: null
@@ -2872,7 +2905,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: odoo
   partner: null
   partner_match: null
@@ -2889,7 +2922,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: OmniHR
   partner: null
   partner_match: null
@@ -2906,7 +2939,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: OnePoint HCM
   partner: null
   partner_match: null
@@ -2923,7 +2956,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: OneSource Payroll
   partner: null
   partner_match: null
@@ -2940,7 +2973,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: OnPay
   partner: null
   partner_match: null
@@ -2960,7 +2993,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Opolis
   partner: null
   partner_match: null
@@ -2977,7 +3010,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Oracle Fusion
   partner: null
   partner_match: null
@@ -2994,7 +3027,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Oyster HR
   partner: null
   partner_match: null
@@ -3011,7 +3044,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Panther
   partner: null
   partner_match: null
@@ -3028,7 +3061,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paragon Payroll isolved
   partner: null
   partner_match: null
@@ -3045,7 +3078,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Patriot
   partner: null
   partner_match: null
@@ -3065,7 +3098,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PayUSA
   partner: null
   partner_match: null
@@ -3082,7 +3115,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paychex Flex
   partner: null
   partner_match: null
@@ -3102,7 +3135,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paycom
   partner: null
   partner_match: null
@@ -3122,7 +3155,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paycor
   partner: null
   partner_match: null
@@ -3142,7 +3175,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payday Payroll
   partner: null
   partner_match: null
@@ -3162,7 +3195,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payday Workforce Solutions
   partner: null
   partner_match: null
@@ -3179,7 +3212,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payentry
   partner: null
   partner_match: null
@@ -3196,7 +3229,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PayFit
   partner: null
   partner_match: null
@@ -3213,7 +3246,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payfluence
   partner: null
   partner_match: null
@@ -3233,7 +3266,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paylocity
   partner: null
   partner_match: null
@@ -3253,7 +3286,7 @@ edges:
   - benefits
   - company
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paylogics
   partner: null
   partner_match: null
@@ -3269,7 +3302,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PayNorthwest
   partner: null
   partner_match: null
@@ -3289,7 +3322,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PayPro HCS isolved
   partner: null
   partner_match: null
@@ -3309,7 +3342,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll4Construction
   partner: null
   partner_match: null
@@ -3326,7 +3359,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Network
   partner: null
   partner_match: null
@@ -3346,7 +3379,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Office of America
   partner: null
   partner_match: null
@@ -3366,7 +3399,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Plus HCM Evolution
   partner: null
   partner_match: null
@@ -3383,7 +3416,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Plus HCM isolved
   partner: null
   partner_match: null
@@ -3400,7 +3433,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Resource Group
   partner: null
   partner_match: null
@@ -3417,7 +3450,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Solutions
   partner: null
   partner_match: null
@@ -3436,7 +3469,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Specialties
   partner: null
   partner_match: null
@@ -3456,7 +3489,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll Vault
   partner: null
   partner_match: null
@@ -3476,7 +3509,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payroll on Time
   partner: null
   partner_match: null
@@ -3496,7 +3529,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Paytime
   partner: null
   partner_match: null
@@ -3516,7 +3549,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Payworks
   partner: null
   partner_match: null
@@ -3533,7 +3566,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PCS HCM
   partner: null
   partner_match: null
@@ -3550,7 +3583,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Penta
   partner: null
   partner_match: null
@@ -3567,7 +3600,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: People Lease
   partner: null
   partner_match: null
@@ -3584,7 +3617,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PeopleCore
   partner: null
   partner_match: null
@@ -3601,7 +3634,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PeopleForce
   partner: null
   partner_match: null
@@ -3618,7 +3651,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PeopleHum
   partner: null
   partner_match: null
@@ -3635,7 +3668,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Personio
   partner: null
   partner_match: null
@@ -3651,7 +3684,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Platinum Group
   partner: null
   partner_match: null
@@ -3668,7 +3701,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Premier Payroll
   partner: null
   partner_match: null
@@ -3685,7 +3718,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Premier Payroll Services
   partner: null
   partner_match: null
@@ -3705,7 +3738,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PrestigePEO
   partner: null
   partner_match: null
@@ -3722,7 +3755,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PrimePay
   partner: null
   partner_match: null
@@ -3739,7 +3772,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PrismHR
   partner: null
   partner_match: null
@@ -3758,7 +3791,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Proliant
   partner: null
   partner_match: null
@@ -3775,7 +3808,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: PropelHR
   partner: null
   partner_match: null
@@ -3792,7 +3825,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ProSoftware
   partner: null
   partner_match: null
@@ -3809,7 +3842,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Proxus HR
   partner: null
   partner_match: null
@@ -3829,7 +3862,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: QForce
   partner: null
   partner_match: null
@@ -3849,7 +3882,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Quality Payroll and Benefits
   partner: null
   partner_match: null
@@ -3866,7 +3899,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Questco
   partner: null
   partner_match: null
@@ -3885,7 +3918,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: QuickBooks Online Payroll
   partner: null
   partner_match: null
@@ -3906,7 +3939,7 @@ edges:
   - documents
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: QuickHR
   partner: null
   partner_match: null
@@ -3923,7 +3956,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Remote
   partner: null
   partner_match: null
@@ -3942,7 +3975,7 @@ edges:
   - pay_statement
   - payment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: RemotePass
   partner: null
   partner_match: null
@@ -3959,7 +3992,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Resourcing Edge
   partner: null
   partner_match: null
@@ -3978,7 +4011,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Restaurant365
   partner: null
   partner_match: null
@@ -3994,7 +4027,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Rippling
   partner: null
   partner_match: null
@@ -4011,7 +4044,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: RMI PEO
   partner: null
   partner_match: null
@@ -4028,7 +4061,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: ADP Payroll for Partners
   partner: null
   partner_match: null
@@ -4045,7 +4078,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sage100
   partner: null
   partner_match: null
@@ -4061,7 +4094,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sage HR
   partner: null
   partner_match: null
@@ -4078,7 +4111,7 @@ edges:
   - employment
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sage Payroll
   partner: null
   partner_match: null
@@ -4095,7 +4128,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sapling
   partner: null
   partner_match: null
@@ -4111,7 +4144,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Savant HCM Evolution
   partner: null
   partner_match: null
@@ -4128,7 +4161,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sequoia One
   partner: null
   partner_match: null
@@ -4148,7 +4181,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sesame
   partner: null
   partner_match: null
@@ -4165,7 +4198,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: 7shifts
   partner: null
   partner_match: null
@@ -4183,7 +4216,7 @@ edges:
   - employment
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Sheakley
   partner: null
   partner_match: null
@@ -4202,7 +4235,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Simploy
   partner: null
   partner_match: null
@@ -4219,7 +4252,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Skuad
   partner: null
   partner_match: null
@@ -4236,7 +4269,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Skyward
   partner: null
   partner_match: null
@@ -4253,7 +4286,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Solution Services
   partner: null
   partner_match: null
@@ -4270,7 +4303,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SourceOne
   partner: null
   partner_match: null
@@ -4287,7 +4320,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Southeast Personnel Leasing
   partner: null
   partner_match: null
@@ -4304,7 +4337,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Square Payroll
   partner: null
   partner_match: null
@@ -4324,7 +4357,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Strategic Payroll Solutions isolved
   partner: null
   partner_match: null
@@ -4341,7 +4374,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Strongpay
   partner: null
   partner_match: null
@@ -4358,7 +4391,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SAP SuccessFactors
   partner: null
   partner_match: null
@@ -4375,7 +4408,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SuitePeople (NetSuite)
   partner: null
   partner_match: null
@@ -4392,7 +4425,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SunFish
   partner: null
   partner_match: null
@@ -4409,7 +4442,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SurePayroll
   partner: null
   partner_match: null
@@ -4426,7 +4459,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: SyncHR
   partner: null
   partner_match: null
@@ -4443,7 +4476,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Synchrony HR
   partner: null
   partner_match: null
@@ -4462,7 +4495,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Talenox
   partner: null
   partner_match: null
@@ -4479,7 +4512,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Talenta
   partner: null
   partner_match: null
@@ -4496,7 +4529,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: TandemHR
   partner: null
   partner_match: null
@@ -4515,7 +4548,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Teamworks Group
   partner: null
   partner_match: null
@@ -4532,7 +4565,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: The Payroll Company
   partner: null
   partner_match: null
@@ -4549,7 +4582,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Thread HCM
   partner: null
   partner_match: null
@@ -4569,7 +4602,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Toast Payroll
   partner: null
   partner_match: null
@@ -4589,7 +4622,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Trakstar
   partner: null
   partner_match: null
@@ -4606,7 +4639,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: TriNet PEO
   partner: null
   partner_match: null
@@ -4626,7 +4659,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Trion
   partner: null
   partner_match: null
@@ -4646,7 +4679,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Trustpoint
   partner: null
   partner_match: null
@@ -4665,7 +4698,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: UKG Ready
   partner: null
   partner_match: null
@@ -4685,7 +4718,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: UKG Pro
   partner: null
   partner_match: null
@@ -4705,7 +4738,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Uzio
   partner: null
   partner_match: null
@@ -4722,7 +4755,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Velocity Global
   partner: null
   partner_match: null
@@ -4739,7 +4772,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: VensureHR
   partner: null
   partner_match: null
@@ -4758,7 +4791,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Venture Workforce
   partner: null
   partner_match: null
@@ -4775,7 +4808,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Vfficient
   partner: null
   partner_match: null
@@ -4794,7 +4827,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Viewpoint HR Management Spectrum
   partner: null
   partner_match: null
@@ -4811,7 +4844,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Viewpoint HR Management Vista
   partner: null
   partner_match: null
@@ -4828,7 +4861,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Visionary Payroll Solutions
   partner: null
   partner_match: null
@@ -4844,7 +4877,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Viventium
   partner: null
   partner_match: null
@@ -4861,7 +4894,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Wagepoint
   partner: null
   partner_match: null
@@ -4878,7 +4911,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Warp
   partner: null
   partner_match: null
@@ -4895,7 +4928,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Wave
   partner: null
   partner_match: null
@@ -4915,7 +4948,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: WebHR
   partner: null
   partner_match: null
@@ -4932,7 +4965,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Whirks
   partner: null
   partner_match: null
@@ -4949,7 +4982,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Winteam
   partner: null
   partner_match: null
@@ -4966,7 +4999,7 @@ edges:
   - employment
   - company
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Wolke
   partner: null
   partner_match: null
@@ -4983,7 +5016,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Workday
   partner: null
   partner_match: null
@@ -5005,7 +5038,7 @@ edges:
   - plans_enrollments
   - plans_dependents
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Workforce Junction
   partner: null
   partner_match: null
@@ -5022,7 +5055,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Workforce
   partner: null
   partner_match: null
@@ -5042,7 +5075,7 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Worklio
   partner: null
   partner_match: null
@@ -5059,7 +5092,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Workplace HCM
   partner: null
   partner_match: null
@@ -5076,7 +5109,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Workzoom
   partner: null
   partner_match: null
@@ -5093,7 +5126,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: wurk
   partner: null
   partner_match: null
@@ -5110,7 +5143,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Xenium HR
   partner: null
   partner_match: null
@@ -5127,7 +5160,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Xero (International)
   partner: null
   partner_match: null
@@ -5144,7 +5177,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Xero (US)
   partner: null
   partner_match: null
@@ -5161,7 +5194,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: TriNet HR Platform (fka Zenefits)
   partner: null
   partner_match: null
@@ -5181,7 +5214,7 @@ edges:
   - payment
   - pay_statement
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Zimyo
   partner: null
   partner_match: null
@@ -5198,7 +5231,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Zoho Payroll
   partner: null
   partner_match: null
@@ -5215,7 +5248,7 @@ edges:
   - individual
   - employment
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
+  detected: '2026-10-19'
 - partner_name: Zuma
   partner: null
   partner_match: null
@@ -5235,23 +5268,6 @@ edges:
   - pay_statement
   - benefits
   detected_by: sweep-hr-stores.py
-  detected: '2026-10-12'
-- partner_name: BambooHR (own)
-  partner: bamboohr
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.bamboohr.com/integrations/listings/finch
-  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
-  apps:
-  - Finch
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Developer Resources
+  detected: '2026-10-19'
 source:
 - bamboohr/integrations/bamboohr-integration-edges.yml
