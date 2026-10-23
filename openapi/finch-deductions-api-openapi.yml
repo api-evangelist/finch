@@ -1660,3 +1660,9 @@ components:
       type: http
       scheme: basic
       description: Please use base64 encoded client_id:client_secret
+x-provenance:
+  method: harvested
+  publisher: Finch
+  source: https://developer.tryfinch.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
