@@ -1,4 +1,4 @@
-# Finch (finch)
+# Finch
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,72 +66,133 @@
 
 Finch is a unified employment API providing standardized read and write access to HRIS, payroll, and benefits systems. Through a single integration, developers can pull company directory data, individual PII, employment records, payments, pay statements, and benefits across hundreds of providers (ADP, Gusto, Paylocity, Workday, BambooHR, Rippling, Justworks, TriNet, and more). Finch Connect handles end-user authorization via OAuth.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/apis.yml)
+**Areas:** Employment · HRIS · Payroll · Benefits · Human Resources · Unified API · Workforce · Integration · Employee Benefits
 
-## Scope
+## Finch on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for Finch is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/finch/](https://apis.io/providers/finch/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (3)
 
-- Employment
-- HRIS
-- Payroll
-- Benefits
-- HR
-- Unified API
-- Workforce
+- [Finch Auth API](https://apis.io/apis/finch/finch-auth-api/) — The Auth API from Finch — 1 operation(s) for auth.
+- [Finch Connect API](https://apis.io/apis/finch/finch-connect-api/) — The Connect API from Finch — 1 operation(s) for connect.
+- [Finch Employer API](https://apis.io/apis/finch/finch-employer-api/) — The Employer API from Finch — 7 operation(s) for employer.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Finch API
+Model Context Protocol servers that expose the API to agents.
 
-Unified REST API for HRIS, payroll, and benefits providers. Supports Company, Directory, Individual, Employment, Payment, Pay Statement, and Benefits resources. Authentication uses OAuth 2.0 via Finch Connect to issue per-employer bearer access tokens.
+- [Moved to /providers/finch/](https://apis.io/servers/finch/finch/)
 
-- **Human URL:** [https://www.tryfinch.com/](https://www.tryfinch.com/)
-- **Base URL:** `https://api.tryfinch.com`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Employment
-- HRIS
-- Payroll
-- Benefits
-- Unified API
+- [Finch Agentic Access](https://apis.io/agentic-access/finch/finch-agentic-access/)
 
-#### Properties
+#### Collections (4)
 
-- [Documentation](https://developer.tryfinch.com/)
-- [API Reference](https://developer.tryfinch.com/api-reference/)
-- [Sign Up](https://dashboard.tryfinch.com/signup)
-- [Pricing](https://www.tryfinch.com/pricing)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/finch/refs/heads/main/openapi/finch-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/finch.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/finch.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Postman and Open Collection request collections.
 
-## Common Properties
+- [Finch API](https://apis.io/collections/finch/open-finch/)
+- [Finch Auth API](https://apis.io/collections/finch/open-finch-auth-api/)
+- [Finch Auth Connect API](https://apis.io/collections/finch/open-finch-connect-api/)
+- [Finch Auth Employer API](https://apis.io/collections/finch/open-finch-employer-api/)
 
-- [GitHub Organization](https://github.com/Finch-API)
-- [LinkedIn](https://www.linkedin.com/company/finchapi)
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Finch Authentication](https://apis.io/security/finch/finch-authentication/)
+- [Finch Domain Security](https://apis.io/security/finch/finch-domain-security/)
+- [Finch Trust Center](https://apis.io/security/finch/finch-trust-center/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Finch Plans Pricing](https://apis.io/plans/finch/finch-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Finch Rate Limits](https://apis.io/rate-limits/finch/finch-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Finch Finops](https://apis.io/finops/finch/finch-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.tryfinch.com/)
 - [Documentation](https://developer.tryfinch.com/)
-- [API Reference](https://developer.tryfinch.com/api-reference/)
-- [Sign Up](https://dashboard.tryfinch.com/signup)
+- [API reference](https://developer.tryfinch.com/api-reference/)
 - [Pricing](https://www.tryfinch.com/pricing)
-- [Blog](https://www.tryfinch.com/blog)
 - [Changelog](https://developer.tryfinch.com/changelog)
-- [Status Page](https://status.tryfinch.com/)
-- [Integrations](https://www.tryfinch.com/integrations)
-- [L L Ms Txt](https://developer.tryfinch.com/llms.txt)
+- [Blog](https://www.tryfinch.com/blog)
+- [GitHub](https://github.com/Finch-API)
+- [Status](https://status.tryfinch.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
+**Kin Score 39.0** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 51.9 |
+| Contract governance | 0.0 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 31.0 |
+| Access clarity | 39.5 |
+
+**Agent readiness 37.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Employment & Payroll
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/finch/](https://apis.io/providers/finch/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Finch: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/finch/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
